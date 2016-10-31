@@ -1,34 +1,40 @@
-/**********************************************
-* Apply Object.freez on object and each children object as deep as it goes.
-* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
-************************************************/
-sn.deepFreez = function deepFreez(obj) {
-  return deepSealOrFreez(obj, Object.freez);
-};
+//DeepFreez / DeepSeal
+(function (sn) {
 
-/**********************************************
-* Apply Object.freez on object and each children object as deep as it goes.
-* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
-************************************************/
-sn.deepSeal = function deepSeal(obj) {
-  return deepSealOrFreez(obj, Object.seal);
-};
+  /**********************************************
+  * Apply Object.freez on object and each children object as deep as it goes.
+  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
+  ************************************************/
+  sn.deepFreez = function deepFreez(obj) {
+    return deepSealOrFreez(obj, Object.freez);
+  };
 
-function deepSealOrFreez(obj, action) {
-  action(obj);
+  /**********************************************
+  * Apply Object.seal on object and each children object as deep as it goes.
+  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
+  ************************************************/
+  sn.deepSeal = function deepSeal(obj) {
+    return deepSealOrFreez(obj, Object.seal);
+  };
 
-  Object.getOwnPropertyNames(obj).forEach(function (key) {
-    if (obj.hasOwnProperty(key)
-      && obj[key] !== null
-      && (typeof obj[key] === 'object' || typeof obj[key] === 'function')
-      && !Object.isSealed(obj[key]))
-    {
-      deepSealOrFreez(obj[key]);
-    }
-  });
+  function deepSealOrFreez(obj, action) {
+    action(obj);
 
-  return obj;
-}
+    Object.getOwnPropertyNames(obj).forEach(function (key) {
+      if (obj.hasOwnProperty(key)
+        && obj[key] !== null
+        && (typeof obj[key] === 'object' || typeof obj[key] === 'function')
+        && !Object.isSealed(obj[key]))
+      {
+        deepSealOrFreez(obj[key]);
+      }
+    });
+
+    return obj;
+  }
+
+})(sn);
+
 
 
 /**********************************************
