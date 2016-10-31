@@ -1,25 +1,26 @@
 {
-  "name": "s.js",
+  "name": "sn.js",
   "version": "0.0.1",
-  "description": "s.js https://github.com/snovakovic/s.js",
-  "main": "dist/s.js",
+  "description": "s.js https://github.com/snovakovic/sn.js",
+  "main": "dist/sn.js",
   "scripts": {
     "test": "karma start"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/snovakovic/s.js.git"
+    "url": "git+https://github.com/snovakovic/sn.js.git"
   },
   "keywords": [
-    "s.js"
+    "sn.js",
+    "snovakovic"
   ],
   "author": "stefan.novakovich@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/snovakovic/s.js/issues"
+    "url": "https://github.com/snovakovic/sn.js/issues"
   },
-  "homepage": "https://github.com/snovakovic/s.js#readme",
-  "dependencies": {
+  "homepage": "https://github.com/snovakovic/sn.js#readme",
+  "devDependencies": {
     "connect-livereload": "^0.6.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
