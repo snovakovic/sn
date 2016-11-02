@@ -9,7 +9,7 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     files: [
       // 'test/mocks/*.js',
-      'dist/s.js',
+      'dist/sn.js',
       'src/specs/*.js'
     ],
 

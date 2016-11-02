@@ -1,110 +1,26 @@
 <?xml version="1.0"?>
-<testsuite name="PhantomJS 2.1.1 (Linux 0.0.0)" package="" timestamp="2016-11-02T12:37:10" id="0" hostname="snovakovic-desktop" tests="18" errors="1" failures="18" time="0.217">
+<testsuite name="PhantomJS 2.1.1 (Linux 0.0.0)" package="" timestamp="2016-11-02T12:53:14" id="0" hostname="snovakovic-desktop" tests="18" errors="0" failures="0" time="0.346">
   <properties>
     <property name="browser.fullName" value="Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1"/>
   </properties>
-  <testcase name="sn.array each should loop correctly" time="0.01" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 40)
-src/specs/sn.array.js:40:9
-loaded@http://localhost:9876/context.js:151:17
-</failure>
-  </testcase>
-  <testcase name="sn.array iterate should iterate correctly" time="0.014" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 72)
-src/specs/sn.array.js:72:9
-loaded@http://localhost:9876/context.js:151:17
-</failure>
-  </testcase>
-  <testcase name="sn.array remove should remove items correctly" time="0.011" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 90)
-src/specs/sn.array.js:90:16
-loaded@http://localhost:9876/context.js:151:17
-</failure>
-  </testcase>
-  <testcase name="sn.array shuffle should shuffle array" time="0.009" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 110)
-src/specs/sn.array.js:110:9
-loaded@http://localhost:9876/context.js:151:17
-</failure>
-  </testcase>
-  <testcase name="sn.array getFilledArray should returned filled array" time="0.012" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 124)
-src/specs/sn.array.js:124:16
-loaded@http://localhost:9876/context.js:151:17
-</failure>
-  </testcase>
-  <testcase name="sn.array unique should return unique values" time="0.012" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 133)
-src/specs/sn.array.js:133:16
-loaded@http://localhost:9876/context.js:151:17
-</failure>
-  </testcase>
-  <testcase name="sn.array first should return first array value" time="0.012" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 140)
-src/specs/sn.array.js:140:16
-loaded@http://localhost:9876/context.js:151:17
-</failure>
-  </testcase>
-  <testcase name="sn.array last should return last array value" time="0.012" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 156)
-src/specs/sn.array.js:156:16
-loaded@http://localhost:9876/context.js:151:17
-</failure>
-  </testcase>
-  <testcase name="sn.array stack should operate with stack correctly" time="0.013" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 173)
-src/specs/sn.array.js:173:21
-loaded@http://localhost:9876/context.js:151:17
-</failure>
-  </testcase>
-  <testcase name="sn.array stack should operate with default stack correctly" time="0.011" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 191)
-src/specs/sn.array.js:191:21
-loaded@http://localhost:9876/context.js:151:17
-</failure>
-  </testcase>
-  <testcase name="sn.array stack stack arrays should operate independently" time="0.012" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 203)
-src/specs/sn.array.js:203:22
-loaded@http://localhost:9876/context.js:151:17
-</failure>
-  </testcase>
-  <testcase name="sn.array stack add multiple values should work as expected" time="0.013" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 218)
-src/specs/sn.array.js:218:21
-loaded@http://localhost:9876/context.js:151:17
-</failure>
-  </testcase>
-  <testcase name="sn.array stack readme example should be correct" time="0.014" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 226)
-src/specs/sn.array.js:226:21
-</failure>
-  </testcase>
-  <testcase name="sn.array queue should operate with queue correctly" time="0.011" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 253)
-src/specs/sn.array.js:253:21
-</failure>
-  </testcase>
-  <testcase name="sn.array queue should operate with default queue correctly" time="0.009" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 271)
-src/specs/sn.array.js:271:21
-</failure>
-  </testcase>
-  <testcase name="sn.array queue queue arrays should operate independently" time="0.012" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 284)
-src/specs/sn.array.js:284:22
-</failure>
-  </testcase>
-  <testcase name="sn.array queue add multiple values should work as expected" time="0.012" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 299)
-src/specs/sn.array.js:299:21
-</failure>
-  </testcase>
-  <testcase name="sn.array queue readme example should be correct" time="0.018" classname="sn.array">
-    <failure type="">ReferenceError: Can't find variable: sn in src/specs/sn.array.js (line 307)
-src/specs/sn.array.js:307:21
-</failure>
-  </testcase>
+  <testcase name="sn.array each should loop correctly" time="0.083" classname="sn.array"/>
+  <testcase name="sn.array iterate should iterate correctly" time="0.084" classname="sn.array"/>
+  <testcase name="sn.array remove should remove items correctly" time="0.012" classname="sn.array"/>
+  <testcase name="sn.array shuffle should shuffle array" time="0.011" classname="sn.array"/>
+  <testcase name="sn.array getFilledArray should returned filled array" time="0.011" classname="sn.array"/>
+  <testcase name="sn.array unique should return unique values" time="0.012" classname="sn.array"/>
+  <testcase name="sn.array first should return first array value" time="0.011" classname="sn.array"/>
+  <testcase name="sn.array last should return last array value" time="0.011" classname="sn.array"/>
+  <testcase name="sn.array stack should operate with stack correctly" time="0.009" classname="sn.array"/>
+  <testcase name="sn.array stack should operate with default stack correctly" time="0.012" classname="sn.array"/>
+  <testcase name="sn.array stack stack arrays should operate independently" time="0.009" classname="sn.array"/>
+  <testcase name="sn.array stack add multiple values should work as expected" time="0.012" classname="sn.array"/>
+  <testcase name="sn.array stack readme example should be correct" time="0.011" classname="sn.array"/>
+  <testcase name="sn.array queue should operate with queue correctly" time="0.012" classname="sn.array"/>
+  <testcase name="sn.array queue should operate with default queue correctly" time="0.011" classname="sn.array"/>
+  <testcase name="sn.array queue queue arrays should operate independently" time="0.013" classname="sn.array"/>
+  <testcase name="sn.array queue add multiple values should work as expected" time="0.011" classname="sn.array"/>
+  <testcase name="sn.array queue readme example should be correct" time="0.011" classname="sn.array"/>
   <system-out>
     <![CDATA[
 ]]>
