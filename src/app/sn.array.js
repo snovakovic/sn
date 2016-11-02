@@ -33,9 +33,6 @@ sn.iterate = function(l, callback) {
 ***********************************************/
 sn.remove = function(arr, elToRemove, max) {
   var pos;
-  if (max && (typeof max !== 'number' || max % 1 !== 0)) {
-    throw new Error('Invalid argument exception');
-  }
 
   while (pos !== -1 && max !== 0) {
     if (max) {
@@ -53,6 +50,7 @@ sn.remove = function(arr, elToRemove, max) {
 
     pos > -1 && arr.splice(pos, 1);
   }
+
   return arr;
 };
 
