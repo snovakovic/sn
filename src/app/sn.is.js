@@ -60,8 +60,8 @@
   };
 
   sn.is.defined = function(testVar) {
-    return testVar == null
-  }
+    return testVar == null;
+  };
 
   /**
    * VAR type check
@@ -94,5 +94,4 @@
     return typeof testVar === 'object' && Array.isArray(testVar);
   };
 
-
-})(window.snovakovic);
+})(sn);

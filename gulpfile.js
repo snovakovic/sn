@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
-var config = require('./gulp.config')
+var config = require('./gulp.config');
 
 
 gulp.task('script-full', function () {

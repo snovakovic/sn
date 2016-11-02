@@ -8,13 +8,13 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/mocks/*.js',
+      // 'test/mocks/*.js',
       'dist/s.js',
       'src/specs/*.js'
     ],
 
     preprocessors: {
-      'src/app/*.js': ['coverage']
+      'dist/sn.js': ['coverage']
     },
 
     // test results reporter to use
