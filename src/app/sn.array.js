@@ -3,12 +3,14 @@
 * @param arr {Array} array we want to iterate
 * @param callback {Function} callback function that will be called on each iteration
 ************************************************/
-sn.each = function(arr, callback) {
-  for (var i = 0, l = arr.length; i < l; i++) {
-    if (callback.call(arr, arr[i], i) === false) {
+sn.each = function(callback) {
+  for (var i = 0, l = sn.__EC__.length; i < l; i++) {
+    if (callback.call(sn.__EC__, sn.__EC__[i], i) === false) {
       break;
     }
   }
+
+  return sn;
 };
 
 /**********************************************
@@ -31,27 +33,27 @@ sn.iterate = function(l, callback) {
 * @param max {whole number integer} max number of occurrences to remove. 1 - remove first, -1 remove last.
 * @return {Array} new array without removed values
 ***********************************************/
-sn.remove = function(arr, elToRemove, max) {
+sn.remove = function(elToRemove, max) {
   var pos;
 
   while (pos !== -1 && max !== 0) {
     if (max) {
       if (max >= 1) {
-        pos = arr.indexOf(elToRemove);
+        pos = sn.__EC__.indexOf(elToRemove);
         max--;
       } else {
-        pos = arr.lastIndexOf(elToRemove);
+        pos = sn.__EC__.lastIndexOf(elToRemove);
         max++;
       }
 
     } else {
-      pos = arr.indexOf(elToRemove);
+      pos = sn.__EC__.indexOf(elToRemove);
     }
 
-    pos > -1 && arr.splice(pos, 1);
+    pos > -1 && sn.__EC__.splice(pos, 1);
   }
 
-  return arr;
+  return sn.__EC__;
 };
 
 /*******************************************************
@@ -60,8 +62,8 @@ sn.remove = function(arr, elToRemove, max) {
 * @param arr {Array} input array that we want to shuffle
 * @return {Array} shuffled array
 ********************************************************/
-sn.shuffle = function(arr) {
-  var currentIndex = arr.length;
+sn.shuffle = function() {
+  var currentIndex = sn.__EC__.length;
   var temporaryValue;
   var randomIndex;
 
@@ -73,12 +75,12 @@ sn.shuffle = function(arr) {
     currentIndex -= 1;
 
     // And swap it with the current element.
-    temporaryValue = arr[currentIndex];
-    arr[currentIndex] = arr[randomIndex];
-    arr[randomIndex] = temporaryValue;
+    temporaryValue = sn.__EC__[currentIndex];
+    sn.__EC__[currentIndex] = sn.__EC__[randomIndex];
+    sn.__EC__[randomIndex] = temporaryValue;
   }
 
-  return arr;
+  return sn.__EC__;
 };
 
 /*********************************************

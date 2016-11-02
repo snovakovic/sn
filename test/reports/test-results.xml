@@ -1,32 +1,32 @@
 <?xml version="1.0"?>
-<testsuite name="PhantomJS 2.1.1 (Linux 0.0.0)" package="" timestamp="2016-11-02T14:43:49" id="0" hostname="snovakovic-desktop" tests="29" errors="0" failures="0" time="0.352">
+<testsuite name="PhantomJS 2.1.1 (Linux 0.0.0)" package="" timestamp="2016-11-02T15:29:16" id="0" hostname="snovakovic-desktop" tests="29" errors="0" failures="0" time="0.355">
   <properties>
     <property name="browser.fullName" value="Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1"/>
   </properties>
-  <testcase name="sn.array each should loop correctly" time="0.081" classname="sn.array"/>
-  <testcase name="sn.array iterate should iterate correctly" time="0.085" classname="sn.array"/>
+  <testcase name="sn.array each should loop correctly" time="0.084" classname="sn.array"/>
+  <testcase name="sn.array iterate should iterate correctly" time="0.087" classname="sn.array"/>
   <testcase name="sn.array remove should remove items correctly" time="0.012" classname="sn.array"/>
-  <testcase name="sn.array shuffle should shuffle array" time="0.011" classname="sn.array"/>
-  <testcase name="sn.array getFilledArray should returned filled array" time="0.013" classname="sn.array"/>
+  <testcase name="sn.array shuffle should shuffle array" time="0.012" classname="sn.array"/>
+  <testcase name="sn.array getFilledArray should returned filled array" time="0.011" classname="sn.array"/>
   <testcase name="sn.array unique should return unique values" time="0.011" classname="sn.array"/>
   <testcase name="sn.array first should return first array value" time="0.011" classname="sn.array"/>
   <testcase name="sn.array last should return last array value" time="0.011" classname="sn.array"/>
   <testcase name="sn.array stack should operate with stack correctly" time="0.01" classname="sn.array"/>
   <testcase name="sn.array stack should operate with default stack correctly" time="0.012" classname="sn.array"/>
   <testcase name="sn.array stack stack arrays should operate independently" time="0.011" classname="sn.array"/>
-  <testcase name="sn.array stack add multiple values should work as expected" time="0.01" classname="sn.array"/>
-  <testcase name="sn.array stack readme example should be correct" time="0.015" classname="sn.array"/>
+  <testcase name="sn.array stack add multiple values should work as expected" time="0.011" classname="sn.array"/>
+  <testcase name="sn.array stack readme example should be correct" time="0.014" classname="sn.array"/>
   <testcase name="sn.array queue should operate with queue correctly" time="0.011" classname="sn.array"/>
-  <testcase name="sn.array queue should operate with default queue correctly" time="0.009" classname="sn.array"/>
-  <testcase name="sn.array queue queue arrays should operate independently" time="0.013" classname="sn.array"/>
-  <testcase name="sn.array queue add multiple values should work as expected" time="0.01" classname="sn.array"/>
-  <testcase name="sn.array queue readme example should be correct" time="0.012" classname="sn.array"/>
-  <testcase name="sn.date isLastDayOfMonth Should correctly show if date is last day of month" time="0.001" classname="sn.date"/>
+  <testcase name="sn.array queue should operate with default queue correctly" time="0.01" classname="sn.array"/>
+  <testcase name="sn.array queue queue arrays should operate independently" time="0.012" classname="sn.array"/>
+  <testcase name="sn.array queue add multiple values should work as expected" time="0.012" classname="sn.array"/>
+  <testcase name="sn.array queue readme example should be correct" time="0.01" classname="sn.array"/>
+  <testcase name="sn.date isLastDayOfMonth Should correctly show if date is last day of month" time="0" classname="sn.date"/>
   <testcase name="sn.date setLastDayOfMonth Should correctly set last day of month" time="0" classname="sn.date"/>
   <testcase name="sn.date getLastDayOfMonth Should correctly get last day of month from date" time="0" classname="sn.date"/>
-  <testcase name="sn.date addMilliseconds should correctly add miliseconds" time="0" classname="sn.date"/>
+  <testcase name="sn.date addMilliseconds should correctly add miliseconds" time="0.001" classname="sn.date"/>
   <testcase name="sn.date addSeconds should correctly add seconds" time="0" classname="sn.date"/>
-  <testcase name="sn.date addMinutes should correctly add minutes" time="0.002" classname="sn.date"/>
+  <testcase name="sn.date addMinutes should correctly add minutes" time="0.001" classname="sn.date"/>
   <testcase name="sn.date addHours should correctly add hours" time="0" classname="sn.date"/>
   <testcase name="sn.date addDays should correctly add days" time="0" classname="sn.date"/>
   <testcase name="sn.date addMonths should correctly add months" time="0.001" classname="sn.date"/>

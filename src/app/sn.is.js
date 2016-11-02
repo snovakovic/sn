@@ -1,7 +1,4 @@
-﻿/*****************************************************
-	  Test Module part
- ***************************************************/
-(function(sn) {
+﻿(function(sn) {
 
   function isString(testVar) {
     return typeof testVar === 'string';

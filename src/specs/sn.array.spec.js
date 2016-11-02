@@ -37,7 +37,7 @@ describe('sn.array', function() {
   describe('each', function() {
 
     it('should loop correctly', function() {
-      sn.each(testArray, function(val, i) {
+      sn(testArray).each(function(val, i) {
         if (val === 'a') {
           a = testArray[i];
         } else if (val === 'b') {
@@ -48,11 +48,11 @@ describe('sn.array', function() {
 
       });
 
-      sn.each(bigArray, function(val, i) {
+      sn(bigArray).each(function(val, i) {
         lastIndex = i;
       });
 
-      sn.each(testArray, function(val) {
+      sn(testArray).each(function(val) {
         lastValue = val;
         return false;
       });
@@ -87,15 +87,15 @@ describe('sn.array', function() {
 
   describe('remove', function() {
     it('should remove items correctly', function() {
-      expect(sn.remove(['c', 'a', 'b', 'c', 'd', 'c'], 'c')).toEqual(['a', 'b', 'd']);
-      expect(sn.remove([1, 2, 2, 3, 4], 2)).toEqual([1, 3, 4]);
-      expect(sn.remove([1, 2, '2', 3, 4], 2)).toEqual([1, '2', 3, 4]);
-      expect(sn.remove([1, 2, 3], 5)).toEqual([1, 2, 3]);
+      expect(sn(['c', 'a', 'b', 'c', 'd', 'c']).remove('c')).toEqual(['a', 'b', 'd']);
+      expect(sn([1, 2, 2, 3, 4]).remove(2)).toEqual([1, 3, 4]);
+      expect(sn([1, 2, '2', 3, 4]).remove(2)).toEqual([1, '2', 3, 4]);
+      expect(sn([1, 2, 3]).remove(5)).toEqual([1, 2, 3]);
 
-      expect(sn.remove(['c', 'a', 'b', 'c', 'd', 'c'], 'c', 1)).toEqual(['a', 'b', 'c', 'd', 'c']);
-      expect(sn.remove(['c', 'a', 'b', 'c', 'd', 'c'], 'c', 2)).toEqual(['a', 'b', 'd', 'c']);
-      expect(sn.remove(['c', 'a', 'b', 'c', 'd', 'c'], 'c', -1)).toEqual(['c', 'a', 'b', 'c', 'd']);
-      expect(sn.remove(['c', 'a', 'b', 'c', 'd', 'c'], 'c', -2)).toEqual(['c', 'a', 'b', 'd']);
+      expect(sn(['c', 'a', 'b', 'c', 'd', 'c']).remove('c', 1)).toEqual(['a', 'b', 'c', 'd', 'c']);
+      expect(sn(['c', 'a', 'b', 'c', 'd', 'c']).remove('c', 2)).toEqual(['a', 'b', 'd', 'c']);
+      expect(sn(['c', 'a', 'b', 'c', 'd', 'c']).remove('c', -1)).toEqual(['c', 'a', 'b', 'c', 'd']);
+      expect(sn(['c', 'a', 'b', 'c', 'd', 'c']).remove('c', -2)).toEqual(['c', 'a', 'b', 'd']);
 
       // expect(function() {
       //   sn.remove(['c', 'a', 'b', 'c', 'd', 'c'], 'c', 10.1);
@@ -107,7 +107,7 @@ describe('sn.array', function() {
   describe('shuffle', function() {
     it('should shuffle array', function() {
       var beforeShuffle = testArray.join();
-      sn.shuffle(testArray);
+      sn(testArray).shuffle();
       var afterShuffle = testArray.join();
 
       expect(beforeShuffle.length).toEqual(afterShuffle.length);
