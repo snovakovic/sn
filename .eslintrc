@@ -21,6 +21,7 @@
     "eol-last": 1,
     "space-before-blocks": [1, "always"],
     "indent": [1, 2, {"SwitchCase": 1}],
+    "semi": [2, "always"],
     "curly": 1
   }
 }

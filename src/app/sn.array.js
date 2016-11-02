@@ -29,8 +29,7 @@ sn.iterate = function(l, callback) {
 * @param arr {Array} array from where we want  to remove values
 * @param elToRemove {...} element that we want to remove from array
 * @param max {whole number integer} max number of occurrences to remove. 1 - remove first, -1 remove last.
-  * @return {Array} new array without the removed values
-* @example sn.remove( ['a', 'b', 'c', 'd', 'c'], 'c' );
+* @return {Array} new array without removed values
 ***********************************************/
 sn.remove = function(arr, elToRemove, max) {
   var pos;
@@ -59,20 +58,35 @@ sn.remove = function(arr, elToRemove, max) {
 
 /*******************************************************
 * Shuffle values in the array
+* https://github.com/Daplie/knuth-shuffle
 * @param arr {Array} input array that we want to shuffle
 * @return {Array} shuffled array
-* @example sn.shuffle(['a', 'b', 'c', 'd', 'c']);
 ********************************************************/
 sn.shuffle = function(arr) {
-  for (var j, x, i = arr.length; i; j = parseInt(Math.random() * i), x = arr[--i], arr[i] = arr[j], arr[j] = x);
+  var currentIndex = arr.length;
+  var temporaryValue;
+  var randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = arr[currentIndex];
+    arr[currentIndex] = arr[randomIndex];
+    arr[randomIndex] = temporaryValue;
+  }
+
   return arr;
 };
 
 /*********************************************
 * Get the new array filled with default values
-* @param val {....} default value that will fill the array
+* @param val {Any} default array value
 * @return len {Integer} size of the new array
-* @example sn.getFilledArray(0, 5);
 **********************************************/
 sn.getFilledArray = function(val, len) {
   var rv = new Array(len);
@@ -85,6 +99,8 @@ sn.getFilledArray = function(val, len) {
 /*************************************************
 * Returns new array containing only unique values from original array
 * Doesn't support nested objects and array
+* @param originalArr {Array} array form where we want to remove duplicate values
+* @return array without duplicate values
 ***********************************************/
 sn.unique = function(originalArr) {
   var arr = [];
@@ -99,10 +115,12 @@ sn.unique = function(originalArr) {
 /********************************************s
 * Returns first element of array if no condition is passed,
 * else if there is condition returns first element of array that meets condition
-* if element is not found undefined is returned
+* @param arr {Array} array we want to search in for value
+* @param condition {Function} function that returns true if value is found.
+* @return array item if found or undefined if not found
 **********************************************/
 sn.first = function(arr, condition) {
-  if(arr && arr.length) {
+  if (arr && arr.length) {
     if (condition) {
       for (var i = 0; i < arr.length; i++) {
         if (condition(arr[i])) {
@@ -110,7 +128,7 @@ sn.first = function(arr, condition) {
         }
       }
     } else {
-      return arr[0]
+      return arr[0];
     }
   }
 
@@ -121,10 +139,12 @@ sn.first = function(arr, condition) {
 /**********************************************************
 * Returns last element of array if no condition is passed,
 * else if there is condition returns last element of array that meets condition
-* if element is not found undefined is returned
+* @param arr {Array} [optional] array we want to search in for value
+* @param condition {Function} function that returns true if value is found.
+* @return array item if found or undefined if not found
 ***********************************************************/
 sn.last = function(arr, condition) {
-  if(arr && arr.length) {
+  if (arr && arr.length) {
     if (condition) {
       for (var i = arr.length - 1; i >= 0; i--) {
         if (condition(arr[i])) {
@@ -132,7 +152,7 @@ sn.last = function(arr, condition) {
         }
       }
     } else {
-      return arr[arr.length - 1]
+      return arr[arr.length - 1];
     }
   }
 
@@ -142,6 +162,7 @@ sn.last = function(arr, condition) {
 
 /*********************************************
  * Stack implementation LIFO last in first out
+ * @param defaultArray [optional] {Array} default array that will be used as a stack base
 *********************************************/
 sn.stack = function(defaultArray) {
   return (function() {
@@ -162,12 +183,13 @@ sn.stack = function(defaultArray) {
       get length() {
         return _stack.length;
       }
-    }
+    };
   })();
 };
 
 /*********************************************
 * Queue implementation FIFI: first in first out
+ * @param defaultArray [optional] {Array} default array that will be used as a queue base
 *********************************************/
 sn.queue = function(defaultArray) {
   return (function() {
@@ -185,12 +207,12 @@ sn.queue = function(defaultArray) {
       peek: function() {
         return _queue.length ? _queue[0] : null;
       },
-      get array()  {
+      get array() {
         return _queue;
       },
       get length() {
         return _queue.length;
       }
-    }
+    };
   })();
 };
