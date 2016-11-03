@@ -239,22 +239,12 @@ sn.queue = function(defaultArray) {
 };
 
 /**********************************************
-* Check if day in date is last day of month
-* @return true -> day is last day of month; false - day is not last day of month
-************************************************/
-//TODO: check should we move this to is module.
-sn.isLastDayOfMonth = function() {
-  var test = new Date(sn.__EC__.getTime());
-  test.setDate(test.getDate() + 1);
-  return test.getDate() === 1;
-};
-
-/**********************************************
 * Change provided date so that it point to last day of current month
 ************************************************/
-sn.setLastDayOfMonth = function() {
-  var dt = sn.__EC__;
-  dt.setMonth(dt.getMonth() + 1, 0, 23, 59, 59, 0);
+sn.setLastDayOfMonth = function () {
+  var dt = sn.__EC__ || new Date();
+  dt.setMonth(dt.getMonth() + 1, 0);
+  return dt;
 };
 
 
@@ -263,8 +253,8 @@ sn.setLastDayOfMonth = function() {
 * @param dt {Date} date we want ot check
 * @return true -> day is last day of month; false - day is not last day of month
 ************************************************/
-sn.getLastDayOfMonth = function() {
-  var dt = sn.__EC__;
+sn.getLastDayOfMonth = function () {
+  var dt = sn.__EC__ || new Date();
   return (new Date(dt.getFullYear(), dt.getMonth() + 1, 0)).getDate();
 };
 
@@ -273,7 +263,7 @@ sn.getLastDayOfMonth = function() {
 * Add or remove dates from provided date
 * @param milliseconds {Number} +/- milliseconds to add or remove from date
 ************************************************/
-sn.addMilliseconds = function(milliseconds) {
+sn.addMilliseconds = function (milliseconds) {
   var dt = sn.__EC__;
   dt.setMilliseconds(dt.getMilliseconds() + milliseconds);
   return dt;
@@ -283,7 +273,7 @@ sn.addMilliseconds = function(milliseconds) {
 * Add or remove dates from provided date
 * @param seconds {Number} +/- seconds to add or remove from date
 ************************************************/
-sn.addSeconds = function(seconds) {
+sn.addSeconds = function (seconds) {
   var dt = sn.__EC__;
   dt.setSeconds(dt.getSeconds() + seconds);
   return dt;
@@ -293,7 +283,7 @@ sn.addSeconds = function(seconds) {
 * Add or remove dates from provided date
 * @param minutes {Number} +/- minutes to add or remove from date
 ************************************************/
-sn.addMinutes = function(minutes) {
+sn.addMinutes = function (minutes) {
   var dt = sn.__EC__;
   dt.setMinutes(dt.getMinutes() + minutes);
   return dt;
@@ -303,7 +293,7 @@ sn.addMinutes = function(minutes) {
 * Add or remove dates from provided date
 * @param hours {Number} +/- hours to add or remove from date
 ************************************************/
-sn.addHours = function(hours) {
+sn.addHours = function (hours) {
   var dt = sn.__EC__;
   dt.setHours(dt.getHours() + hours);
   return dt;
@@ -313,7 +303,7 @@ sn.addHours = function(hours) {
 * Add or remove dates from provided date
 * @param days {Number} +/- days to add or remove from date
 ************************************************/
-sn.addDays = function(days) {
+sn.addDays = function (days) {
   var dt = sn.__EC__;
   dt.setDate(dt.getDate() + days);
   return dt;
@@ -323,7 +313,7 @@ sn.addDays = function(days) {
 * Add or remove dates from provided date
 * @param months {Number} +/- months to add or remove from date
 ************************************************/
-sn.addMonths = function(months) {
+sn.addMonths = function (months) {
   var dt = sn.__EC__;
   dt.setMonth(dt.getMonth() + months);
   return dt;
@@ -333,7 +323,7 @@ sn.addMonths = function(months) {
 * Add or remove dates from provided date
 * @param years {Number} +/- years to add or remove from date
 ************************************************/
-sn.addYears = function(years) {
+sn.addYears = function (years) {
   var dt = sn.__EC__;
   dt.setFullYear(dt.getFullYear() + years);
   return dt;
@@ -342,7 +332,7 @@ sn.addYears = function(years) {
 /**********************************************
 * Get the list of english months with fullName, shortName and month index
 ************************************************/
-sn.getMonths = function() {
+sn.getMonths = function () {
   return [
     {
       index: 0,
@@ -526,7 +516,7 @@ sn.execute = function(executeFn) {
 
 })(sn);
 
-(function(sn) {
+(function (sn) {
 
   function isString(testVar) {
     return typeof testVar === 'string';
@@ -537,7 +527,7 @@ sn.execute = function(executeFn) {
     return typeof testVar === 'number' && testVar === testVar;
   }
 
-  sn.is = function(t2) {
+  sn.is = function (t2) {
     var t1 = sn._EC_;
     if ((isString(t1) || isNumber(t1)) && (isString(t2) || isNumber(t2))) {
       //this covers coercion between string and number without any gotchas
@@ -566,7 +556,7 @@ sn.execute = function(executeFn) {
    * sn.is.empty('\n\t'); => true
    * sn.is.empty(null); => true
   */
-  sn.is.empty = function(testVar) {
+  sn.is.empty = function (testVar) {
     if (testVar == null
       || (typeof testVar === 'string' && (/^\s*$/).test(testVar))) {
       return true;
@@ -584,7 +574,7 @@ sn.execute = function(executeFn) {
     return false;
   };
 
-  sn.is.defined = function(testVar) {
+  sn.is.defined = function (testVar) {
     return testVar == null;
   };
 
@@ -595,29 +585,40 @@ sn.execute = function(executeFn) {
 
   sn.is.number = isNumber;
 
-  sn.is.boolean = function(testVar) {
+  sn.is.boolean = function (testVar) {
     return typeof testVar === 'boolean';
   };
 
-  sn.is.null = function(testVar) {
+  sn.is.null = function (testVar) {
     return testVar === null;
   };
 
-  sn.is.undefined = function(testVar) {
+  sn.is.undefined = function (testVar) {
     typeof testVar === 'undefined';
   };
 
-  sn.is.object = function(testVar) {
+  sn.is.object = function (testVar) {
     return typeof testVar === 'object' && testVar !== null && !Array.isArray(testVar);
   };
 
-  sn.is.function = function(testVar) {
+  sn.is.function = function (testVar) {
     return typeof testVar === 'function';
   };
 
-  sn.is.array = function(testVar) {
+  sn.is.array = function (testVar) {
     return typeof testVar === 'object' && Array.isArray(testVar);
   };
+
+  /**********************************************
+  * Check if day in date is last day of month
+  * @return true -> day is last day of month; false - day is not last day of month
+  ************************************************/
+  sn.is.lastDayOfMonth = function () {
+    var test = new Date(sn.__EC__.getTime());
+    test.setDate(test.getDate() + 1);
+    return test.getDate() === 1;
+  };
+
 
 })(sn);
 

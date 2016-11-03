@@ -1,12 +1,14 @@
 describe('sn.date', function() {
 
   var monthsOf2016;
+  var today;
 
   function getDate() {
     return new Date(1087, 14, 11);
   }
 
   beforeEach(function() {
+    today = new Date();
     monthsOf2016 = [];
     for (var i = 0; i < 12; i++) {
       var month = {
@@ -28,10 +30,10 @@ describe('sn.date', function() {
 
     it('Should correctly show if date is last day of month', function() {
       monthsOf2016.forEach(function(month) {
-        expect(sn(month.lastDayOfMonth).isLastDayOfMonth()).toEqual(true);
-        expect(sn(month.middleOfMonth).isLastDayOfMonth()).toEqual(false);
-        expect(sn(month.dayBeforeLastDayOfMonth).isLastDayOfMonth()).toEqual(false);
-        expect(sn(month.firstDayOfMonth).isLastDayOfMonth()).toEqual(false);
+        expect(sn(month.lastDayOfMonth).is.lastDayOfMonth()).toEqual(true);
+        expect(sn(month.middleOfMonth).is.lastDayOfMonth()).toEqual(false);
+        expect(sn(month.dayBeforeLastDayOfMonth).is.lastDayOfMonth()).toEqual(false);
+        expect(sn(month.firstDayOfMonth).is.lastDayOfMonth()).toEqual(false);
       });
     });
 
@@ -55,6 +57,8 @@ describe('sn.date', function() {
     it('Should correctly get last day of month from date', function() {
       monthsOf2016.forEach(function(month) {
         expect(sn(month.middleOfMonth).getLastDayOfMonth()).toEqual(month.lastDayOfMonth.getDate());
+        var lastDayOfMonth = (new Date(today.getFullYear(), today.getMonth() + 1, 0)).getDate();
+        expect(sn().getLastDayOfMonth()).toEqual(lastDayOfMonth);
       });
     });
 

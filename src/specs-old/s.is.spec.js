@@ -1,4 +1,4 @@
-describe('s.test', function() {
+describe('s.test', function () {
 
   var notDefined = undefined;
   var obj = {};
@@ -13,9 +13,9 @@ describe('s.test', function() {
   var spacesOnly = '    ';
   var bool = true;
   var falseBool = false;
-  var func = function() {};
+  var func = function () { };
 
-  beforeEach(function() {
+  beforeEach(function () {
     notDefined = undefined;
     obj = {};
     obj1 = { test: 'test' };
@@ -31,8 +31,9 @@ describe('s.test', function() {
     falseBool = false;
   });
 
-  describe('is.defined', function() {
-    it('should show correct values for isDefined', function() {
+
+  describe('is.defined', function () {
+    it('should show correct values for isDefined', function () {
       expect(s.is.defined(notDefined)).toEqual(false);
       expect(s.is.defined(obj)).toEqual(true);
       expect(s.is.defined(num)).toEqual(true);
@@ -43,8 +44,8 @@ describe('s.test', function() {
     });
   });
 
-  describe('is.empty', function() {
-    it('should show correct values for is.empty', function() {
+  describe('is.empty', function () {
+    it('should show correct values for is.empty', function () {
       expect(s.is.empty(notDefined)).toEqual(true);
       expect(s.is.empty(obj)).toEqual(true);
       expect(s.is.empty(arr)).toEqual(true);
@@ -65,8 +66,8 @@ describe('s.test', function() {
     });
   });
 
-  describe('is.number', function() {
-    it('should show correct values for is.number', function() {
+  describe('is.number', function () {
+    it('should show correct values for is.number', function () {
       expect(s.is.number(notDefined)).toEqual(false);
       expect(s.is.number(obj)).toEqual(false);
       expect(s.is.number(num)).toEqual(true);
@@ -79,8 +80,8 @@ describe('s.test', function() {
     });
   });
 
-  describe('is.string', function() {
-    it('should show correct values for is.string', function() {
+  describe('is.string', function () {
+    it('should show correct values for is.string', function () {
       expect(s.is.string(notDefined)).toEqual(false);
       expect(s.is.string(obj)).toEqual(false);
       expect(s.is.string(num)).toEqual(false);
@@ -91,8 +92,8 @@ describe('s.test', function() {
     });
   });
 
-  describe('is.boolean', function() {
-    it('should show correct values for is.boolean', function() {
+  describe('is.boolean', function () {
+    it('should show correct values for is.boolean', function () {
       expect(s.is.boolean(notDefined)).toEqual(false);
       expect(s.is.boolean(obj)).toEqual(false);
       expect(s.is.boolean(num)).toEqual(false);
@@ -103,8 +104,8 @@ describe('s.test', function() {
     });
   });
 
-  describe('is.object', function() {
-    it('should show correct values for is.object', function() {
+  describe('is.object', function () {
+    it('should show correct values for is.object', function () {
       expect(s.is.object(notDefined)).toEqual(false);
       expect(s.is.object(obj)).toEqual(true);
       expect(s.is.object(num)).toEqual(false);
@@ -117,8 +118,8 @@ describe('s.test', function() {
     });
   });
 
-  describe('is.function', function() {
-    it('should show correct values for is.object', function() {
+  describe('is.function', function () {
+    it('should show correct values for is.object', function () {
       expect(s.is.function(func)).toEqual(true);
       expect(s.is.function(notDefined)).toEqual(false);
       expect(s.is.function(obj)).toEqual(false);
@@ -131,8 +132,8 @@ describe('s.test', function() {
     });
   });
 
-  describe('is.array', function() {
-    it('should show correct values for is.array', function() {
+  describe('is.array', function () {
+    it('should show correct values for is.array', function () {
       expect(s.is.array(notDefined)).toEqual(false);
       expect(s.is.array(obj)).toEqual(false);
       expect(s.is.array(num)).toEqual(false);
@@ -145,9 +146,9 @@ describe('s.test', function() {
     });
   });
 
-  describe('String tests', function() {
+  describe('String tests', function () {
 
-    it('should show correct values for alphabetic regex', function() {
+    it('should show correct values for alphabetic regex', function () {
       expect(s.is.alphabetic('abc')).toEqual(true);
       expect(s.is.alphabetic('a b c')).toEqual(true);
       expect(s.is.alphabetic('a b c')).toEqual(true);
@@ -157,7 +158,7 @@ describe('s.test', function() {
       expect(s.is.alphabetic('asd.')).toEqual(false);
     });
 
-    it('should show correct values for alphanumeric regex', function() {
+    it('should show correct values for alphanumeric regex', function () {
       expect(s.is.alphanumeric('abc')).toEqual(true);
       expect(s.is.alphanumeric('a b c')).toEqual(true);
       expect(s.is.alphanumeric('')).toEqual(true);
@@ -167,7 +168,7 @@ describe('s.test', function() {
       expect(s.is.alphanumeric('asd.')).toEqual(false);
     });
 
-    it('should show correct values for numeric regex', function() {
+    it('should show correct values for numeric regex', function () {
       expect(s.is.numeric('abc')).toEqual(false);
       expect(s.is.numeric('a b c')).toEqual(false);
       expect(s.is.numeric('')).toEqual(true);
@@ -177,7 +178,7 @@ describe('s.test', function() {
       expect(s.is.numeric('12345.456')).toEqual(false);
     });
 
-    it('should show correct values for lowercase regex', function() {
+    it('should show correct values for lowercase regex', function () {
       expect(s.is.lowercase('abc')).toEqual(true);
       expect(s.is.lowercase('a b c')).toEqual(true);
       expect(s.is.lowercase('')).toEqual(true);
@@ -188,7 +189,7 @@ describe('s.test', function() {
       expect(s.is.lowercase('12345.456')).toEqual(false);
     });
 
-    it('should show correct values for uppercase regex', function() {
+    it('should show correct values for uppercase regex', function () {
       expect(s.is.uppercase('ABC')).toEqual(true);
       expect(s.is.uppercase('A B C')).toEqual(true);
       expect(s.is.uppercase('')).toEqual(true);
@@ -199,7 +200,7 @@ describe('s.test', function() {
       expect(s.is.uppercase('12345.456')).toEqual(false);
     });
 
-    it('should show correct values for email regex', function() {
+    it('should show correct values for email regex', function () {
       expect(s.is.email(notDefined)).toEqual(false);
       expect(s.is.email(obj)).toEqual(false);
       expect(s.is.email(num)).toEqual(false);
@@ -215,7 +216,7 @@ describe('s.test', function() {
       expect(s.is.email('a@net.bc nije')).toEqual(false);
     });
 
-    it('should show correct values for strong password', function() {
+    it('should show correct values for strong password', function () {
       expect(s.is.strongpassword('ABC')).toEqual(false);
       expect(s.is.strongpassword('StrongPassword1')).toEqual(true);
       expect(s.is.strongpassword('abC1s')).toEqual(false);
@@ -224,7 +225,7 @@ describe('s.test', function() {
       expect(s.is.strongpassword('asd12')).toEqual(false);
     });
 
-    it('should show correct values for ip', function() {
+    it('should show correct values for ip', function () {
       expect(s.is.ip('73.60.124.136')).toEqual(true);
       expect(s.is.ip('256.60.124.136')).toEqual(false);
     });
