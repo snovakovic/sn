@@ -9,6 +9,8 @@
     return typeof testVar === 'number' && testVar === testVar;
   }
 
+  sn.assert = { is : {} };
+
   sn.is = function (t2) {
     var t1 = sn._EC_;
     if ((isString(t1) || isNumber(t1)) && (isString(t2) || isNumber(t2))) {
@@ -90,6 +92,17 @@
   sn.is.array = function (testVar) {
     return typeof testVar === 'object' && Array.isArray(testVar);
   };
+
+  sn.is.date = function (testVar) {
+    return Object.prototype.toString.call(testVar) === '[object Date]';
+  };
+
+  sn.assert.is.date = function (testVar) {
+    if (!sn.is.date(testVar)) {
+      throw new TypeError('Date is not valid.');
+    }
+  };
+
 
   /**********************************************
   * Check if day in date is last day of month

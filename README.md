@@ -72,6 +72,7 @@ sn().setLastDayOfMonth() //=> depend's on current month
 
 #### addMilliseconds
 Adds or subtracts miliseconds from date.
+If date is not provided it will create new current date and add/substract milliseconds from it.
 
 ```javascript
 var d1 = new Date(1987, 10, 14);
@@ -81,6 +82,7 @@ console.log(d1) //=> Thu Nov 14 1987 00:00:00
 
 sn(d1).addMilliseconds(3000) //=> Thu Nov 14 1987 00:00:03
 sn(d2).addMilliseconds(-3000) //=> Thu Nov 13 1987 23:59:57
+sn().addMilliseconds(5000) //=> Depends on current date
 
 console.log(d1) //=> Thu Nov 14 1987 00:00:03
 
@@ -89,6 +91,7 @@ sn().setLastDayOfMonth() //=> depend's on current month
 
 #### addSeconds
 Adds or subtracts seconds from date.
+If date is not provided it will create new current date and add/substract seconds from it.
 
 ```javascript
 var d1 = new Date(1987, 10, 14);
@@ -97,6 +100,7 @@ sn(d1).addSeconds(3) //=> Thu Nov 14 1987 00:00:03
 
 #### addMinutes
 Adds or subtracts seconds from date.
+If date is not provided it will create new current date and add/substract minutes from it.
 
 ```javascript
 var d1 = new Date(1987, 10, 14);
@@ -105,6 +109,7 @@ sn(d1).addMinutes(3) //=> Thu Nov 14 1987 00:03:00
 
 #### addHours
 Adds or subtracts hours from date.
+If date is not provided it will create new current date and add/substract hours from it.
 
 ```javascript
 var d1 = new Date(1987, 10, 14);
@@ -113,6 +118,7 @@ sn(d1).addHours(3) //=> Thu Nov 14 1987 03:00:00
 
 #### addDays
 Adds or subtracts days from date.
+If date is not provided it will create new current date and add/substract days from it.
 
 ```javascript
 var d1 = new Date(1987, 10, 14);
@@ -121,6 +127,7 @@ sn(d1).addDays(3) //=> Thu Nov 14 1987 00:00:00
 
 #### addMonths
 Adds or subtracts months from date.
+If date is not provided it will create new current date and add/substract months from it.
 
 ```javascript
 var d1 = new Date(1987, 10, 14);
@@ -129,6 +136,7 @@ sn(d1).addMonths(-3) //=> Thu Aug 14 1987 00:00:00
 
 #### addYears
 Adds or subtracts years from date.
+If date is not provided it will create new current date and add/substract years from it.
 
 ```javascript
 var d1 = new Date(1987, 10, 14);
@@ -137,7 +145,7 @@ sn(d1).addMonths(3) //=> Thu Nov 14 1990 00:00:00
 
 #### getMonths
 Get the list of englis months with short and long names.
-
+If date is not provided it will create new current date and add/substract months from it.
 
 ```javascript
 sn.getMonths()

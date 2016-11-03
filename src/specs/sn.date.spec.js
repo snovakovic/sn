@@ -1,4 +1,4 @@
-describe('sn.date', function() {
+describe('sn.date', function () {
 
   var monthsOf2016;
   var today;
@@ -7,7 +7,9 @@ describe('sn.date', function() {
     return new Date(1087, 14, 11);
   }
 
-  beforeEach(function() {
+  //TODO: add validation for invalid date
+
+  beforeEach(function () {
     today = new Date();
     monthsOf2016 = [];
     for (var i = 0; i < 12; i++) {
@@ -26,10 +28,10 @@ describe('sn.date', function() {
 
   });
 
-  describe('isLastDayOfMonth', function() {
+  describe('isLastDayOfMonth', function () {
 
-    it('Should correctly show if date is last day of month', function() {
-      monthsOf2016.forEach(function(month) {
+    it('Should correctly show if date is last day of month', function () {
+      monthsOf2016.forEach(function (month) {
         expect(sn(month.lastDayOfMonth).is.lastDayOfMonth()).toEqual(true);
         expect(sn(month.middleOfMonth).is.lastDayOfMonth()).toEqual(false);
         expect(sn(month.dayBeforeLastDayOfMonth).is.lastDayOfMonth()).toEqual(false);
@@ -39,10 +41,10 @@ describe('sn.date', function() {
 
   });
 
-  describe('setLastDayOfMonth', function() {
+  describe('setLastDayOfMonth', function () {
 
-    it('Should correctly set last day of month', function() {
-      monthsOf2016.forEach(function(month) {
+    it('Should correctly set last day of month', function () {
+      monthsOf2016.forEach(function (month) {
         expect(month.middleOfMonth.getDate()).not.toEqual(month.lastDayOfMonth.getDate());
         sn(month.middleOfMonth).setLastDayOfMonth();
         expect(month.middleOfMonth.getDate()).toEqual(month.lastDayOfMonth.getDate());
@@ -52,10 +54,10 @@ describe('sn.date', function() {
 
   });
 
-  describe('getLastDayOfMonth', function() {
+  describe('getLastDayOfMonth', function () {
 
-    it('Should correctly get last day of month from date', function() {
-      monthsOf2016.forEach(function(month) {
+    it('Should correctly get last day of month from date', function () {
+      monthsOf2016.forEach(function (month) {
         expect(sn(month.middleOfMonth).getLastDayOfMonth()).toEqual(month.lastDayOfMonth.getDate());
         var lastDayOfMonth = (new Date(today.getFullYear(), today.getMonth() + 1, 0)).getDate();
         expect(sn().getLastDayOfMonth()).toEqual(lastDayOfMonth);
@@ -64,14 +66,15 @@ describe('sn.date', function() {
 
   });
 
-  describe('addMilliseconds', function() {
+  describe('addMilliseconds', function () {
 
-    it('should correctly add miliseconds', function() {
+    it('should correctly add miliseconds', function () {
       var d1 = getDate();
       var d2 = getDate();
       var d3 = getDate();
       expect(d1 - d2).toEqual(0);
       sn(d2).addMilliseconds(10);
+      sn(d2.toString()).addMilliseconds(10);
       sn(d3).addMilliseconds(-5);
       expect(d2 - d1).toEqual(10);
       expect(d3 - d1).toEqual(-5);
@@ -80,9 +83,9 @@ describe('sn.date', function() {
   });
 
 
-  describe('addSeconds', function() {
+  describe('addSeconds', function () {
 
-    it('should correctly add seconds', function() {
+    it('should correctly add seconds', function () {
       var d1 = getDate();
       var d2 = getDate();
       var d3 = getDate();
@@ -95,9 +98,9 @@ describe('sn.date', function() {
 
   });
 
-  describe('addMinutes', function() {
+  describe('addMinutes', function () {
 
-    it('should correctly add minutes', function() {
+    it('should correctly add minutes', function () {
       var d1 = getDate();
       var d2 = getDate();
       var d3 = getDate();
@@ -110,9 +113,9 @@ describe('sn.date', function() {
 
   });
 
-  describe('addHours', function() {
+  describe('addHours', function () {
 
-    it('should correctly add hours', function() {
+    it('should correctly add hours', function () {
       var d1 = getDate();
       var d2 = getDate();
       var d3 = getDate();
@@ -125,9 +128,9 @@ describe('sn.date', function() {
 
   });
 
-  describe('addDays', function() {
+  describe('addDays', function () {
 
-    it('should correctly add days', function() {
+    it('should correctly add days', function () {
       var d1 = getDate();
       var d2 = getDate();
       var d3 = getDate();
@@ -140,9 +143,9 @@ describe('sn.date', function() {
 
   });
 
-  describe('addMonths', function() {
+  describe('addMonths', function () {
 
-    it('should correctly add months', function() {
+    it('should correctly add months', function () {
       var d1 = getDate();
       var d2 = getDate();
       var d3 = getDate();
@@ -157,9 +160,9 @@ describe('sn.date', function() {
 
   });
 
-  describe('addYears', function() {
+  describe('addYears', function () {
 
-    it('should correctly add years', function() {
+    it('should correctly add years', function () {
       var d1 = getDate();
       var d2 = getDate();
       var d3 = getDate();
@@ -175,9 +178,9 @@ describe('sn.date', function() {
   });
 
 
-  describe('getMonths', function() {
+  describe('getMonths', function () {
 
-    it('should display list of months', function() {
+    it('should display list of months', function () {
       var months = sn.getMonths();
       expect(months.length).toEqual(12);
       expect(months[0].name).toEqual('January');
