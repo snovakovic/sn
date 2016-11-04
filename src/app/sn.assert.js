@@ -139,6 +139,9 @@
   sn.assert = {
     is: function (val) {
       return internals.assert(sn.is(val), 'Values are not the same.');
+    },
+    not: function (val) {
+      return internals.assert(!sn.is(val), 'Values are the same.');
     }
   };
 
@@ -147,6 +150,9 @@
       (function (prop) {
         sn.assert.is[prop] = function () {
           return internals.assert(sn.is[prop](), 'Provided value is not ' + prop);
+        };
+        sn.assert.not[prop] = function () {
+          return internals.assert(!sn.is[prop](), 'Provided value is ' + prop);
         };
       })(prop);
     }
