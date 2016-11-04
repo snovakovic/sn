@@ -3,7 +3,7 @@
   var internals = {
     getDate: function () {
       if (sn.__EC__) {
-        sn.assert.is.date(sn.__EC__);
+        // sn.assert.is.date(sn.__EC__);
         return sn.__EC__;
       }
 

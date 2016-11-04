@@ -1,17 +1,17 @@
 ﻿/*****************************************************
  			  String Modification.
  ***************************************************/
-(function(s) {
+(function (s) {
 
-  s.replaceAll = function(str, find) {
+  s.replaceAll = function (str, find) {
     return {
-      with: function(replace) {
+      with: function (replace) {
         return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
       }
     }
   };
 
-  s.capitalize = function(str) {
+  s.capitalize = function (str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
@@ -27,7 +27,7 @@
    * @example capitalize('foo Bar', 'oo'); => 'Foo Bar'; capitalize('FOO Bar', true); => 'Foo bar'
    * https://github.com/epeli/underscore.string
   */
-  s.contains = function(str1, str2, ignoreCase) {
+  s.contains = function (str1, str2, ignoreCase) {
     if (ignoreCase === true) {
       str1 = str1.toLowerCase();
       str2 = str2.toLowerCase();
@@ -39,7 +39,7 @@
    * Break string in array of substring
    * @example: chop("whitespace", 3); => ['whi', 'tes', 'pac', 'e']
   */
-  s.chop = function(str, step) {
+  s.chop = function (str, step) {
     if (!str) {
       return [];
     }
@@ -52,7 +52,7 @@
   * Trim and replace multiple spaces with a single space.
   * @example clean(' foo    bar   '); => 'foo bar'
   */
-  s.clean = function(str) {
+  s.clean = function (str) {
     return str.trim().replace(/\s\s+/g, ' ');
   };
 
@@ -61,7 +61,7 @@
   * Truncate string if it exceed max number of characters,
   * apply provided truncate string at the end of truncated string (default: '...')
   */
-  s.truncate = function(str, length, truncateStr) {
+  s.truncate = function (str, length, truncateStr) {
     truncateStr = truncateStr || '...';
     length = ~~length;
     return str.length > length ? str.slice(0, length) + truncateStr : str;

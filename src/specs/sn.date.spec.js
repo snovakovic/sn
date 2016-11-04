@@ -4,7 +4,7 @@ describe('sn.date', function () {
   var today;
 
   function getDate() {
-    return new Date(1087, 14, 11);
+    return new Date(1987, 11, 14);
   }
 
   //TODO: add validation for invalid date
@@ -74,7 +74,6 @@ describe('sn.date', function () {
       var d3 = getDate();
       expect(d1 - d2).toEqual(0);
       sn(d2).addMilliseconds(10);
-      sn(d2.toString()).addMilliseconds(10);
       sn(d3).addMilliseconds(-5);
       expect(d2 - d1).toEqual(10);
       expect(d3 - d1).toEqual(-5);
@@ -176,7 +175,6 @@ describe('sn.date', function () {
     });
 
   });
-
 
   describe('getMonths', function () {
 

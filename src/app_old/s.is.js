@@ -103,7 +103,7 @@
     return re.test(str);
   };
 
-  s.is.strongpassword = function(str) {
+  s.is.strongPassword = function(str) {
     var re = /^(?=^.{6,}$)((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.*$/;
     return re.test(str);
   };

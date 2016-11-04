@@ -15,28 +15,24 @@ Yes they are all great libraries not just great there are by lightyear better th
 Yes this library has Unit tests with 100% code coverage but I'm the only user which can't be comapred to 10 000 of peoples using it every day and testing it every day.
 
 If you where wondering should you use this library the answer is simpe NO don't use it there is better alternatives.
-In case you have came accross this library in code the chances are that I have add referenc to it and you are unlucky bastard who is working with me on project.
+In case you have came across this library in code the chances are that I have add referenc to it and you are unlucky bastard who is working with me on project.
 In that case sorry.
 
 You still may be wondering why I have create this library when there is ton of other better libraries and the reasons are:
 
 * Why not? it was fun.
-* To learn somethin (and I definnetly have)
+* To learn something (and I definnetly have)
 * To avoid including 2-3 libraries to use 10-20 helper methods which is not even 5% of library code (does that sound familiar?).
 * Small footprint. It is and will always be < 10kb
-* Eveng though it has much smaller API then lodash or some other library for me it has every method I will ever need.
+* Even though it has much smaller API then lodash or some other library for me it has every method I will ever need.
   Think about it. Have you ever wanted for a library you use to have some superDruperCoolMethod?
-  Just recentyl I was hoping lodash would have deepFreez but no it does not. guess which library now have deepFreez?
+  Just recently I was hoping lodash would have deepFreez but no it does not. guess which library now have deepFreez?
   If I need some method I can just add it any time I want.
 
 
 
 Dates
 ------
-
-Module for date manipulation. sn(date).someMethod => will modify provided date.
-sn().someMethod will create new current date and modify it.
-If date in sn(date) is not valid JS date TypeError('Date is not valid.') will be thrown.
 
 #### is.lastDayOfMonth
 Check if day in date is equal to last day of date month.
