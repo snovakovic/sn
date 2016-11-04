@@ -241,9 +241,170 @@ sn.queue = function(defaultArray) {
 (function (sn) {
 
   var internals = {
+    isString: function(testVar) {
+      return typeof testVar === 'string';
+    },
+    isNumber: function (testVar) {
+      //NaN will produce false because NaN !== NaN
+      return typeof testVar === 'number' && testVar === testVar;
+    },
+    isDate: function (testVar) {
+      return Object.prototype.toString.call(testVar) === '[object Date]';
+    },
+    isFunction: function (testVar) {
+      return Boolean(testVar && Object.prototype.toString.call(testVar) === '[object Function]');
+    },
+    assert: function(val, assertMessage) {
+      if(val) {
+        return val;
+      }
+      throw new TypeError(assertMessage);
+    }
+
+  };
+
+  //PUBLIC
+
+  /****************************************
+  * Safely check if two variables are the same without JS coercion gotchas
+  * == is used when comparing string and numbers (with exception for emptySting == 0 which is false as it should be)
+  * == is used for compering null and undefined
+  * for everything else === is used.
+  * ********************************* */
+  sn.is = function (t2) {
+    var t1 = sn.__EC__;
+    if ((internals.isString(t1) || internals.isNumber(t1)) && (internals.isString(t2) || internals.isNumber(t2))) {
+      //this covers coercion between string and number without any gotchas
+      return (typeof t1 === typeof t2)
+        ? t1 === t2
+        : t1 == t2 && t1 !== '' && t2 !== '';
+
+    } else if (t1 == null && t2 == null) {
+      //This covers when vars are either null or undefined without any gotchas
+      return true;
+    }
+
+    return t1 === t2;
+
+  };
+
+
+  /**
+   * Test if variable has been defined and is not empty,
+   * Following will be treated as false
+   * sn.is.empty(null); => true
+   * sn.is.empty(undefined); => true
+   * sn.is.empty({}); => true
+   * sn.is.empty([]); => true
+   * sn.is.empty(' '); => true
+   * sn.is.empty('\n\t'); => true
+   * sn.is.empty(null); => true
+  */
+  sn.is.empty = function () {
+    if (sn.__EC__ == null
+      || (typeof sn.__EC__ === 'string' && (/^\s*$/).test(sn.__EC__))) {
+      return true;
+    }
+
+    if (typeof sn.__EC__ === 'object') {
+      for (var key in sn.__EC__) {
+        if (Object.prototype.hasOwnProperty.call(sn.__EC__, key)) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    return false;
+  };
+
+  /**********************************************
+  * Check if variable is defined. Variable is consider defined if it's not null or undefined
+  ************************************************/
+  sn.is.defined = function () {
+    return sn.__EC__ == null;
+  };
+
+  /***************************************
+   * START: data type checks
+   **************************************/
+  sn.is.string = function () {
+    return internals.isString(sn.__EC__);
+  };
+
+  sn.is.number = function () {
+    return internals.isNumber(sn.__EC__);
+  };
+
+  sn.is.boolean = function () {
+    return typeof sn.__EC__ === 'boolean';
+  };
+
+  sn.is.null = function () {
+    return sn.__EC__ === null;
+  };
+
+  sn.is.undefined = function () {
+    typeof sn.__EC__ === 'undefined';
+  };
+
+  sn.is.object = function () {
+    return typeof sn.__EC__ === 'object'
+      && sn.__EC__ !== null
+      && !Array.isArray(sn.__EC__)
+      && !internals.isFunction(sn.__EC__);
+  };
+
+  sn.is.function = function () {
+    return internals.isFunction(sn.__EC__);
+  };
+
+  sn.is.array = function () {
+    return typeof sn.__EC__ === 'object' && Array.isArray(sn.__EC__);
+  };
+
+  sn.is.date = function () {
+    return internals.isDate(sn.__EC__);
+  };
+
+  /***************************************
+  * END: data type checks
+  **************************************/
+
+
+
+  /*************************************
+  * START: ASSERT MODULE DEFINITION
+  **************************************/
+  sn.assert = {
+    is: function (val) {
+      return internals.assert(sn.is(val), 'Values are not the same.');
+  }
+};
+
+  for (var prop in sn.is) {
+    if (sn.is.hasOwnProperty(prop)) {
+      (function (prop) {
+        sn.assert.is[prop] = function () {
+          return internals.assert(sn.is[prop](), 'Provided value is not ' + prop);
+        };
+      })(prop);
+    }
+  }
+
+  /*************************************
+  * END: ASSERT MODULE DEFINITION
+  **************************************/
+
+
+})(sn);
+
+(function (sn) {
+
+  var internals = {
     getDate: function () {
       if (sn.__EC__) {
-        // sn.assert.is.date(sn.__EC__);
+        sn.assert.is.date(sn.__EC__);
         return sn.__EC__;
       }
 
@@ -258,6 +419,18 @@ sn.queue = function(defaultArray) {
     var dt = internals.getDate();
     dt.setMonth(dt.getMonth() + 1, 0);
     return dt;
+  };
+
+
+  /**********************************************
+  * Check if day in date is last day of month
+  * @return true -> day is last day of month; false - day is not last day of month
+  ************************************************/
+  sn.is.lastDayOfMonth = function () {
+    var dt = internals.getDate();
+    var test = new Date(dt.getTime());
+    test.setDate(test.getDate() + 1);
+    return test.getDate() === 1;
   };
 
 
@@ -532,181 +705,6 @@ sn.execute = function(executeFn) {
 
 })(sn);
 
-(function (sn) {
-
-  function isString() {
-    return typeof sn.__EC__ === 'string';
-  }
-
-  function isNumber() {
-    //NaN will produce false because NaN !== NaN
-    return typeof sn.__EC__ === 'number' && sn.__EC__ === sn.__EC__;
-  }
-
-  sn.is = function (t2) {
-    var t1 = sn._EC_;
-    if ((isString(t1) || isNumber(t1)) && (isString(t2) || isNumber(t2))) {
-      //this covers coercion between string and number without any gotchas
-      return (typeof t1 === typeof t2)
-        ? t1 === t2
-        : t1 == t2 && t1 !== '' && t2 !== '';
-
-    } else if (t1 == null && t2 == null) {
-      //This covers when vars are eather null or undefined without any gotchas
-      return true;
-    }
-
-    return t1 === t2;
-
-  };
-
-
-  /**
-   * Test if variable has been defined and is not empty,
-   * Following will be treated as false
-   * sn.is.empty(null); => true
-   * sn.is.empty(undefined); => true
-   * sn.is.empty({}); => true
-   * sn.is.empty([]); => true
-   * sn.is.empty(' '); => true
-   * sn.is.empty('\n\t'); => true
-   * sn.is.empty(null); => true
-  */
-  sn.is.empty = function () {
-    if (sn.__EC__ == null
-      || (typeof sn.__EC__ === 'string' && (/^\s*$/).test())) {
-      return true;
-    }
-
-    if (typeof sn.__EC__ === 'object') {
-      for (var key in sn.__EC__) {
-        if (Object.prototype.hasOwnProperty.call(sn.__EC__, key)) {
-          return false;
-        }
-      }
-      return true;
-    }
-
-    return false;
-  };
-
-  sn.is.defined = function () {
-    return sn.__EC__ == null;
-  };
-
-  /**
-   * VAR type check
-   */
-  sn.is.string = isString;
-
-  sn.is.number = isNumber;
-
-  sn.is.boolean = function () {
-    return typeof sn.__EC__ === 'boolean';
-  };
-
-  sn.is.null = function () {
-    return sn.__EC__ === null;
-  };
-
-  sn.is.undefined = function () {
-    typeof sn.__EC__ === 'undefined';
-  };
-
-  sn.is.object = function () {
-    return typeof sn.__EC__ === 'object' && sn.__EC__ !== null && !Array.isArray();
-  };
-
-  sn.is.function = function () {
-    return typeof sn.__EC__ === 'function';
-  };
-
-  sn.is.array = function () {
-    return typeof sn.__EC__ === 'object' && Array.isArray();
-  };
-
-  sn.is.date = function () {
-    return Object.prototype.toString.call(sn.__EC__) === '[object Date]';
-  };
-
-
-  /****
-  * RegExp tests
-  ****/
-  sn.is.alphabetic = function (str) {
-    var re = /^[a-zA-Z ]*$/;
-    return re.test(str);
-  };
-
-  sn.is.alphanumeric = function (str) {
-    var re = /^[a-zA-Z0-9 ]*$/;
-    return re.test(str);
-  };
-
-  sn.is.numeric = function (str) {
-    var re = /^[0-9 ]*$/;
-    return re.test(str);
-  };
-
-  sn.is.lowercase = function (str) {
-    var re = /^[a-z ]*$/;
-    return re.test(str);
-  };
-
-  sn.is.uppercase = function (str) {
-    var re = /^[A-Z ]*$/;
-    return re.test(str);
-  };
-
-  sn.is.email = function (str) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(str);
-  };
-
-  sn.is.strongPassword = function (str) {
-    var re = /^(?=^.{6,}$)((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.*$/;
-    return re.test(str);
-  };
-
-  sn.is.ip = function (str) {
-    var re = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-    return re.test(str);
-  };
-
-
-  /**********************************************
-  * Check if day in date is last day of month
-  * @return true -> day is last day of month; false - day is not last day of month
-  ************************************************/
-  sn.is.lastDayOfMonth = function () {
-    var test = new Date(sn.__EC__.getTime());
-    test.setDate(test.getDate() + 1);
-    return test.getDate() === 1;
-  };
-
-
-
-  /***
- * ASSERT
- */
-  sn.assert = { is: {} };
-
-  for (var prop in sn.is) {
-    if (sn.is.hasOwnProperty(prop)) {
-      (function (prop) {
-        sn.assert.is[prop] = function () {
-          if (sn.is[prop]()) {
-            return true;
-          }
-
-          throw new TypeError('Provided value is not ' + prop);
-        };
-      })(prop);
-    }
-  }
-
-})(sn);
-
 //DeepFreez / DeepSeal
 (function (sn) {
 
@@ -761,17 +759,17 @@ sn.extend = function() {
   return arguments[0];
 }
 
-sn.replaceAll = function(whatToReplace) {
+sn.replaceAll = function (whatToReplace) {
   return {
-    with: function(replaceWith) {
+    with: function (replaceWith) {
       return typeof sn.__EC__ === 'string'
         ? sn.__EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
         : sn.__EC__;
     }
-  }
+  };
 };
 
-sn.capitalize = function(str) {
+sn.capitalize = function (str) {
   return typeof str === 'string' ? str[(0)].toUpperCase() + str.slice(1) : str;
 };
 
@@ -786,7 +784,7 @@ sn.capitalize = function(str) {
  * @example capitalize('foo Bar', 'oo'); => 'Foo Bar'; capitalize('FOO Bar', true); => 'Foo bar'
  * https://github.com/epeli/underscore.string
 */
-sn.contains = function(str1, str2, ignoreCase) {
+sn.contains = function (str1, str2, ignoreCase) {
   if (ignoreCase === true) {
     str1 = str1.toLowerCase();
     str2 = str2.toLowerCase();
@@ -798,7 +796,7 @@ sn.contains = function(str1, str2, ignoreCase) {
  * Break string in array of substring
  * @example: chop("whitespace", 3); => ['whi', 'tes', 'pac', 'e']
 */
-sn.chop = function(str, step) {
+sn.chop = function (str, step) {
   if (!str) { return []; }
   str = String(str);
   step = ~~step;
@@ -809,7 +807,7 @@ sn.chop = function(str, step) {
 * Trim and replace multiple spaces with a single space.
 * @example clean(' foo    bar   '); => 'foo bar'
 */
-sn.clean = function(str) {
+sn.clean = function (str) {
   return str.trim().replace(/\s\s+/g, ' ');
 };
 
@@ -818,10 +816,26 @@ sn.clean = function(str) {
 * Truncate string if it exceed max number of characters,
 * apply provided truncate string at the end of truncated string (default: '...')
 */
-sn.truncate = function(str, length, truncateStr) {
+sn.truncate = function (str, length, truncateStr) {
   truncateStr = truncateStr || '...';
   length = ~~length;
   return str.length > length ? str.slice(0, length) + truncateStr : str;
+};
+
+/**********************************************
+* Get the substring of the string between 2 substrings,
+TODO: not documented or tested
+***************************************************/
+sn.between = function (startStr, endStr) {
+  var startIndex = sn.__EC__.indexOf(startStr);
+  var endIndex = sn.__EC__.indexOf(endStr);
+
+  if (startIndex === -1 || startIndex === -1) {
+    return undefined;
+  }
+
+  startIndex += startStr.length;
+  return sn.__EC__.substr(startIndex, endIndex - startIndex);
 };
 
   return sn;

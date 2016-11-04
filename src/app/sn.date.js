@@ -3,7 +3,7 @@
   var internals = {
     getDate: function () {
       if (sn.__EC__) {
-        // sn.assert.is.date(sn.__EC__);
+        sn.assert.is.date(sn.__EC__);
         return sn.__EC__;
       }
 
@@ -18,6 +18,18 @@
     var dt = internals.getDate();
     dt.setMonth(dt.getMonth() + 1, 0);
     return dt;
+  };
+
+
+  /**********************************************
+  * Check if day in date is last day of month
+  * @return true -> day is last day of month; false - day is not last day of month
+  ************************************************/
+  sn.is.lastDayOfMonth = function () {
+    var dt = internals.getDate();
+    var test = new Date(dt.getTime());
+    test.setDate(test.getDate() + 1);
+    return test.getDate() === 1;
   };
 
 

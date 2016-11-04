@@ -1,24 +1,46 @@
 ﻿(function (sn) {
 
-  function isString() {
-    return typeof sn.__EC__ === 'string';
-  }
+  var internals = {
+    isString: function(testVar) {
+      return typeof testVar === 'string';
+    },
+    isNumber: function (testVar) {
+      //NaN will produce false because NaN !== NaN
+      return typeof testVar === 'number' && testVar === testVar;
+    },
+    isDate: function (testVar) {
+      return Object.prototype.toString.call(testVar) === '[object Date]';
+    },
+    isFunction: function (testVar) {
+      return Boolean(testVar && Object.prototype.toString.call(testVar) === '[object Function]');
+    },
+    assert: function(val, assertMessage) {
+      if(val) {
+        return val;
+      }
+      throw new TypeError(assertMessage);
+    }
 
-  function isNumber() {
-    //NaN will produce false because NaN !== NaN
-    return typeof sn.__EC__ === 'number' && sn.__EC__ === sn.__EC__;
-  }
+  };
 
+  //PUBLIC
+
+  /****************************************
+  * Safely check if two variables are the same without JS coercion gotchas
+  * == is used when comparing string and numbers (with exception for emptySting == 0 which is false as it should be)
+  * == is used for compering null and undefined
+  * for everything else === is used.
+  * ********************************* */
   sn.is = function (t2) {
-    var t1 = sn._EC_;
-    if ((isString(t1) || isNumber(t1)) && (isString(t2) || isNumber(t2))) {
+    var t1 = sn.__EC__;
+    if ((internals.isString(t1) || internals.isNumber(t1)) && (internals.isString(t2) || internals.isNumber(t2))) {
       //this covers coercion between string and number without any gotchas
       return (typeof t1 === typeof t2)
         ? t1 === t2
         : t1 == t2 && t1 !== '' && t2 !== '';
 
     } else if (t1 == null && t2 == null) {
-      //This covers when vars are eather null or undefined without any gotchas
+      //This covers when vars are either null or undefined without any gotchas
       return true;
     }
 
@@ -40,7 +62,7 @@
   */
   sn.is.empty = function () {
     if (sn.__EC__ == null
-      || (typeof sn.__EC__ === 'string' && (/^\s*$/).test())) {
+      || (typeof sn.__EC__ === 'string' && (/^\s*$/).test(sn.__EC__))) {
       return true;
     }
 
@@ -56,16 +78,23 @@
     return false;
   };
 
+  /**********************************************
+  * Check if variable is defined. Variable is consider defined if it's not null or undefined
+  ************************************************/
   sn.is.defined = function () {
     return sn.__EC__ == null;
   };
 
-  /**
-   * VAR type check
-   */
-  sn.is.string = isString;
+  /***************************************
+   * START: data type checks
+   **************************************/
+  sn.is.string = function () {
+    return internals.isString(sn.__EC__);
+  };
 
-  sn.is.number = isNumber;
+  sn.is.number = function () {
+    return internals.isNumber(sn.__EC__);
+  };
 
   sn.is.boolean = function () {
     return typeof sn.__EC__ === 'boolean';
@@ -80,95 +109,52 @@
   };
 
   sn.is.object = function () {
-    return typeof sn.__EC__ === 'object' && sn.__EC__ !== null && !Array.isArray();
+    return typeof sn.__EC__ === 'object'
+      && sn.__EC__ !== null
+      && !Array.isArray(sn.__EC__)
+      && !internals.isFunction(sn.__EC__);
   };
 
   sn.is.function = function () {
-    return typeof sn.__EC__ === 'function';
+    return internals.isFunction(sn.__EC__);
   };
 
   sn.is.array = function () {
-    return typeof sn.__EC__ === 'object' && Array.isArray();
+    return typeof sn.__EC__ === 'object' && Array.isArray(sn.__EC__);
   };
 
   sn.is.date = function () {
-    return Object.prototype.toString.call(sn.__EC__) === '[object Date]';
+    return internals.isDate(sn.__EC__);
   };
 
-
-  /****
-  * RegExp tests
-  ****/
-  sn.is.alphabetic = function (str) {
-    var re = /^[a-zA-Z ]*$/;
-    return re.test(str);
-  };
-
-  sn.is.alphanumeric = function (str) {
-    var re = /^[a-zA-Z0-9 ]*$/;
-    return re.test(str);
-  };
-
-  sn.is.numeric = function (str) {
-    var re = /^[0-9 ]*$/;
-    return re.test(str);
-  };
-
-  sn.is.lowercase = function (str) {
-    var re = /^[a-z ]*$/;
-    return re.test(str);
-  };
-
-  sn.is.uppercase = function (str) {
-    var re = /^[A-Z ]*$/;
-    return re.test(str);
-  };
-
-  sn.is.email = function (str) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(str);
-  };
-
-  sn.is.strongPassword = function (str) {
-    var re = /^(?=^.{6,}$)((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.*$/;
-    return re.test(str);
-  };
-
-  sn.is.ip = function (str) {
-    var re = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-    return re.test(str);
-  };
-
-
-  /**********************************************
-  * Check if day in date is last day of month
-  * @return true -> day is last day of month; false - day is not last day of month
-  ************************************************/
-  sn.is.lastDayOfMonth = function () {
-    var test = new Date(sn.__EC__.getTime());
-    test.setDate(test.getDate() + 1);
-    return test.getDate() === 1;
-  };
+  /***************************************
+  * END: data type checks
+  **************************************/
 
 
 
-  /***
- * ASSERT
- */
-  sn.assert = { is: {} };
+  /*************************************
+  * START: ASSERT MODULE DEFINITION
+  **************************************/
+  sn.assert = {
+    is: function (val) {
+      return internals.assert(sn.is(val), 'Values are not the same.');
+  }
+};
 
   for (var prop in sn.is) {
     if (sn.is.hasOwnProperty(prop)) {
       (function (prop) {
         sn.assert.is[prop] = function () {
-          if (sn.is[prop]()) {
-            return true;
-          }
-
-          throw new TypeError('Provided value is not ' + prop);
+          return internals.assert(sn.is[prop](), 'Provided value is not ' + prop);
         };
       })(prop);
     }
   }
+
+  /*************************************
+  * END: ASSERT MODULE DEFINITION
+  **************************************/
+
 
 })(sn);
