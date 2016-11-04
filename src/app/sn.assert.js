@@ -139,8 +139,8 @@
   sn.assert = {
     is: function (val) {
       return internals.assert(sn.is(val), 'Values are not the same.');
-  }
-};
+    }
+  };
 
   for (var prop in sn.is) {
     if (sn.is.hasOwnProperty(prop)) {
