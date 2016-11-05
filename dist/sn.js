@@ -315,12 +315,6 @@ sn.queue = function(defaultArray) {
     return false;
   };
 
-  /**********************************************
-  * Check if variable is defined. Variable is consider defined if it's not null or undefined
-  ************************************************/
-  sn.is.defined = function () {
-    return sn.__EC__ == null;
-  };
 
   /***************************************
    * START: data type checks
@@ -343,6 +337,11 @@ sn.queue = function(defaultArray) {
 
   sn.is.undefined = function () {
     typeof sn.__EC__ === 'undefined';
+  };
+
+  //not null and undefined
+  sn.is.defined = function () {
+    return sn.__EC__ != null;
   };
 
   sn.is.object = function () {
@@ -368,9 +367,8 @@ sn.queue = function(defaultArray) {
   **************************************/
 
 
-
   /*************************************
-  * START: ASSERT/NOT MODULE DEFINITION
+  * START: ASSERT && NOT MODULE DEFINITION
   **************************************/
   sn.not = function (val) {
     return !sn.is(val);

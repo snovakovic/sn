@@ -34,9 +34,9 @@ You still may be wondering why I have create this library when there is ton of o
 Assert is not
 ------
 
-s().is module is used to check the truth of something. s().not is just nicer way of writing !s().is.
-For each s.is check we can also use s().assert.is. Assert will trow TypeError in case if is condition is false.
-In case of true condition it will return true. There is also s().assert.not which is opposite to s().assert.is.
+s().is module is used to check the truth of something. sn().not is just nicer way of writing !s().is.
+For each s.is check we can also use sn().assert.is (assert are use in code for checking method inputs). Assert will trow TypeError in case if is condition is false.
+In case of true condition it will return true. There is also sn().assert.not which is opposite to sn().assert.is.
 
 #### is.is
 
@@ -54,31 +54,122 @@ If you have ever use == in your code please consider following gotchas
 * "" == []; // true -- UH OH!
 * 0 == []; // true -- UH OH!
 
-consider s(var1).is(var2) like == without any gotchas from above.
+consider sn(var1).is(var2) like == without any gotchas from above.
 If you want to know more about == and === (and coercion that is been performed when using ==)
 There is great book chapter (https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch4.md)
 I strongly recommend you to read whole series of You-Dont-Know-JS books!
 
 ```javascript
-  s('0').is(false); //=> false
-  s('').is(0); //=> false
-  s(0).is([]); //=> false
-  s(false).is([]); //=> false
+sn('0').is(false); //=> false
+sn('').is(0); //=> false
+sn(0).is([]); //=> false
+sn(false).is([]); //=> false
 
-  s('3').is(3); //=> true
-  s('-3').is(-3); //=> true
-  s(null).is(undefined); //=> true
+sn('3').is(3); //=> true
+sn('-3').is(-3); //=> true
+sn(null).is(undefined); //=> true
 
-    //not is shorthand for calling !s(var).is(var)
-  s(false).not([]); //=> true
+//not is shorthand for calling !s(var).is(var)
+sn(false).not([]); //=> true
 
-  //assert will throw TypeError if false
-  s(0).assert.is(''); //=> TypeError Values are not the same.
-  s(10).assert.is('10'); //=> true
-
-  s(10).assert.not('10'); //=> TypeError Values are not the same.
+//assert will throw TypeError if false
+sn(0).assert.is(''); //=> TypeError Values are not the same.
+sn(10).assert.is('10'); //=> true
+sn(10).assert.not('10'); //=> TypeError Values are the same.
 
 ```
+
+#### is.empty
+Test if variable has been defined and is not empty.
+{}, [] and empty string or string with only space tab character are consider empty.
+
+
+```javascript
+sn(null).is.empty(); //=> true
+sn(undefined).is.empty(); //=> true
+sn({}).is.empty(); //=> true
+sn([]).is.empty(); //=> true
+sn(' ').is.empty(); //=> true
+sn('\n\t').is.empty(); //=> true
+
+sn(0).is.empty(0); //=> false
+sn(false).is.empty(); //=> false
+
+sn(null).not.empty(); //=> false
+sn(null).assert.not.empty(); //=> TypeError Provided value is empty.
+sn(0).assert.is.empty(); //=> TypeError Provided value is not empty.
+```
+
+#### is.defined
+true if value is not null or undefined
+
+```javascript
+sn(undefined).is.defined(); //=> false
+sn(null).is.defined(); //=> false
+
+sn([]).is.defined(); //=> true
+sn(0).is.defined(); //=> true
+
+sn(true).not.defined(); //=> false
+sn(null).assert.is.defined(); //=> TypeError Provided value is not defined.
+sn({}).assert.not.defined(); //=> TypeError Provided value is defined.
+```
+
+#### is.string
+
+```javascript
+sn('').is.string(); //=> true
+sn(2).is.string(); //=> false
+//check previous examples on how to use assert and not
+```
+
+#### is.number
+
+```javascript
+sn(2).is.number(); //=> true
+sn('').is.number(); //=> false
+//check previous examples on how to use assert and not
+```
+
+#### is.boolean
+
+```javascript
+sn(false).is.boolean(); //=> true
+sn(2).is.boolean(); //=> false
+//check previous examples on how to use assert and not
+```
+
+#### is.object
+
+```javascript
+sn({}).is.object(); //=> true
+sn([]).is.object(); //=> false
+sn(null).is.object(); //=> false
+sn(function(){}).is.object(); //=> false
+sn(false).is.object(); //=> false
+//check previous examples on how to use assert and not
+```
+#### is.function
+
+```javascript
+sn(function(){}).is.function(); //=> true
+sn([]).is.function(); //=> false
+sn({}).is.function(); //=> false
+sn(false).is.function(); //=> false
+//check previous examples on how to use assert and not
+```
+
+#### is.array
+
+```javascript
+sn([]).is.array(); //=> true
+sn({}).is.array(); //=> false
+sn(null).is.array(); //=> false
+//check previous examples on how to use assert and not
+
+```
+
+
 
 Dates
 ------

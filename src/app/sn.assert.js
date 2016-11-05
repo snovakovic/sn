@@ -101,7 +101,7 @@
 
   //not null and undefined
   sn.is.defined = function () {
-    return sn.__EC__ == null;
+    return sn.__EC__ != null;
   };
 
   sn.is.object = function () {
