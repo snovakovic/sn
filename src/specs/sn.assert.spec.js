@@ -39,7 +39,7 @@ describe('sn().assert', function () {
     bool = true;
     falseBool = false;
     date = new Date();
-    func = function() {};
+    func = function () { };
   });
 
 
@@ -70,9 +70,15 @@ describe('sn().assert', function () {
       expect(sn(emptyStrObj).is(emptyStrObj)).toEqual(true);
       expect(sn(strObj).is(strObj)).toEqual(true);
 
-
       expect(sn({}).is({})).toEqual(false);
 
+    });
+
+    it('should correctly handle not', function () {
+      expect(sn(false).not('')).toEqual(true);
+      expect(sn(false).not([])).toEqual(true);
+      expect(sn(emptyStrObj).not(emptyStrObj)).toEqual(false);
+      expect(sn(strObj).not(strObj)).toEqual(false);
     });
 
     it('should correctly handle assert is', function () {
@@ -126,7 +132,36 @@ describe('sn().assert', function () {
       expect(sn(strObj).is.empty()).toEqual(false);
       expect(sn(numObj).is.empty()).toEqual(false);
     });
+
+    it('should correctly handle not.empty', function () {
+      expect(sn('   ').not.empty()).toEqual(false);
+      expect(sn(obj1).not.empty()).toEqual(true);
+      expect(sn(arr1).not.empty()).toEqual(true);
+    });
+
+    it('should correctly handle assert.is.empty', function () {
+      expect(sn('   ').assert.is.empty()).toEqual(true);
+
+      expect(function () {
+        sn('   ').assert.not.empty();
+      }).toThrow(new TypeError('Provided value is empty.'));
+
+      expect(function () {
+        sn(obj1).assert.is.empty();
+      }).toThrow(new TypeError('Provided value is not empty.'));
+
+      expect(sn(obj1).assert.not.empty()).toEqual(true);
+
+      expect(function () {
+        sn(arr1).assert.is.empty();
+      }).toThrow(new TypeError('Provided value is not empty.'));
+
+      expect(sn(arr1).not.empty()).toEqual(true);
+
+    });
+
   });
+
 
   describe('is.number', function () {
     it('should show correct values for is.number', function () {
@@ -140,6 +175,23 @@ describe('sn().assert', function () {
       expect(sn(emptyString).is.number()).toEqual(false);
       expect(sn(bool).is.number()).toEqual(false);
     });
+
+    it('should show correct values for not.number', function () {
+      expect(sn(num).not.number()).toEqual(false);
+      expect(sn(empty).not.number()).toEqual(true);
+    });
+
+    it('should show correctly assert number', function () {
+      expect(sn(num).assert.is.number()).toEqual(true);
+      expect(sn(empty).assert.not.number()).toEqual(true);
+      expect(function () {
+        sn(empty).assert.is.number();
+      }).toThrow(new TypeError('Provided value is not number.'));
+      expect(function () {
+        sn(num).assert.not.number();
+      }).toThrow(new TypeError('Provided value is number.'));
+    });
+
   });
 
   describe('is.string', function () {
@@ -151,6 +203,23 @@ describe('sn().assert', function () {
       expect(sn(str).is.string()).toEqual(true);
       expect(sn(emptyString).is.string()).toEqual(true);
       expect(sn(bool).is.string()).toEqual(false);
+    });
+
+    it('should show correct values for not.string', function () {
+      expect(sn(notDefined).not.string()).toEqual(true);
+      expect(sn(str).not.string()).toEqual(false);
+    });
+
+
+    it('should handle assert string', function () {
+      expect(sn(str).assert.is.string()).toEqual(true);
+      expect(sn(notDefined).assert.not.string()).toEqual(true);
+      expect(function () {
+        sn(notDefined).assert.is.string();
+      }).toThrow(new TypeError('Provided value is not string.'));
+      expect(function () {
+        sn(str).assert.not.string();
+      }).toThrow(new TypeError('Provided value is string.'));
     });
   });
 
@@ -164,6 +233,22 @@ describe('sn().assert', function () {
       expect(sn(emptyString).is.boolean()).toEqual(false);
       expect(sn(bool).is.boolean()).toEqual(true);
     });
+
+    it('should show correct values for not.boolean', function () {
+      expect(sn(emptyString).not.boolean()).toEqual(true);
+      expect(sn(bool).not.boolean()).toEqual(false);
+    });
+
+    it('should correctly handle assert boolean', function () {
+      expect(sn(bool).assert.is.boolean()).toEqual(true);
+      expect(sn(emptyString).assert.not.boolean()).toEqual(true);
+      expect(function () {
+        sn(emptyString).assert.is.boolean();
+      }).toThrow(new TypeError('Provided value is not boolean.'));
+      expect(function () {
+        sn(bool).assert.not.boolean();
+      }).toThrow(new TypeError('Provided value is boolean.'));
+    });
   });
 
   describe('is.object', function () {
@@ -176,12 +261,22 @@ describe('sn().assert', function () {
       expect(sn(emptyString).is.object()).toEqual(false);
       expect(sn(bool).is.object()).toEqual(false);
       expect(sn(arr).is.object()).toEqual(false);
-      // expect(sn(func).is.object()).toEqual(false);
+      expect(sn(func).is.object()).toEqual(false);
+    });
+
+    it('should show correct values for not.object', function () {
+      expect(sn(obj).not.object()).toEqual(false);
+      expect(sn(arr).not.object()).toEqual(true);
+    });
+
+    it('should correctly handle assert.object', function () {
+      expect(sn(obj).not.object()).toEqual(false);
+      expect(sn(arr).not.object()).toEqual(true);
     });
   });
 
   describe('is.function', function () {
-    it('should show correct values for is.object', function () {
+    it('should show correct values for is.function', function () {
       expect(sn(func).is.function()).toEqual(true);
       expect(sn(notDefined).is.function()).toEqual(false);
       expect(sn(obj).is.function()).toEqual(false);
@@ -191,6 +286,22 @@ describe('sn().assert', function () {
       expect(sn(bool).is.function()).toEqual(false);
       expect(sn().is.function()).toEqual(false);
       expect(sn(arr).is.function()).toEqual(false);
+    });
+
+    it('should show correct values for not.function', function () {
+      expect(sn(func).not.function()).toEqual(false);
+      expect(sn(arr).not.function()).toEqual(true);
+    });
+
+    it('should correctly handle assert function', function () {
+      expect(sn(arr).assert.not.function()).toEqual(true);
+      expect(sn(func).assert.is.function()).toEqual(true);
+      expect(function () {
+        sn(func).assert.not.function();
+      }).toThrow(new TypeError('Provided value is function.'));
+      expect(function () {
+        sn(arr).assert.is.function();
+      }).toThrow(new TypeError('Provided value is not function.'));
     });
   });
 
@@ -206,34 +317,56 @@ describe('sn().assert', function () {
       expect(sn(arr).is.array()).toEqual(true);
       expect(sn(func).is.array()).toEqual(false);
     });
+
+    it('should show correct values for not.array', function () {
+      expect(sn(arr).not.array()).toEqual(false);
+      expect(sn(func).not.array()).toEqual(true);
+    });
+
+    it('should correctly handle assert array', function () {
+      expect(sn(arr).assert.is.array()).toEqual(true);
+      expect(sn(func).assert.not.array()).toEqual(true);
+      expect(function () {
+        sn(func).assert.is.array();
+      }).toThrow(new TypeError('Provided value is not array.'));
+      expect(function () {
+        sn(arr).assert.not.array();
+      }).toThrow(new TypeError('Provided value is array.'));
+    });
   });
 
-  describe('is date', function () {
+  describe('is.date', function () {
 
     it('should correctly handle is date', function () {
       expect(sn(date).is.date()).toEqual(true);
       expect(sn(date.toString()).is.date()).toEqual(false);
       expect(sn({}).is.date()).toEqual(false);
       expect(sn().is.date()).toEqual(false);
+    });
 
+    it('should correctly handle not date', function () {
+      expect(sn(date).not.date()).toEqual(false);
+      expect(sn(date.toString()).not.date()).toEqual(true);
     });
 
     it('should correctly handle assert is date', function () {
       var date = new Date();
 
       expect(sn(date).assert.is.date()).toEqual(true);
+      expect(sn(date.toString()).assert.not.date()).toEqual(true);
 
       expect(function () {
         sn(date.toString()).assert.is.date();
-      }).toThrow(new TypeError('Provided value is not date'));
-
+      }).toThrow(new TypeError('Provided value is not date.'));
       expect(function () {
         sn({}).assert.is.date();
-      }).toThrow(new TypeError('Provided value is not date'));
-
+      }).toThrow(new TypeError('Provided value is not date.'));
       expect(function () {
         sn().assert.is.date();
-      }).toThrow(new TypeError('Provided value is not date'));
+      }).toThrow(new TypeError('Provided value is not date.'));
+      expect(function () {
+        sn(date).assert.not.date();
+      }).toThrow(new TypeError('Provided value is date.'));
 
     });
 

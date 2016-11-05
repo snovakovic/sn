@@ -241,7 +241,7 @@ sn.queue = function(defaultArray) {
 (function (sn) {
 
   var internals = {
-    isString: function(testVar) {
+    isString: function (testVar) {
       return typeof testVar === 'string';
     },
     isNumber: function (testVar) {
@@ -251,17 +251,15 @@ sn.queue = function(defaultArray) {
     isDate: function (testVar) {
       return Object.prototype.toString.call(testVar) === '[object Date]';
     },
-    isFunction: function (testVar) {
-      return Boolean(testVar && Object.prototype.toString.call(testVar) === '[object Function]');
-    },
-    assert: function(val, assertMessage) {
-      if(val) {
+    assert: function (val, assertMessage) {
+      if (val) {
         return val;
       }
       throw new TypeError(assertMessage);
     }
 
   };
+
 
   //PUBLIC
 
@@ -289,17 +287,16 @@ sn.queue = function(defaultArray) {
   };
 
 
-  /**
+  /****************************************************
    * Test if variable has been defined and is not empty,
    * Following will be treated as false
-   * sn.is.empty(null); => true
-   * sn.is.empty(undefined); => true
-   * sn.is.empty({}); => true
-   * sn.is.empty([]); => true
-   * sn.is.empty(' '); => true
-   * sn.is.empty('\n\t'); => true
-   * sn.is.empty(null); => true
-  */
+   * sn(null).is.empty(); => true
+   * sn(undefined).is.empty(); => true
+   * sn({}).is.empty(); => true
+   * sn([]).is.empty(); => true
+   * sn(' ').is.empty(); => true
+   * sn('\n\t').is.empty(); => true
+  ********************************************************/
   sn.is.empty = function () {
     if (sn.__EC__ == null
       || (typeof sn.__EC__ === 'string' && (/^\s*$/).test(sn.__EC__))) {
@@ -308,7 +305,7 @@ sn.queue = function(defaultArray) {
 
     if (typeof sn.__EC__ === 'object') {
       for (var key in sn.__EC__) {
-        if (Object.prototype.hasOwnProperty.call(sn.__EC__, key)) {
+        if (sn.__EC__.hasOwnProperty(key)) {
           return false;
         }
       }
@@ -351,12 +348,11 @@ sn.queue = function(defaultArray) {
   sn.is.object = function () {
     return typeof sn.__EC__ === 'object'
       && sn.__EC__ !== null
-      && !Array.isArray(sn.__EC__)
-      && !internals.isFunction(sn.__EC__);
+      && !Array.isArray(sn.__EC__);
   };
 
   sn.is.function = function () {
-    return internals.isFunction(sn.__EC__);
+    return typeof sn.__EC__ === 'function';
   };
 
   sn.is.array = function () {
@@ -374,19 +370,32 @@ sn.queue = function(defaultArray) {
 
 
   /*************************************
-  * START: ASSERT MODULE DEFINITION
+  * START: ASSERT/NOT MODULE DEFINITION
   **************************************/
+  sn.not = function (val) {
+    return !sn.is(val);
+  };
+
   sn.assert = {
     is: function (val) {
       return internals.assert(sn.is(val), 'Values are not the same.');
-  }
-};
+    },
+    not: function (val) {
+      return internals.assert(!sn.is(val), 'Values are the same.');
+    }
+  };
 
   for (var prop in sn.is) {
     if (sn.is.hasOwnProperty(prop)) {
       (function (prop) {
+        sn.not[prop] = function () {
+          return !sn.is[prop]();
+        };
         sn.assert.is[prop] = function () {
-          return internals.assert(sn.is[prop](), 'Provided value is not ' + prop);
+          return internals.assert(sn.is[prop](), 'Provided value is not ' + prop + '.');
+        };
+        sn.assert.not[prop] = function () {
+          return internals.assert(!sn.is[prop](), 'Provided value is ' + prop + '.');
         };
       })(prop);
     }
