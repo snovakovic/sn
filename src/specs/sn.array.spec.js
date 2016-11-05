@@ -1,4 +1,4 @@
-describe('sn.array', function() {
+describe('sn.array', function () {
   var testArray;
   var testObjArray;
   var a;
@@ -9,9 +9,10 @@ describe('sn.array', function() {
   var counter;
   var tmp;
   var bigArray;
+  var testString;
 
 
-  beforeEach(function() {
+  beforeEach(function () {
     testArray = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     testObjArray = [
       {
@@ -27,6 +28,7 @@ describe('sn.array', function() {
     ];
 
     counter = 0;
+    testString = 'test string';
     a = b = c = lastIndex = lastValue = null;
     bigArray = [];
     for (var i = 0; i <= 1000000; i++) {
@@ -34,10 +36,10 @@ describe('sn.array', function() {
     }
   });
 
-  describe('each', function() {
+  describe('each', function () {
 
-    it('should loop correctly', function() {
-      sn(testArray).each(function(val, i) {
+    it('should loop correctly', function () {
+      sn(testArray).each(function (val, i) {
         if (val === 'a') {
           a = testArray[i];
         } else if (val === 'b') {
@@ -48,14 +50,23 @@ describe('sn.array', function() {
 
       });
 
-      sn(bigArray).each(function(val, i) {
+      sn(bigArray).each(function (val, i) {
         lastIndex = i;
       });
 
-      sn(testArray).each(function(val) {
+      sn(testArray).each(function (val) {
         lastValue = val;
         return false;
       });
+
+      var test = '';
+      sn(testString).each(function (char) {
+        test += char;
+        if (test === 'test') {
+          return false;
+        }
+      });
+      expect(test).toEqual('test');
 
       expect(a).toEqual(testArray[0]);
       expect(b).toEqual(b, testArray[1]);
@@ -66,15 +77,15 @@ describe('sn.array', function() {
 
   });
 
-  describe('iterate', function() {
+  describe('iterate', function () {
 
-    it('should iterate correctly', function() {
-      sn.iterate(1000000, function() {
+    it('should iterate correctly', function () {
+      sn.iterate(1000000, function () {
         counter++;
       });
       expect(counter).toEqual(1000000);
 
-      sn.iterate(1000000, function(i) {
+      sn.iterate(1000000, function (i) {
         tmp = i;
         if (i === 3) {
           return false;
@@ -85,8 +96,8 @@ describe('sn.array', function() {
 
   });
 
-  describe('remove', function() {
-    it('should remove items correctly', function() {
+  describe('remove', function () {
+    it('should remove items correctly', function () {
       expect(sn(['c', 'a', 'b', 'c', 'd', 'c']).remove('c')).toEqual(['a', 'b', 'd']);
       expect(sn([1, 2, 2, 3, 4]).remove(2)).toEqual([1, 3, 4]);
       expect(sn([1, 2, '2', 3, 4]).remove(2)).toEqual([1, '2', 3, 4]);
@@ -97,6 +108,7 @@ describe('sn.array', function() {
       expect(sn(['c', 'a', 'b', 'c', 'd', 'c']).remove('c', -1)).toEqual(['c', 'a', 'b', 'c', 'd']);
       expect(sn(['c', 'a', 'b', 'c', 'd', 'c']).remove('c', -2)).toEqual(['c', 'a', 'b', 'd']);
 
+
       // expect(function() {
       //   sn.remove(['c', 'a', 'b', 'c', 'd', 'c'], 'c', 10.1);
       // }).toThrow(new Error('Invalid argument exception'));
@@ -104,8 +116,8 @@ describe('sn.array', function() {
     });
   });
 
-  describe('shuffle', function() {
-    it('should shuffle array', function() {
+  describe('shuffle', function () {
+    it('should shuffle array', function () {
       var beforeShuffle = testArray.join();
       sn(testArray).shuffle();
       var afterShuffle = testArray.join();
@@ -119,8 +131,8 @@ describe('sn.array', function() {
     });
   });
 
-  describe('getFilledArray', function() {
-    it('should returned filled array', function() {
+  describe('getFilledArray', function () {
+    it('should returned filled array', function () {
       expect(sn.getFilledArray(0, 3)).toEqual([0, 0, 0]);
       expect(sn.getFilledArray('b', 4)).toEqual(['b', 'b', 'b', 'b']);
       expect(sn.getFilledArray({ a: 'b' }, 2)).toEqual([{ a: 'b' }, { a: 'b' }]);
@@ -128,48 +140,48 @@ describe('sn.array', function() {
     });
   });
 
-  describe('unique', function() {
-    it('should return unique values', function() {
+  describe('unique', function () {
+    it('should return unique values', function () {
       expect(sn.unique([1, 1, 2, 3, 2, 1, 3])).toEqual([1, 2, 3]);
       expect(sn.unique(['a', 'b', 'a'])).toEqual(['a', 'b']);
     });
   });
 
-  describe('first', function() {
-    it('should return first array value', function() {
+  describe('first', function () {
+    it('should return first array value', function () {
       expect(sn.first(testArray)).toEqual('a');
       expect(sn.first(testObjArray)).toEqual(testObjArray[0]);
       expect(sn.first(undefined)).toEqual(undefined);
 
-      expect(sn.first(testArray, function(letter) {
+      expect(sn.first(testArray, function (letter) {
         return letter === 'c';
       })).toEqual('c');
 
-      expect(sn.first(testObjArray, function(obj) {
+      expect(sn.first(testObjArray, function (obj) {
         return obj.id === 2;
       })).toEqual(testObjArray[1]);
     });
   });
 
-  describe('last', function() {
-    it('should return last array value', function() {
+  describe('last', function () {
+    it('should return last array value', function () {
       expect(sn.last(testArray)).toEqual('h');
       expect(sn.last(testObjArray)).toEqual(testObjArray[testObjArray.length - 1]);
       expect(sn.last(undefined)).toEqual(undefined);
 
-      expect(sn.last(testArray, function(letter) {
+      expect(sn.last(testArray, function (letter) {
         return letter === 'c';
       })).toEqual('c');
 
-      expect(sn.last(testObjArray, function(obj) {
+      expect(sn.last(testObjArray, function (obj) {
         return obj.id === 3;
       })).toEqual(testObjArray[2]);
     });
   });
 
 
-  describe('stack', function() {
-    it('should operate with stack correctly', function() {
+  describe('stack', function () {
+    it('should operate with stack correctly', function () {
       var stack = sn.stack();
       stack.add(2);         // stack is now [2]
       stack.add(5);         // stack is now [2, 5]
@@ -187,7 +199,7 @@ describe('sn.array', function() {
       expect(stack.array).toEqual([]);
     });
 
-    it('should operate with default stack correctly', function() {
+    it('should operate with default stack correctly', function () {
       var stack = sn.stack([1, 2, 3]);
       stack.add(2);
       expect(stack.array).toEqual([1, 2, 3, 2]);
@@ -199,7 +211,7 @@ describe('sn.array', function() {
       expect(stack.remove()).toEqual(3);
     });
 
-    it('stack arrays should operate independently', function() {
+    it('stack arrays should operate independently', function () {
       var stack1 = sn.stack([1]);
       var stack2 = sn.stack();
       var stack3 = sn.stack();
@@ -214,7 +226,7 @@ describe('sn.array', function() {
       expect(stack3.array).toEqual([7, 8]);
     });
 
-    it('add multiple values should work as expected', function() {
+    it('add multiple values should work as expected', function () {
       var stack = sn.stack([1]);
       stack.add(2);
       stack.add([3, 4]);
@@ -222,7 +234,7 @@ describe('sn.array', function() {
       expect(stack.peek()).toEqual(4);
     });
 
-    it('readme example should be correct', function() {
+    it('readme example should be correct', function () {
       var stack = sn.stack();
       stack.add(2);
       stack.add(3);
@@ -248,8 +260,8 @@ describe('sn.array', function() {
   });
 
 
-  describe('queue', function() {
-    it('should operate with queue correctly', function() {
+  describe('queue', function () {
+    it('should operate with queue correctly', function () {
       var queue = sn.queue();
       queue.add(2);         // queue is now [2]
       queue.add(5);         // queue is now [2, 5]
@@ -267,7 +279,7 @@ describe('sn.array', function() {
       expect(queue.array).toEqual([]);
     });
 
-    it('should operate with default queue correctly', function() {
+    it('should operate with default queue correctly', function () {
       var queue = sn.queue([1, 2, 3]);
       queue.add(2);
       expect(queue.array).toEqual([1, 2, 3, 2]);
@@ -280,7 +292,7 @@ describe('sn.array', function() {
       expect(queue.remove()).toEqual(2);
     });
 
-    it('queue arrays should operate independently', function() {
+    it('queue arrays should operate independently', function () {
       var queue1 = sn.queue([1]);
       var queue2 = sn.queue();
       var queue3 = sn.queue();
@@ -295,7 +307,7 @@ describe('sn.array', function() {
       expect(queue3.array).toEqual([7, 8]);
     });
 
-    it('add multiple values should work as expected', function() {
+    it('add multiple values should work as expected', function () {
       var queue = sn.queue([1]);
       queue.add(2);
       queue.add([3, 4]);
@@ -303,7 +315,7 @@ describe('sn.array', function() {
       expect(queue.peek()).toEqual(1);
     });
 
-    it('readme example should be correct', function() {
+    it('readme example should be correct', function () {
       var queue = sn.queue();
       queue.add(2);
       queue.add(3);

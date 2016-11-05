@@ -1,66 +1,66 @@
 <?xml version="1.0"?>
-<testsuite name="PhantomJS 2.1.1 (Windows 8 0.0.0)" package="" timestamp="2016-11-05T19:36:07" id="0" hostname="Aedui" tests="58" errors="0" failures="0" time="1.338">
+<testsuite name="PhantomJS 2.1.1 (Windows 8 0.0.0)" package="" timestamp="2016-11-05T20:08:53" id="0" hostname="Aedui" tests="58" errors="0" failures="0" time="1.28">
   <properties>
     <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1"/>
   </properties>
-  <testcase name="sn.array each should loop correctly" time="0.317" classname="sn.array"/>
-  <testcase name="sn.array iterate should iterate correctly" time="0.327" classname="sn.array"/>
-  <testcase name="sn.array remove should remove items correctly" time="0.042" classname="sn.array"/>
-  <testcase name="sn.array shuffle should shuffle array" time="0.039" classname="sn.array"/>
-  <testcase name="sn.array getFilledArray should returned filled array" time="0.039" classname="sn.array"/>
-  <testcase name="sn.array unique should return unique values" time="0.041" classname="sn.array"/>
-  <testcase name="sn.array first should return first array value" time="0.04" classname="sn.array"/>
-  <testcase name="sn.array last should return last array value" time="0.04" classname="sn.array"/>
-  <testcase name="sn.array stack should operate with stack correctly" time="0.041" classname="sn.array"/>
+  <testcase name="sn.array each should loop correctly" time="0.31" classname="sn.array"/>
+  <testcase name="sn.array iterate should iterate correctly" time="0.308" classname="sn.array"/>
+  <testcase name="sn.array remove should remove items correctly" time="0.04" classname="sn.array"/>
+  <testcase name="sn.array shuffle should shuffle array" time="0.036" classname="sn.array"/>
+  <testcase name="sn.array getFilledArray should returned filled array" time="0.037" classname="sn.array"/>
+  <testcase name="sn.array unique should return unique values" time="0.036" classname="sn.array"/>
+  <testcase name="sn.array first should return first array value" time="0.038" classname="sn.array"/>
+  <testcase name="sn.array last should return last array value" time="0.037" classname="sn.array"/>
+  <testcase name="sn.array stack should operate with stack correctly" time="0.038" classname="sn.array"/>
   <testcase name="sn.array stack should operate with default stack correctly" time="0.038" classname="sn.array"/>
-  <testcase name="sn.array stack stack arrays should operate independently" time="0.043" classname="sn.array"/>
-  <testcase name="sn.array stack add multiple values should work as expected" time="0.041" classname="sn.array"/>
+  <testcase name="sn.array stack stack arrays should operate independently" time="0.039" classname="sn.array"/>
+  <testcase name="sn.array stack add multiple values should work as expected" time="0.038" classname="sn.array"/>
   <testcase name="sn.array stack readme example should be correct" time="0.045" classname="sn.array"/>
-  <testcase name="sn.array queue should operate with queue correctly" time="0.044" classname="sn.array"/>
-  <testcase name="sn.array queue should operate with default queue correctly" time="0.046" classname="sn.array"/>
-  <testcase name="sn.array queue queue arrays should operate independently" time="0.04" classname="sn.array"/>
-  <testcase name="sn.array queue add multiple values should work as expected" time="0.038" classname="sn.array"/>
-  <testcase name="sn.array queue readme example should be correct" time="0.042" classname="sn.array"/>
+  <testcase name="sn.array queue should operate with queue correctly" time="0.039" classname="sn.array"/>
+  <testcase name="sn.array queue should operate with default queue correctly" time="0.038" classname="sn.array"/>
+  <testcase name="sn.array queue queue arrays should operate independently" time="0.041" classname="sn.array"/>
+  <testcase name="sn.array queue add multiple values should work as expected" time="0.039" classname="sn.array"/>
+  <testcase name="sn.array queue readme example should be correct" time="0.04" classname="sn.array"/>
   <testcase name="sn().assert is should correctly handle is" time="0.002" classname="sn().assert"/>
-  <testcase name="sn().assert is should correctly handle not" time="0" classname="sn().assert"/>
+  <testcase name="sn().assert is should correctly handle not" time="0.001" classname="sn().assert"/>
   <testcase name="sn().assert is should correctly handle assert is" time="0.003" classname="sn().assert"/>
   <testcase name="sn().assert is.empty should correctly handle is.empty" time="0.001" classname="sn().assert"/>
   <testcase name="sn().assert is.empty should correctly handle not.empty" time="0.001" classname="sn().assert"/>
-  <testcase name="sn().assert is.empty should correctly handle assert.is.empty" time="0.001" classname="sn().assert"/>
+  <testcase name="sn().assert is.empty should correctly handle assert.is.empty" time="0.003" classname="sn().assert"/>
   <testcase name="sn().assert is.number should show correct values for is.number" time="0.001" classname="sn().assert"/>
   <testcase name="sn().assert is.number should show correct values for not.number" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.number should show correctly assert number" time="0.002" classname="sn().assert"/>
-  <testcase name="sn().assert is.string should show correct values for is.string" time="0" classname="sn().assert"/>
-  <testcase name="sn().assert is.string should show correct values for not.string" time="0.001" classname="sn().assert"/>
+  <testcase name="sn().assert is.string should show correct values for is.string" time="0.001" classname="sn().assert"/>
+  <testcase name="sn().assert is.string should show correct values for not.string" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.string should handle assert string" time="0.001" classname="sn().assert"/>
   <testcase name="sn().assert is.boolean should show correct values for is.boolean" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.boolean should show correct values for not.boolean" time="0" classname="sn().assert"/>
-  <testcase name="sn().assert is.boolean should correctly handle assert boolean" time="0.001" classname="sn().assert"/>
+  <testcase name="sn().assert is.boolean should correctly handle assert boolean" time="0.002" classname="sn().assert"/>
   <testcase name="sn().assert is.object should show correct values for is.object" time="0.001" classname="sn().assert"/>
-  <testcase name="sn().assert is.object should show correct values for not.object" time="0" classname="sn().assert"/>
+  <testcase name="sn().assert is.object should show correct values for not.object" time="0.001" classname="sn().assert"/>
   <testcase name="sn().assert is.object should correctly handle assert.object" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.function should show correct values for is.function" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.function should show correct values for not.function" time="0" classname="sn().assert"/>
-  <testcase name="sn().assert is.function should correctly handle assert function" time="0.001" classname="sn().assert"/>
-  <testcase name="sn().assert is.array should show correct values for is.array" time="0.001" classname="sn().assert"/>
+  <testcase name="sn().assert is.function should correctly handle assert function" time="0.002" classname="sn().assert"/>
+  <testcase name="sn().assert is.array should show correct values for is.array" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.array should show correct values for not.array" time="0" classname="sn().assert"/>
-  <testcase name="sn().assert is.array should correctly handle assert array" time="0.002" classname="sn().assert"/>
-  <testcase name="sn().assert is.date should correctly handle is date" time="0" classname="sn().assert"/>
-  <testcase name="sn().assert is.date should correctly handle not date" time="0.001" classname="sn().assert"/>
+  <testcase name="sn().assert is.array should correctly handle assert array" time="0.003" classname="sn().assert"/>
+  <testcase name="sn().assert is.date should correctly handle is date" time="0.001" classname="sn().assert"/>
+  <testcase name="sn().assert is.date should correctly handle not date" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.date should correctly handle assert is date" time="0.001" classname="sn().assert"/>
   <testcase name="sn().assert Readme examples Readme examples should be correct" time="0.003" classname="sn().assert"/>
   <testcase name="sn.date isLastDayOfMonth Should correctly show if date is last day of month" time="0.002" classname="sn.date"/>
   <testcase name="sn.date setLastDayOfMonth Should correctly set last day of month" time="0.002" classname="sn.date"/>
-  <testcase name="sn.date getLastDayOfMonth Should correctly get last day of month from date" time="0.001" classname="sn.date"/>
-  <testcase name="sn.date addMilliseconds should correctly add miliseconds" time="0.001" classname="sn.date"/>
+  <testcase name="sn.date getLastDayOfMonth Should correctly get last day of month from date" time="0.002" classname="sn.date"/>
+  <testcase name="sn.date addMilliseconds should correctly add milliseconds" time="0" classname="sn.date"/>
   <testcase name="sn.date addSeconds should correctly add seconds" time="0.001" classname="sn.date"/>
   <testcase name="sn.date addMinutes should correctly add minutes" time="0.001" classname="sn.date"/>
   <testcase name="sn.date addHours should correctly add hours" time="0.001" classname="sn.date"/>
-  <testcase name="sn.date addDays should correctly add days" time="0.001" classname="sn.date"/>
+  <testcase name="sn.date addDays should correctly add days" time="0" classname="sn.date"/>
   <testcase name="sn.date addMonths should correctly add months" time="0.001" classname="sn.date"/>
-  <testcase name="sn.date addYears should correctly add years" time="0" classname="sn.date"/>
-  <testcase name="sn.date getMonths should display list of months" time="0" classname="sn.date"/>
-  <testcase name="sn.date Readme examples Readme examples should be correct" time="0" classname="sn.date"/>
+  <testcase name="sn.date addYears should correctly add years" time="0.001" classname="sn.date"/>
+  <testcase name="sn.date getMonths should display list of months" time="0.001" classname="sn.date"/>
+  <testcase name="sn.date Readme examples Readme examples should be correct" time="0.001" classname="sn.date"/>
   <system-out>
     <![CDATA[
 ]]>

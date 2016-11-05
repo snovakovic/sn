@@ -1,78 +1,101 @@
-﻿sn.replaceAll = function (whatToReplace) {
-  return {
-    with: function (replaceWith) {
-      return typeof __EC__ === 'string'
-        ? __EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
-        : __EC__;
-    }
+﻿(function (sn) {
+
+  //PUBLIC
+
+  /**************************************************
+  * Remove all occurrences of substring in string
+  * @param whatToReplace {String}
+  * @param replaceWith {String}
+  * @return {String} string with replaced old values with new values
+**************************************************/
+  sn.replaceAll = function (whatToReplace, replaceWith) {
+    return typeof __EC__ === 'string'
+      ? __EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
+      : __EC__;
   };
-};
-
-sn.capitalize = function (str) {
-  return typeof str === 'string' ? str[(0)].toUpperCase() + str.slice(1) : str;
-};
-
-/***********************************************
- * Below methods has been taken from
- * https://github.com/epeli/underscore.string
-************************************************/
-
-/*
- * test if string contains substring
- * @ignore case - case is ignored on comparation
- * @example capitalize('foo Bar', 'oo'); => 'Foo Bar'; capitalize('FOO Bar', true); => 'Foo bar'
- * https://github.com/epeli/underscore.string
-*/
-sn.contains = function (str1, str2, ignoreCase) {
-  if (ignoreCase === true) {
-    str1 = str1.toLowerCase();
-    str2 = str2.toLowerCase();
-  }
-  return str1.indexOf(str2) !== -1;
-};
-
-/*
- * Break string in array of substring
- * @example: chop("whitespace", 3); => ['whi', 'tes', 'pac', 'e']
-*/
-sn.chop = function (str, step) {
-  if (!str) { return []; }
-  str = String(str);
-  step = ~~step;
-  return step > 0 ? str.match(new RegExp('.{1,' + step + '}', 'g')) : [str];
-};
-
-/*
-* Trim and replace multiple spaces with a single space.
-* @example clean(' foo    bar   '); => 'foo bar'
-*/
-sn.clean = function (str) {
-  return str.trim().replace(/\s\s+/g, ' ');
-};
 
 
-/**
-* Truncate string if it exceed max number of characters,
-* apply provided truncate string at the end of truncated string (default: '...')
-*/
-sn.truncate = function (str, length, truncateStr) {
-  truncateStr = truncateStr || '...';
-  length = ~~length;
-  return str.length > length ? str.slice(0, length) + truncateStr : str;
-};
+  /**************************************************
+  * Capitalize string
+  * @return {String} capitalized string
+  **************************************************/
+  sn.capitalize = function () {
+    return typeof __EC__ === 'string'
+      ? __EC__[(0)].toUpperCase() + __EC__.slice(1)
+      : __EC__;
+  };
 
-/**********************************************
-* Get the substring of the string between 2 substrings,
-TODO: not documented or tested
-***************************************************/
-sn.between = function (startStr, endStr) {
-  var startIndex = __EC__.indexOf(startStr);
-  var endIndex = __EC__.indexOf(endStr);
 
-  if (startIndex === -1 || startIndex === -1) {
-    return undefined;
-  }
+  /**************************************************
+  * test if string contains substring
+  * @param substring {String} substring we want to check for existance
+  * @param ignoreCase {Boolean} if true ignore case when comparing string
+  * @example capitalize('foo Bar', 'oo'); => 'Foo Bar'; capitalize('FOO Bar', true); => 'Foo bar'
+  * https://github.com/epeli/underscore.string
+  **************************************************/
+  sn.contains = function (substring, ignoreCase) {
+    if (ignoreCase === true) {
+      __EC__ = __EC__.toLowerCase();
+      substring = substring.toLowerCase();
+    }
 
-  startIndex += startStr.length;
-  return __EC__.substr(startIndex, endIndex - startIndex);
-};
+    return __EC__.indexOf(substring) !== -1;
+  };
+
+
+  /**************************************************
+  * Break string in array of substring.
+  * @param step {Number} length of chopped substrings
+  * @example: chop("whitespace", 3); => ['whi', 'tes', 'pac', 'e']
+  * @return {Array} array containing chopped substrings
+  **************************************************/
+  sn.chop = function (step) {
+    if (!__EC__) { return []; }
+    __EC__ = String(__EC__);
+    step = ~~step;
+    return step > 0 ? __EC__.match(new RegExp('.{1,' + step + '}', 'g')) : [__EC__];
+  };
+
+
+  /**************************************************
+  * Trim and replace multiple spaces with a single space.
+  * @return {String} trimmed and cleaned string
+  **************************************************/
+  sn.clean = function () {
+    return __EC__.trim().replace(/\s\s+/g, ' ');
+  };
+
+
+  /**********************************************
+  * Truncate string if it exceed max number of characters,
+  * apply provided truncate string at the end of truncated string (default: '...')
+  * @param length {Number} cut the string after this number of characters
+  * @param appender {String} [default: '...'] string that will be appended to truncated string
+  * @return {String} truncated string
+  **********************************************/
+  sn.truncate = function (length, appender) {
+    appender = appender || '...';
+    appender = ~~appender;
+    return __EC__.length > length ? __EC__.slice(0, length) + appender : __EC__;
+  };
+
+
+  /**********************************************
+  * get part of the string between 2 words.
+  * @param startStr {String}
+  * @param endStr {String}
+  * @return {String} string between startStr and endStr
+  ***********************************************/
+  sn.between = function (startStr, endStr) {
+    var startIndex = __EC__.indexOf(startStr);
+    var endIndex = __EC__.indexOf(endStr);
+
+    if (startIndex === -1 || startIndex === -1) {
+      return undefined;
+    }
+
+    startIndex += startStr.length;
+    return __EC__.substr(startIndex, endIndex - startIndex);
+  };
+
+})(sn);

@@ -68,7 +68,7 @@ describe('sn.date', function () {
 
   describe('addMilliseconds', function () {
 
-    it('should correctly add miliseconds', function () {
+    it('should correctly add milliseconds', function () {
       var d1 = getDate();
       var d2 = getDate();
       var d3 = getDate();

@@ -1,11 +1,5 @@
 (function (sn) {
 
-  //PRIVATE
-  var assertIsArray = function (arr) {
-    sn(arr || __EC__).assert.is.array();
-  };
-
-  //PUBLIC
 
   /**********************************************
   * Loop over array. this in callback function will ber set to array.
@@ -13,8 +7,6 @@
   * @param callback {Function} callback function that will be called on each iteration
   ************************************************/
   sn.each = function (callback) {
-    assertIsArray();
-
     for (var i = 0, l = __EC__.length; i < l; i++) {
       if (callback.call(__EC__, __EC__[i], i) === false) {
         break;
@@ -46,8 +38,6 @@
   sn.remove = function (elToRemove, max) {
     var pos;
 
-    assertIsArray();
-
     while (pos !== -1 && max !== 0) {
       if (max) {
         if (max >= 1) {
@@ -78,8 +68,6 @@
     var currentIndex = __EC__.length;
     var temporaryValue;
     var randomIndex;
-
-    assertIsArray();
 
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
@@ -118,9 +106,6 @@
   ***********************************************/
   sn.unique = function (originalArr) {
     var arr = [];
-
-    assertIsArray();
-
     for (var i = 0; i < originalArr.length; i++) {
       if (arr.indexOf(originalArr[i]) === -1) {
         arr.push(originalArr[i]);
@@ -137,8 +122,6 @@
   * @return array item if found or undefined if not found
   **********************************************/
   sn.first = function (arr, condition) {
-    assertIsArray();
-
     if (arr && arr.length) {
       if (condition) {
         for (var i = 0; i < arr.length; i++) {
@@ -163,8 +146,6 @@
   * @return array item if found or undefined if not found
   ***********************************************************/
   sn.last = function (arr, condition) {
-    assertIsArray();
-
     if (arr && arr.length) {
       if (condition) {
         for (var i = arr.length - 1; i >= 0; i--) {
@@ -186,10 +167,6 @@
    * @param defaultArray [optional] {Array} default array that will be used as a stack base
   *********************************************/
   sn.stack = function (defaultArray) {
-    if (defaultArray) {
-      assertIsArray();
-    }
-
     return (function () {
       var _stack = defaultArray || [];
       return {
@@ -217,10 +194,6 @@
    * @param defaultArray [optional] {Array} default array that will be used as a queue base
   *********************************************/
   sn.queue = function (defaultArray) {
-    if (defaultArray) {
-      assertIsArray();
-    }
-
     return (function () {
       var _queue = defaultArray || [];
       return {
