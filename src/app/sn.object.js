@@ -50,4 +50,4 @@ sn.extend = function() {
     });
   }
   return arguments[0];
-}
+};
