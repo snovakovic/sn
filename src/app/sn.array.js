@@ -1,5 +1,7 @@
 (function (sn) {
 
+  //PUBLIC
+
 
   /**********************************************
   * Loop over array. this in callback function will ber set to array.
@@ -15,6 +17,7 @@
     return sn;
   };
 
+
   /**********************************************
   * Iterate specific number of times.
   * @param l {Number} number of times we want to iterate
@@ -27,6 +30,7 @@
       }
     }
   };
+
 
   /***********************************************
   * Remove all occurrences of element from array
@@ -58,6 +62,7 @@
     return __EC__;
   };
 
+
   /*******************************************************
   * Shuffle values in the array
   * https://github.com/Daplie/knuth-shuffle
@@ -85,6 +90,7 @@
     return __EC__;
   };
 
+
   /*********************************************
   * Get the new array filled with default values
   * @param val {Any} default array value
@@ -97,6 +103,7 @@
     }
     return rv;
   };
+
 
   /*************************************************
   * Returns new array containing only unique values from original array
@@ -113,6 +120,7 @@
     }
     return arr;
   };
+
 
   /********************************************s
   * Returns first element of array if no condition is passed,
@@ -162,6 +170,7 @@
 
   };
 
+
   /*********************************************
    * Stack implementation LIFO last in first out
    * @param defaultArray [optional] {Array} default array that will be used as a stack base
@@ -189,9 +198,10 @@
     })();
   };
 
+
   /*********************************************
-  * Queue implementation FIFI: first in first out
-   * @param defaultArray [optional] {Array} default array that will be used as a queue base
+  * Queue implementation FIFO: first in first out
+  * @param defaultArray [optional] {Array} default array that will be used as a queue base
   *********************************************/
   sn.queue = function (defaultArray) {
     return (function () {

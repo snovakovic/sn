@@ -2,12 +2,13 @@
 
   //PUBLIC
 
+
   /**************************************************
   * Remove all occurrences of substring in string
   * @param whatToReplace {String}
   * @param replaceWith {String}
   * @return {String} string with replaced old values with new values
-**************************************************/
+  **************************************************/
   sn.replaceAll = function (whatToReplace, replaceWith) {
     return typeof __EC__ === 'string'
       ? __EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
@@ -70,7 +71,7 @@
   * Truncate string if it exceed max number of characters,
   * apply provided truncate string at the end of truncated string (default: '...')
   * @param length {Number} cut the string after this number of characters
-  * @param appender {String} [default: '...'] string that will be appended to truncated string
+  * @param appender [optional, default: '...'] {String} string that will be appended to truncated string
   * @return {String} truncated string
   **********************************************/
   sn.truncate = function (length, appender) {
