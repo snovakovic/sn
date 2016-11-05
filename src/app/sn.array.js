@@ -1,7 +1,8 @@
 (function (sn) {
 
-  //PUBLIC
+  //PRIVATE
 
+  //PUBLIC
 
   /**********************************************
   * Loop over array. this in callback function will ber set to array.
@@ -170,63 +171,65 @@
 
   };
 
+  //Stack && Queue implementation
+  (function (sn) {
 
-  /*********************************************
-   * Stack implementation LIFO last in first out
-   * @param defaultArray [optional] {Array} default array that will be used as a stack base
-  *********************************************/
-  sn.stack = function (defaultArray) {
-    return (function () {
-      var _stack = defaultArray || [];
-      return {
-        add: function (val) {
-          Array.isArray(val) ? Array.prototype.push.apply(_stack, val) : _stack.push(val);
-        },
-        remove: function () {
-          return _stack.length ? _stack.pop() : null;
-        },
-        peek: function () {
-          return _stack.length ? _stack[_stack.length - 1] : null;
-        },
-        get array() {
-          return _stack;
-        },
-        get length() {
-          return _stack.length;
-        }
-      };
-    })();
-  };
+    var stackQueueBase = {
+      init: function (baseArray) {
+        this.__array__ = baseArray || [];
+      },
+      add: function (val) {
+        Array.isArray(val)
+          ? Array.prototype.push.apply(this.__array__, val)
+          : this.__array__.push(val);
+      },
+      get array() {
+        return this.__array__;
+      },
+      get length() {
+        return this.__array__.length;
+      }
+    };
+
+    var Stack = Object.create(stackQueueBase);
+    Stack.remove = function () {
+      return this.__array__.length ? this.__array__.pop() : null;
+    };
+    Stack.peek = function () {
+      return this.__array__.length ? this.__array__[this.__array__.length - 1] : null;
+    };
+
+    var Queue = Object.create(stackQueueBase);
+    Queue.remove = function () {
+      return this.__array__.length ? this.__array__.shift() : null;
+    };
+    Queue.peek = function () {
+      return this.__array__.length ? this.__array__[0] : null;
+    };
 
 
-  /*********************************************
-  * Queue implementation FIFO: first in first out
-  * @param defaultArray [optional] {Array} default array that will be used as a queue base
-  *********************************************/
-  sn.queue = function (defaultArray) {
-    return (function () {
-      var _queue = defaultArray || [];
-      return {
-        add: function (val) {
-          Array.isArray(val) ? Array.prototype.push.apply(_queue, val) : _queue.push(val);
-        },
-        addRange: function (range) {
-          Array.prototype.push.apply(_queue, range);
-        },
-        remove: function () {
-          return _queue.length ? _queue.shift() : null;
-        },
-        peek: function () {
-          return _queue.length ? _queue[0] : null;
-        },
-        get array() {
-          return _queue;
-        },
-        get length() {
-          return _queue.length;
-        }
-      };
-    })();
-  };
+    /*********************************************
+     * Stack implementation LIFO last in first out
+     * @param defaultArray [optional] {Array} default array that will be used as a stack base
+    *********************************************/
+    sn.stack = function (defaultArray) {
+      var stack = Object.create(Stack);
+      stack.init(defaultArray);
+      return stack;
+    };
+
+
+    /*********************************************
+    * Queue implementation FIFO: first in first out
+    * @param defaultArray [optional] {Array} default array that will be used as a queue base
+    *********************************************/
+    sn.queue = function (defaultArray) {
+      var queue = Object.create(Queue);
+      queue.init(defaultArray);
+      return queue;
+    };
+
+  })(sn);
+
 
 })(sn);

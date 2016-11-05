@@ -23,6 +23,9 @@
 
 (function (sn) {
 
+  //PRIVATE
+
+  //PUBLIC
 
   /**********************************************
   * Loop over array. this in callback function will ber set to array.
@@ -38,6 +41,7 @@
     return sn;
   };
 
+
   /**********************************************
   * Iterate specific number of times.
   * @param l {Number} number of times we want to iterate
@@ -50,6 +54,7 @@
       }
     }
   };
+
 
   /***********************************************
   * Remove all occurrences of element from array
@@ -81,6 +86,7 @@
     return __EC__;
   };
 
+
   /*******************************************************
   * Shuffle values in the array
   * https://github.com/Daplie/knuth-shuffle
@@ -108,6 +114,7 @@
     return __EC__;
   };
 
+
   /*********************************************
   * Get the new array filled with default values
   * @param val {Any} default array value
@@ -120,6 +127,7 @@
     }
     return rv;
   };
+
 
   /*************************************************
   * Returns new array containing only unique values from original array
@@ -136,6 +144,7 @@
     }
     return arr;
   };
+
 
   /********************************************s
   * Returns first element of array if no condition is passed,
@@ -185,62 +194,66 @@
 
   };
 
-  /*********************************************
-   * Stack implementation LIFO last in first out
-   * @param defaultArray [optional] {Array} default array that will be used as a stack base
-  *********************************************/
-  sn.stack = function (defaultArray) {
-    return (function () {
-      var _stack = defaultArray || [];
-      return {
-        add: function (val) {
-          Array.isArray(val) ? Array.prototype.push.apply(_stack, val) : _stack.push(val);
-        },
-        remove: function () {
-          return _stack.length ? _stack.pop() : null;
-        },
-        peek: function () {
-          return _stack.length ? _stack[_stack.length - 1] : null;
-        },
-        get array() {
-          return _stack;
-        },
-        get length() {
-          return _stack.length;
-        }
-      };
-    })();
-  };
+  //Stack && Queue implementation
+  (function (sn) {
 
-  /*********************************************
-  * Queue implementation FIFI: first in first out
-   * @param defaultArray [optional] {Array} default array that will be used as a queue base
-  *********************************************/
-  sn.queue = function (defaultArray) {
-    return (function () {
-      var _queue = defaultArray || [];
-      return {
-        add: function (val) {
-          Array.isArray(val) ? Array.prototype.push.apply(_queue, val) : _queue.push(val);
-        },
-        addRange: function (range) {
-          Array.prototype.push.apply(_queue, range);
-        },
-        remove: function () {
-          return _queue.length ? _queue.shift() : null;
-        },
-        peek: function () {
-          return _queue.length ? _queue[0] : null;
-        },
-        get array() {
-          return _queue;
-        },
-        get length() {
-          return _queue.length;
-        }
-      };
-    })();
-  };
+    var stackQueueBase = {
+      init: function (baseArray) {
+        this.__array__ = baseArray || [];
+      },
+      add: function (val) {
+        Array.isArray(val)
+          ? Array.prototype.push.apply(this.__array__, val)
+          : this.__array__.push(val);
+      },
+      get array() {
+        return this.__array__;
+      },
+      get length() {
+        return this.__array__.length;
+      }
+    };
+
+    var Stack = Object.create(stackQueueBase);
+    Stack.remove = function () {
+      return this.__array__.length ? this.__array__.pop() : null;
+    };
+    Stack.peek = function () {
+      return this.__array__.length ? this.__array__[this.__array__.length - 1] : null;
+    };
+
+    var Queue = Object.create(stackQueueBase);
+    Queue.remove = function () {
+      return this.__array__.length ? this.__array__.shift() : null;
+    };
+    Queue.peek = function () {
+      return this.__array__.length ? this.__array__[0] : null;
+    };
+
+
+    /*********************************************
+     * Stack implementation LIFO last in first out
+     * @param defaultArray [optional] {Array} default array that will be used as a stack base
+    *********************************************/
+    sn.stack = function (defaultArray) {
+      var stack = Object.create(Stack);
+      stack.init(defaultArray);
+      return stack;
+    };
+
+
+    /*********************************************
+    * Queue implementation FIFO: first in first out
+    * @param defaultArray [optional] {Array} default array that will be used as a queue base
+    *********************************************/
+    sn.queue = function (defaultArray) {
+      var queue = Object.create(Queue);
+      queue.init(defaultArray);
+      return queue;
+    };
+
+  })(sn);
+
 
 })(sn);
 
@@ -776,12 +789,13 @@ sn.extend = function() {
 
   //PUBLIC
 
+
   /**************************************************
   * Remove all occurrences of substring in string
   * @param whatToReplace {String}
   * @param replaceWith {String}
   * @return {String} string with replaced old values with new values
-**************************************************/
+  **************************************************/
   sn.replaceAll = function (whatToReplace, replaceWith) {
     return typeof __EC__ === 'string'
       ? __EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
@@ -844,7 +858,7 @@ sn.extend = function() {
   * Truncate string if it exceed max number of characters,
   * apply provided truncate string at the end of truncated string (default: '...')
   * @param length {Number} cut the string after this number of characters
-  * @param appender {String} [default: '...'] string that will be appended to truncated string
+  * @param appender [optional, default: '...'] {String} string that will be appended to truncated string
   * @return {String} truncated string
   **********************************************/
   sn.truncate = function (length, appender) {
