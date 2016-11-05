@@ -190,6 +190,19 @@ describe('sn.date', function () {
 
   describe('Readme examples', function () {
     it('Readme examples should be correct', function () {
+      var d1 = new Date(1987, 10, 14);
+      var d2 = new Date(1987, 10, 30);
+
+      //is.lastDayOfMonth
+      expect(sn(d1).is.lastDayOfMonth()).toEqual(false);
+      expect(sn(d2).is.lastDayOfMonth()).toEqual(true);
+
+      //getLastDayOfMonth
+      expect(sn(d1).getLastDayOfMonth()).toEqual(30);
+
+      sn(d1).setLastDayOfMonth();
+      expect(sn(d1).is.lastDayOfMonth()).toEqual(false);
+      (sn(sn().setLastDayOfMonth()).isLastDayOfMont()).toEqual(true);
 
     });
   });

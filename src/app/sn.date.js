@@ -126,7 +126,7 @@
         },
         name: 'January',
         shortName: 'Jan',
-        days: 31,
+        days: 31
       }, {
         index: 1,
         get month() {
@@ -134,7 +134,7 @@
         },
         name: 'February',
         shortName: 'Feb',
-        days: [28, 29],
+        days: [28, 29]
       }, {
         index: 2,
         get month() {
@@ -142,7 +142,7 @@
         },
         name: 'March',
         shortName: 'Mar',
-        days: 31,
+        days: 31
       }, {
         index: 3,
         get month() {
@@ -150,7 +150,7 @@
         },
         name: 'April',
         shortName: 'Apr',
-        days: 30,
+        days: 30
       }, {
         index: 4,
         get month() {
@@ -158,7 +158,7 @@
         },
         name: 'May',
         shortName: 'May',
-        days: 31,
+        days: 31
       }, {
         index: 5,
         get month() {
@@ -166,7 +166,7 @@
         },
         name: 'June',
         shortName: 'Jun',
-        days: 30,
+        days: 30
       }, {
         index: 6,
         get month() {
@@ -174,7 +174,7 @@
         },
         name: 'July',
         shortName: 'Jul',
-        days: 31,
+        days: 31
       }, {
         index: 7,
         get month() {
@@ -182,7 +182,7 @@
         },
         name: 'August',
         shortName: 'Aug',
-        days: 31,
+        days: 31
       }, {
         index: 8,
         get month() {
@@ -190,7 +190,7 @@
         },
         name: 'September',
         shortName: 'Sep',
-        days: 30,
+        days: 30
       }, {
         index: 9,
         get month() {
@@ -198,7 +198,7 @@
         },
         name: 'October',
         shortName: 'Oct',
-        days: 31,
+        days: 31
       }, {
         index: 10,
         get month() {
@@ -206,7 +206,7 @@
         },
         name: 'November',
         shortName: 'Nov',
-        days: 30,
+        days: 30
       }, {
         index: 11,
         get month() {
@@ -214,10 +214,9 @@
         },
         name: 'December',
         shortName: 'Dec',
-        days: 31,
+        days: 31
       }
     ];
   };
 
 })(sn);
-

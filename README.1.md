@@ -179,10 +179,10 @@ Check if day in date is equal to last day of date month.
 
 ```javascript
 var d1 = new Date(1987, 10, 14);
-var d2 = new Date(1987, 14, 31);
+var d2 = new Date(1987, 10, 30);
 
-sn(d1).is.lastDayOfMonth() //=> false
-sn(d2).is.lastDayOfMonth() //=> true
+sn(d1).is.lastDayOfMonth(); //=> false
+sn(d2).is.lastDayOfMonth(); //=> true
 ```
 
 #### getLastDayOfMonth
@@ -191,10 +191,9 @@ If date is not provided it will get last day of the month for current month.
 
 ```javascript
 var d1 = new Date(1987, 10, 14);
-var d2 = new Date(1987, 14, 31);
 
-sn(d1).getLastDayOfMonth() //=> 31
-sn().getLastDayOfMonth() //=> depend's on current month
+sn(d1).getLastDayOfMonth(); //=> 30
+var d2 = sn().getLastDayOfMonth(); //=> depends on current month
 ```
 
 #### setLastDayOfMonth
@@ -204,10 +203,10 @@ If date is not provided create new date that point to last day of current month
 ```javascript
 var d1 = new Date(1987, 10, 14);
 
-sn(d1).setLastDayOfMonth() //=> Thu Nov 31 1987 00:00:00
-console.log(d1) //=> Thu Nov 31 1987 00:00:00
+sn(d1).setLastDayOfMonth(); //=> Thu Nov 30 1987 00:00:00
+console.log(d1); //=> Thu Nov 30 1987 00:00:00
 
-sn().setLastDayOfMonth() //=> depends on current month
+sn().setLastDayOfMonth(); //=> depends on current month
 ```
 
 #### addMilliseconds
@@ -220,13 +219,12 @@ var d2 = new Date(1987, 10, 14);
 
 console.log(d1) //=> Thu Nov 14 1987 00:00:00
 
-sn(d1).addMilliseconds(3000) //=> Thu Nov 14 1987 00:00:03
-sn(d2).addMilliseconds(-3000) //=> Thu Nov 13 1987 23:59:57
-sn().addMilliseconds(5000) //=> Depends on current date
+sn(d1).addMilliseconds(3000); //=> Thu Nov 14 1987 00:00:03
+sn(d2).addMilliseconds(-3000); //=> Thu Nov 13 1987 23:59:57
+sn().addMilliseconds(5000); //=> Depends on current date
 
 console.log(d1) //=> Thu Nov 14 1987 00:00:03
 
-sn().setLastDayOfMonth() //=> depends on current month
 ```
 
 #### addSeconds
@@ -235,7 +233,7 @@ If date is not provided it will create new current date and add/subtract seconds
 
 ```javascript
 var d1 = new Date(1987, 10, 14);
-sn(d1).addSeconds(3) //=> Thu Nov 14 1987 00:00:03
+sn(d1).addSeconds(3); //=> Thu Nov 14 1987 00:00:03
 ```
 
 #### addMinutes
@@ -244,7 +242,7 @@ If date is not provided it will create new current date and add/subtract minutes
 
 ```javascript
 var d1 = new Date(1987, 10, 14);
-sn(d1).addMinutes(3) //=> Thu Nov 14 1987 00:03:00
+sn(d1).addMinutes(3); //=> Thu Nov 14 1987 00:03:00
 ```
 
 #### addHours
@@ -253,7 +251,7 @@ If date is not provided it will create new current date and add/subtract hours f
 
 ```javascript
 var d1 = new Date(1987, 10, 14);
-sn(d1).addHours(3) //=> Thu Nov 14 1987 03:00:00
+sn(d1).addHours(3); //=> Thu Nov 14 1987 03:00:00
 ```
 
 #### addDays
@@ -262,7 +260,7 @@ If date is not provided it will create new current date and add/subtract days fr
 
 ```javascript
 var d1 = new Date(1987, 10, 14);
-sn(d1).addDays(3) //=> Thu Nov 14 1987 00:00:00
+sn(d1).addDays(3); //=> Thu Nov 17 1987 00:00:00
 ```
 
 #### addMonths
@@ -271,7 +269,7 @@ If date is not provided it will create new current date and add/subtract months 
 
 ```javascript
 var d1 = new Date(1987, 10, 14);
-sn(d1).addMonths(-3) //=> Thu Aug 14 1987 00:00:00
+sn(d1).addMonths(-3); //=> Thu Aug 14 1987 00:00:00
 ```
 
 #### addYears
@@ -280,7 +278,7 @@ If date is not provided it will create new current date and add/subtract years f
 
 ```javascript
 var d1 = new Date(1987, 10, 14);
-sn(d1).addMonths(3) //=> Thu Nov 14 1990 00:00:00
+sn(d1).addMonths(3); //=> Thu Nov 14 1990 00:00:00
 ```
 
 #### getMonths
@@ -288,8 +286,8 @@ Get the list of englis months with short and long names.
 If date is not provided it will create new current date and add/subtract months from it.
 
 ```javascript
-sn.getMonths()
-//=> Thu Nov 14 1987 00:00:03
+sn.getMonths();
+/*
   {
       index: 0,
       month: 1
@@ -304,6 +302,7 @@ sn.getMonths()
       days: [28, 29],
     }
     .....
+*/
 
 //if you need list of short names you can use map
 var monthShortNames = sn.getMonths().map(function(m) { return m.shortName; });
