@@ -201,8 +201,8 @@ describe('sn.date', function () {
       expect(sn(d1).getLastDayOfMonth()).toEqual(30);
 
       sn(d1).setLastDayOfMonth();
-      expect(sn(d1).is.lastDayOfMonth()).toEqual(false);
-      (sn(sn().setLastDayOfMonth()).isLastDayOfMont()).toEqual(true);
+      expect(sn(d1).is.lastDayOfMonth()).toEqual(true);
+      expect(sn(sn().setLastDayOfMonth()).is.lastDayOfMonth()).toEqual(true);
 
     });
   });

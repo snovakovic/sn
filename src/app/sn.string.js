@@ -1,9 +1,9 @@
 ﻿sn.replaceAll = function (whatToReplace) {
   return {
     with: function (replaceWith) {
-      return typeof sn.__EC__ === 'string'
-        ? sn.__EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
-        : sn.__EC__;
+      return typeof __EC__ === 'string'
+        ? __EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
+        : __EC__;
     }
   };
 };
@@ -66,13 +66,13 @@ sn.truncate = function (str, length, truncateStr) {
 TODO: not documented or tested
 ***************************************************/
 sn.between = function (startStr, endStr) {
-  var startIndex = sn.__EC__.indexOf(startStr);
-  var endIndex = sn.__EC__.indexOf(endStr);
+  var startIndex = __EC__.indexOf(startStr);
+  var endIndex = __EC__.indexOf(endStr);
 
   if (startIndex === -1 || startIndex === -1) {
     return undefined;
   }
 
   startIndex += startStr.length;
-  return sn.__EC__.substr(startIndex, endIndex - startIndex);
+  return __EC__.substr(startIndex, endIndex - startIndex);
 };

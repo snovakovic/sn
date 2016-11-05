@@ -2,9 +2,9 @@
 
   var internals = {
     getDate: function () {
-      if (sn.__EC__) {
-        sn.assert.is.date(sn.__EC__);
-        return sn.__EC__;
+      if (__EC__) {
+        sn.assert.is.date(__EC__);
+        return __EC__;
       }
 
       return new Date();

@@ -30,7 +30,7 @@
   * for everything else === is used.
   * ********************************* */
   sn.is = function (t2) {
-    var t1 = sn.__EC__;
+    var t1 = __EC__;
     if ((internals.isString(t1) || internals.isNumber(t1)) && (internals.isString(t2) || internals.isNumber(t2))) {
       //this covers coercion between string and number without any gotchas
       return (typeof t1 === typeof t2)
@@ -58,14 +58,14 @@
    * sn('\n\t').is.empty(); => true
   ********************************************************/
   sn.is.empty = function () {
-    if (sn.__EC__ == null
-      || (typeof sn.__EC__ === 'string' && (/^\s*$/).test(sn.__EC__))) {
+    if (__EC__ == null
+      || (typeof __EC__ === 'string' && (/^\s*$/).test(__EC__))) {
       return true;
     }
 
-    if (typeof sn.__EC__ === 'object') {
-      for (var key in sn.__EC__) {
-        if (sn.__EC__.hasOwnProperty(key)) {
+    if (typeof __EC__ === 'object') {
+      for (var key in __EC__) {
+        if (__EC__.hasOwnProperty(key)) {
           return false;
         }
       }
@@ -80,46 +80,46 @@
    * START: data type checks
    **************************************/
   sn.is.string = function () {
-    return internals.isString(sn.__EC__);
+    return internals.isString(__EC__);
   };
 
   sn.is.number = function () {
-    return internals.isNumber(sn.__EC__);
+    return internals.isNumber(__EC__);
   };
 
   sn.is.boolean = function () {
-    return typeof sn.__EC__ === 'boolean';
+    return typeof __EC__ === 'boolean';
   };
 
   sn.is.null = function () {
-    return sn.__EC__ === null;
+    return __EC__ === null;
   };
 
   sn.is.undefined = function () {
-    typeof sn.__EC__ === 'undefined';
+    typeof __EC__ === 'undefined';
   };
 
   //not null and undefined
   sn.is.defined = function () {
-    return sn.__EC__ != null;
+    return __EC__ != null;
   };
 
   sn.is.object = function () {
-    return typeof sn.__EC__ === 'object'
-      && sn.__EC__ !== null
-      && !Array.isArray(sn.__EC__);
+    return typeof __EC__ === 'object'
+      && __EC__ !== null
+      && !Array.isArray(__EC__);
   };
 
   sn.is.function = function () {
-    return typeof sn.__EC__ === 'function';
+    return typeof __EC__ === 'function';
   };
 
   sn.is.array = function () {
-    return typeof sn.__EC__ === 'object' && Array.isArray(sn.__EC__);
+    return typeof __EC__ === 'object' && Array.isArray(__EC__);
   };
 
   sn.is.date = function () {
-    return internals.isDate(sn.__EC__);
+    return internals.isDate(__EC__);
   };
 
   /***************************************

@@ -1,15 +1,14 @@
 /**********************************************
-* Loop throught array. this in callback function will ber set to array.
+* Loop over array. this in callback function will ber set to array.
 * @param arr {Array} array we want to iterate
 * @param callback {Function} callback function that will be called on each iteration
 ************************************************/
 sn.each = function(callback) {
-  for (var i = 0, l = sn.__EC__.length; i < l; i++) {
-    if (callback.call(sn.__EC__, sn.__EC__[i], i) === false) {
+  for (var i = 0, l = __EC__.length; i < l; i++) {
+    if (callback.call(__EC__, __EC__[i], i) === false) {
       break;
     }
   }
-
   return sn;
 };
 
@@ -39,21 +38,21 @@ sn.remove = function(elToRemove, max) {
   while (pos !== -1 && max !== 0) {
     if (max) {
       if (max >= 1) {
-        pos = sn.__EC__.indexOf(elToRemove);
+        pos = __EC__.indexOf(elToRemove);
         max--;
       } else {
-        pos = sn.__EC__.lastIndexOf(elToRemove);
+        pos = __EC__.lastIndexOf(elToRemove);
         max++;
       }
 
     } else {
-      pos = sn.__EC__.indexOf(elToRemove);
+      pos = __EC__.indexOf(elToRemove);
     }
 
-    pos > -1 && sn.__EC__.splice(pos, 1);
+    pos > -1 && __EC__.splice(pos, 1);
   }
 
-  return sn.__EC__;
+  return __EC__;
 };
 
 /*******************************************************
@@ -63,7 +62,7 @@ sn.remove = function(elToRemove, max) {
 * @return {Array} shuffled array
 ********************************************************/
 sn.shuffle = function() {
-  var currentIndex = sn.__EC__.length;
+  var currentIndex = __EC__.length;
   var temporaryValue;
   var randomIndex;
 
@@ -75,12 +74,12 @@ sn.shuffle = function() {
     currentIndex -= 1;
 
     // And swap it with the current element.
-    temporaryValue = sn.__EC__[currentIndex];
-    sn.__EC__[currentIndex] = sn.__EC__[randomIndex];
-    sn.__EC__[randomIndex] = temporaryValue;
+    temporaryValue = __EC__[currentIndex];
+    __EC__[currentIndex] = __EC__[randomIndex];
+    __EC__[randomIndex] = temporaryValue;
   }
 
-  return sn.__EC__;
+  return __EC__;
 };
 
 /*********************************************

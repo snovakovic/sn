@@ -3,34 +3,35 @@
     author: stefan.novakovich@gmail.com
     version: 0.0.1
  ***************************************************/
-(function(global, factory) {
+(function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
       (global.sn = factory());
-} (this, (function() {
+} (this, (function () {
 
   'use strict';
 
+  var __EC__; //execution context
+
   function sn(executionContext) {
-    sn.__EC__ = executionContext;
+    __EC__ = executionContext;
     return sn;
   }
 
-  //app files will be concatinated here and then this will be closed with sn.end.js
+  //app files will be concatenated here and then this will be closed with sn.end.js
 
 
 /**********************************************
-* Loop throught array. this in callback function will ber set to array.
+* Loop over array. this in callback function will ber set to array.
 * @param arr {Array} array we want to iterate
 * @param callback {Function} callback function that will be called on each iteration
 ************************************************/
 sn.each = function(callback) {
-  for (var i = 0, l = sn.__EC__.length; i < l; i++) {
-    if (callback.call(sn.__EC__, sn.__EC__[i], i) === false) {
+  for (var i = 0, l = __EC__.length; i < l; i++) {
+    if (callback.call(__EC__, __EC__[i], i) === false) {
       break;
     }
   }
-
   return sn;
 };
 
@@ -60,21 +61,21 @@ sn.remove = function(elToRemove, max) {
   while (pos !== -1 && max !== 0) {
     if (max) {
       if (max >= 1) {
-        pos = sn.__EC__.indexOf(elToRemove);
+        pos = __EC__.indexOf(elToRemove);
         max--;
       } else {
-        pos = sn.__EC__.lastIndexOf(elToRemove);
+        pos = __EC__.lastIndexOf(elToRemove);
         max++;
       }
 
     } else {
-      pos = sn.__EC__.indexOf(elToRemove);
+      pos = __EC__.indexOf(elToRemove);
     }
 
-    pos > -1 && sn.__EC__.splice(pos, 1);
+    pos > -1 && __EC__.splice(pos, 1);
   }
 
-  return sn.__EC__;
+  return __EC__;
 };
 
 /*******************************************************
@@ -84,7 +85,7 @@ sn.remove = function(elToRemove, max) {
 * @return {Array} shuffled array
 ********************************************************/
 sn.shuffle = function() {
-  var currentIndex = sn.__EC__.length;
+  var currentIndex = __EC__.length;
   var temporaryValue;
   var randomIndex;
 
@@ -96,12 +97,12 @@ sn.shuffle = function() {
     currentIndex -= 1;
 
     // And swap it with the current element.
-    temporaryValue = sn.__EC__[currentIndex];
-    sn.__EC__[currentIndex] = sn.__EC__[randomIndex];
-    sn.__EC__[randomIndex] = temporaryValue;
+    temporaryValue = __EC__[currentIndex];
+    __EC__[currentIndex] = __EC__[randomIndex];
+    __EC__[randomIndex] = temporaryValue;
   }
 
-  return sn.__EC__;
+  return __EC__;
 };
 
 /*********************************************
@@ -270,7 +271,7 @@ sn.queue = function(defaultArray) {
   * for everything else === is used.
   * ********************************* */
   sn.is = function (t2) {
-    var t1 = sn.__EC__;
+    var t1 = __EC__;
     if ((internals.isString(t1) || internals.isNumber(t1)) && (internals.isString(t2) || internals.isNumber(t2))) {
       //this covers coercion between string and number without any gotchas
       return (typeof t1 === typeof t2)
@@ -298,14 +299,14 @@ sn.queue = function(defaultArray) {
    * sn('\n\t').is.empty(); => true
   ********************************************************/
   sn.is.empty = function () {
-    if (sn.__EC__ == null
-      || (typeof sn.__EC__ === 'string' && (/^\s*$/).test(sn.__EC__))) {
+    if (__EC__ == null
+      || (typeof __EC__ === 'string' && (/^\s*$/).test(__EC__))) {
       return true;
     }
 
-    if (typeof sn.__EC__ === 'object') {
-      for (var key in sn.__EC__) {
-        if (sn.__EC__.hasOwnProperty(key)) {
+    if (typeof __EC__ === 'object') {
+      for (var key in __EC__) {
+        if (__EC__.hasOwnProperty(key)) {
           return false;
         }
       }
@@ -320,46 +321,46 @@ sn.queue = function(defaultArray) {
    * START: data type checks
    **************************************/
   sn.is.string = function () {
-    return internals.isString(sn.__EC__);
+    return internals.isString(__EC__);
   };
 
   sn.is.number = function () {
-    return internals.isNumber(sn.__EC__);
+    return internals.isNumber(__EC__);
   };
 
   sn.is.boolean = function () {
-    return typeof sn.__EC__ === 'boolean';
+    return typeof __EC__ === 'boolean';
   };
 
   sn.is.null = function () {
-    return sn.__EC__ === null;
+    return __EC__ === null;
   };
 
   sn.is.undefined = function () {
-    typeof sn.__EC__ === 'undefined';
+    typeof __EC__ === 'undefined';
   };
 
   //not null and undefined
   sn.is.defined = function () {
-    return sn.__EC__ != null;
+    return __EC__ != null;
   };
 
   sn.is.object = function () {
-    return typeof sn.__EC__ === 'object'
-      && sn.__EC__ !== null
-      && !Array.isArray(sn.__EC__);
+    return typeof __EC__ === 'object'
+      && __EC__ !== null
+      && !Array.isArray(__EC__);
   };
 
   sn.is.function = function () {
-    return typeof sn.__EC__ === 'function';
+    return typeof __EC__ === 'function';
   };
 
   sn.is.array = function () {
-    return typeof sn.__EC__ === 'object' && Array.isArray(sn.__EC__);
+    return typeof __EC__ === 'object' && Array.isArray(__EC__);
   };
 
   sn.is.date = function () {
-    return internals.isDate(sn.__EC__);
+    return internals.isDate(__EC__);
   };
 
   /***************************************
@@ -410,9 +411,9 @@ sn.queue = function(defaultArray) {
 
   var internals = {
     getDate: function () {
-      if (sn.__EC__) {
-        sn.assert.is.date(sn.__EC__);
-        return sn.__EC__;
+      if (__EC__) {
+        sn.assert.is.date(__EC__);
+        return __EC__;
       }
 
       return new Date();
@@ -534,7 +535,7 @@ sn.queue = function(defaultArray) {
         },
         name: 'January',
         shortName: 'Jan',
-        days: 31,
+        days: 31
       }, {
         index: 1,
         get month() {
@@ -542,7 +543,7 @@ sn.queue = function(defaultArray) {
         },
         name: 'February',
         shortName: 'Feb',
-        days: [28, 29],
+        days: [28, 29]
       }, {
         index: 2,
         get month() {
@@ -550,7 +551,7 @@ sn.queue = function(defaultArray) {
         },
         name: 'March',
         shortName: 'Mar',
-        days: 31,
+        days: 31
       }, {
         index: 3,
         get month() {
@@ -558,7 +559,7 @@ sn.queue = function(defaultArray) {
         },
         name: 'April',
         shortName: 'Apr',
-        days: 30,
+        days: 30
       }, {
         index: 4,
         get month() {
@@ -566,7 +567,7 @@ sn.queue = function(defaultArray) {
         },
         name: 'May',
         shortName: 'May',
-        days: 31,
+        days: 31
       }, {
         index: 5,
         get month() {
@@ -574,7 +575,7 @@ sn.queue = function(defaultArray) {
         },
         name: 'June',
         shortName: 'Jun',
-        days: 30,
+        days: 30
       }, {
         index: 6,
         get month() {
@@ -582,7 +583,7 @@ sn.queue = function(defaultArray) {
         },
         name: 'July',
         shortName: 'Jul',
-        days: 31,
+        days: 31
       }, {
         index: 7,
         get month() {
@@ -590,7 +591,7 @@ sn.queue = function(defaultArray) {
         },
         name: 'August',
         shortName: 'Aug',
-        days: 31,
+        days: 31
       }, {
         index: 8,
         get month() {
@@ -598,7 +599,7 @@ sn.queue = function(defaultArray) {
         },
         name: 'September',
         shortName: 'Sep',
-        days: 30,
+        days: 30
       }, {
         index: 9,
         get month() {
@@ -606,7 +607,7 @@ sn.queue = function(defaultArray) {
         },
         name: 'October',
         shortName: 'Oct',
-        days: 31,
+        days: 31
       }, {
         index: 10,
         get month() {
@@ -614,7 +615,7 @@ sn.queue = function(defaultArray) {
         },
         name: 'November',
         shortName: 'Nov',
-        days: 30,
+        days: 30
       }, {
         index: 11,
         get month() {
@@ -622,13 +623,12 @@ sn.queue = function(defaultArray) {
         },
         name: 'December',
         shortName: 'Dec',
-        days: 31,
+        days: 31
       }
     ];
   };
 
 })(sn);
-
 
 /**********************************************
 * returns function that can be executed only once
@@ -764,14 +764,14 @@ sn.extend = function() {
     });
   }
   return arguments[0];
-}
+};
 
 sn.replaceAll = function (whatToReplace) {
   return {
     with: function (replaceWith) {
-      return typeof sn.__EC__ === 'string'
-        ? sn.__EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
-        : sn.__EC__;
+      return typeof __EC__ === 'string'
+        ? __EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
+        : __EC__;
     }
   };
 };
@@ -834,15 +834,15 @@ sn.truncate = function (str, length, truncateStr) {
 TODO: not documented or tested
 ***************************************************/
 sn.between = function (startStr, endStr) {
-  var startIndex = sn.__EC__.indexOf(startStr);
-  var endIndex = sn.__EC__.indexOf(endStr);
+  var startIndex = __EC__.indexOf(startStr);
+  var endIndex = __EC__.indexOf(endStr);
 
   if (startIndex === -1 || startIndex === -1) {
     return undefined;
   }
 
   startIndex += startStr.length;
-  return sn.__EC__.substr(startIndex, endIndex - startIndex);
+  return __EC__.substr(startIndex, endIndex - startIndex);
 };
 
   return sn;
