@@ -185,29 +185,29 @@ describe('sn.array', function () {
       var stack = sn.stack();
       stack.add(2);         // stack is now [2]
       stack.add(5);         // stack is now [2, 5]
-      expect(stack.array).toEqual([2, 5]);
+      expect(stack.__array__).toEqual([2, 5]);
       var i = stack.remove(); // stack is now [2]
       expect(i).toEqual(5);
-      expect(stack.array).toEqual([2]);
+      expect(stack.__array__).toEqual([2]);
       i = stack.remove();
       expect(i).toEqual(2);
-      expect(stack.array).toEqual([]);
+      expect(stack.__array__).toEqual([]);
       i = stack.remove();
       expect(i).toEqual(null);
       i = stack.remove();
       expect(i).toEqual(null);
-      expect(stack.array).toEqual([]);
+      expect(stack.__array__).toEqual([]);
     });
 
     it('should operate with default stack correctly', function () {
       var stack = sn.stack([1, 2, 3]);
       stack.add(2);
-      expect(stack.array).toEqual([1, 2, 3, 2]);
-      expect(stack.length).toEqual(4);
+      expect(stack.__array__).toEqual([1, 2, 3, 2]);
+      expect(stack.length()).toEqual(4);
       expect(stack.peek()).toEqual(2);
-      expect(stack.length).toEqual(4);
+      expect(stack.length()).toEqual(4);
       expect(stack.remove()).toEqual(2);
-      expect(stack.length).toEqual(3);
+      expect(stack.length()).toEqual(3);
       expect(stack.remove()).toEqual(3);
     });
 
@@ -221,16 +221,16 @@ describe('sn.array', function () {
       stack3.add(7);
       stack3.add(8);
 
-      expect(stack1.array).toEqual([1, 5]);
-      expect(stack2.array).toEqual([6]);
-      expect(stack3.array).toEqual([7, 8]);
+      expect(stack1.__array__).toEqual([1, 5]);
+      expect(stack2.__array__).toEqual([6]);
+      expect(stack3.__array__).toEqual([7, 8]);
     });
 
     it('add multiple values should work as expected', function () {
       var stack = sn.stack([1]);
       stack.add(2);
       stack.add([3, 4]);
-      expect(stack.array).toEqual([1, 2, 3, 4]);
+      expect(stack.__array__).toEqual([1, 2, 3, 4]);
       expect(stack.peek()).toEqual(4);
     });
 
@@ -238,24 +238,24 @@ describe('sn.array', function () {
       var stack = sn.stack();
       stack.add(2);
       stack.add(3);
-      expect(stack.length).toEqual(2);
-      expect(stack.array).toEqual([2, 3]);
+      expect(stack.length()).toEqual(2);
+      expect(stack.__array__).toEqual([2, 3]);
       expect(stack.peek()).toEqual(3);
       var val = stack.remove();
       expect(val).toEqual(3);
-      expect(stack.length).toEqual(1);
-      expect(stack.array).toEqual([2]);
+      expect(stack.length()).toEqual(1);
+      expect(stack.__array__).toEqual([2]);
 
       var stack2 = sn.stack();
       expect(stack2.remove()).toEqual(null);
-      expect(stack2.array).toEqual([]);
+      expect(stack2.__array__).toEqual([]);
 
       var stack3 = sn.stack([1, 2]);
       stack3.add([3, 4]);
-      expect(stack3.array).toEqual([1, 2, 3, 4]);
+      expect(stack3.__array__).toEqual([1, 2, 3, 4]);
       expect(stack3.remove()).toEqual(4);
       expect(stack3.remove()).toEqual(3);
-      expect(stack3.array).toEqual([1, 2]);
+      expect(stack3.__array__).toEqual([1, 2]);
     });
   });
 
@@ -265,29 +265,29 @@ describe('sn.array', function () {
       var queue = sn.queue();
       queue.add(2);         // queue is now [2]
       queue.add(5);         // queue is now [2, 5]
-      expect(queue.array).toEqual([2, 5]);
+      expect(queue.__array__).toEqual([2, 5]);
       var i = queue.remove(); // queue is now [5]
       expect(i).toEqual(2);
-      expect(queue.array).toEqual([5]);
+      expect(queue.__array__).toEqual([5]);
       i = queue.remove();
       expect(i).toEqual(5);
-      expect(queue.array).toEqual([]);
+      expect(queue.__array__).toEqual([]);
       i = queue.remove();
       expect(i).toEqual(null);
       i = queue.remove();
       expect(i).toEqual(null);
-      expect(queue.array).toEqual([]);
+      expect(queue.__array__).toEqual([]);
     });
 
     it('should operate with default queue correctly', function () {
       var queue = sn.queue([1, 2, 3]);
       queue.add(2);
-      expect(queue.array).toEqual([1, 2, 3, 2]);
-      expect(queue.length).toEqual(4);
+      expect(queue.__array__).toEqual([1, 2, 3, 2]);
+      expect(queue.length()).toEqual(4);
       expect(queue.peek()).toEqual(1);
-      expect(queue.length).toEqual(4);
+      expect(queue.length()).toEqual(4);
       expect(queue.remove()).toEqual(1);
-      expect(queue.length).toEqual(3);
+      expect(queue.length()).toEqual(3);
       expect(queue.peek()).toEqual(2);
       expect(queue.remove()).toEqual(2);
     });
@@ -302,16 +302,16 @@ describe('sn.array', function () {
       queue3.add(7);
       queue3.add(8);
 
-      expect(queue1.array).toEqual([1, 5]);
-      expect(queue2.array).toEqual([6]);
-      expect(queue3.array).toEqual([7, 8]);
+      expect(queue1.__array__).toEqual([1, 5]);
+      expect(queue2.__array__).toEqual([6]);
+      expect(queue3.__array__).toEqual([7, 8]);
     });
 
     it('add multiple values should work as expected', function () {
       var queue = sn.queue([1]);
       queue.add(2);
       queue.add([3, 4]);
-      expect(queue.array).toEqual([1, 2, 3, 4]);
+      expect(queue.__array__).toEqual([1, 2, 3, 4]);
       expect(queue.peek()).toEqual(1);
     });
 
@@ -319,24 +319,24 @@ describe('sn.array', function () {
       var queue = sn.queue();
       queue.add(2);
       queue.add(3);
-      expect(queue.length).toEqual(2);
-      expect(queue.array).toEqual([2, 3]);
+      expect(queue.length()).toEqual(2);
+      expect(queue.__array__).toEqual([2, 3]);
       expect(queue.peek()).toEqual(2);
       var val = queue.remove();
       expect(val).toEqual(2);
-      expect(queue.length).toEqual(1);
-      expect(queue.array).toEqual([3]);
+      expect(queue.length()).toEqual(1);
+      expect(queue.__array__).toEqual([3]);
 
       var queue2 = sn.queue();
       expect(queue2.remove()).toEqual(null);
-      expect(queue2.array).toEqual([]);
+      expect(queue2.__array__).toEqual([]);
 
       var queue3 = sn.queue([1, 2]);
       queue3.add([3, 4]);
-      expect(queue3.array).toEqual([1, 2, 3, 4]);
+      expect(queue3.__array__).toEqual([1, 2, 3, 4]);
       expect(queue3.remove()).toEqual(1);
       expect(queue3.remove()).toEqual(2);
-      expect(queue3.array).toEqual([3, 4]);
+      expect(queue3.__array__).toEqual([3, 4]);
     });
   });
 

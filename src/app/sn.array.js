@@ -171,40 +171,25 @@
 
   };
 
+
   //Stack && Queue implementation
   (function (sn) {
 
-    var stackQueueBase = {
-      init: function (baseArray) {
-        this.__array__ = baseArray || [];
-      },
-      add: function (val) {
+    var stackQueueBase = function (baseArray) {
+      var _arr = this.__array__ = baseArray || [];
+
+      this.add = function (val) {
         Array.isArray(val)
-          ? Array.prototype.push.apply(this.__array__, val)
-          : this.__array__.push(val);
-      },
-      get array() {
-        return this.__array__;
-      },
-      get length() {
-        return this.__array__.length;
-      }
-    };
+          ? Array.prototype.push.apply(_arr, val)
+          : _arr.push(val);
+      };
 
-    var Stack = Object.create(stackQueueBase);
-    Stack.remove = function () {
-      return this.__array__.length ? this.__array__.pop() : null;
-    };
-    Stack.peek = function () {
-      return this.__array__.length ? this.__array__[this.__array__.length - 1] : null;
-    };
+      this.length = function () {
+        return _arr.length;
+      };
 
-    var Queue = Object.create(stackQueueBase);
-    Queue.remove = function () {
-      return this.__array__.length ? this.__array__.shift() : null;
-    };
-    Queue.peek = function () {
-      return this.__array__.length ? this.__array__[0] : null;
+      return this;
+
     };
 
 
@@ -213,8 +198,16 @@
      * @param defaultArray [optional] {Array} default array that will be used as a stack base
     *********************************************/
     sn.stack = function (defaultArray) {
-      var stack = Object.create(Stack);
-      stack.init(defaultArray);
+      var stack = new stackQueueBase(defaultArray);
+      stack.remove = function () {
+        var _arr = this.__array__;
+        return _arr.length ? _arr.pop() : null;
+      };
+      stack.peek = function () {
+        var _arr = this.__array__;
+        return _arr.length ? _arr[_arr.length - 1] : null;
+      };
+
       return stack;
     };
 
@@ -224,8 +217,16 @@
     * @param defaultArray [optional] {Array} default array that will be used as a queue base
     *********************************************/
     sn.queue = function (defaultArray) {
-      var queue = Object.create(Queue);
-      queue.init(defaultArray);
+      var queue = new stackQueueBase(defaultArray);
+      queue.remove = function () {
+        var _arr = this.__array__;
+        return _arr.length ? _arr.shift() : null;
+      };
+      queue.peek = function () {
+        var _arr = this.__array__;
+        return _arr.length ? _arr[0] : null;
+      };
+
       return queue;
     };
 
