@@ -13,7 +13,8 @@
   "globals": {
     "sn": true,
     "require": true,
-    "module": true
+    "module": true,
+    "__EC__": true
   },
   "rules": {
     "no-console": 1,

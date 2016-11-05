@@ -1,21 +1,23 @@
 (function (sn) {
 
-  var internals = {
-    getDate: function () {
-      if (__EC__) {
-        sn.assert.is.date(__EC__);
-        return __EC__;
-      }
-
-      return new Date();
+  //PRIVATE
+  var getDate = function () {
+    if (__EC__) {
+      sn.assert.is.date(__EC__);
+      return __EC__;
     }
+    return new Date();
   };
+
+
+
+  //PUBLIC
 
   /**********************************************
   * Change provided date so that it point to last day of current month
   ************************************************/
   sn.setLastDayOfMonth = function () {
-    var dt = internals.getDate();
+    var dt = getDate();
     dt.setMonth(dt.getMonth() + 1, 0);
     return dt;
   };
@@ -26,7 +28,7 @@
   * @return true -> day is last day of month; false - day is not last day of month
   ************************************************/
   sn.is.lastDayOfMonth = function () {
-    var dt = internals.getDate();
+    var dt = getDate();
     var test = new Date(dt.getTime());
     test.setDate(test.getDate() + 1);
     return test.getDate() === 1;
@@ -35,11 +37,10 @@
 
   /**********************************************
   * Check if day in date is last day of month
-  * @param dt {Date} date we want ot check
   * @return true -> day is last day of month; false - day is not last day of month
   ************************************************/
   sn.getLastDayOfMonth = function () {
-    var dt = internals.getDate();
+    var dt = getDate();
     return (new Date(dt.getFullYear(), dt.getMonth() + 1, 0)).getDate();
   };
 
@@ -49,7 +50,7 @@
   * @param milliseconds {Number} +/- milliseconds to add or remove from date
   ************************************************/
   sn.addMilliseconds = function (milliseconds) {
-    var dt = internals.getDate();
+    var dt = getDate();
     dt.setMilliseconds(dt.getMilliseconds() + milliseconds);
     return dt;
   };
@@ -59,7 +60,7 @@
   * @param seconds {Number} +/- seconds to add or remove from date
   ************************************************/
   sn.addSeconds = function (seconds) {
-    var dt = internals.getDate();
+    var dt = getDate();
     dt.setSeconds(dt.getSeconds() + seconds);
     return dt;
   };
@@ -69,7 +70,7 @@
   * @param minutes {Number} +/- minutes to add or remove from date
   ************************************************/
   sn.addMinutes = function (minutes) {
-    var dt = internals.getDate();
+    var dt = getDate();
     dt.setMinutes(dt.getMinutes() + minutes);
     return dt;
   };
@@ -79,7 +80,7 @@
   * @param hours {Number} +/- hours to add or remove from date
   ************************************************/
   sn.addHours = function (hours) {
-    var dt = internals.getDate();
+    var dt = getDate();
     dt.setHours(dt.getHours() + hours);
     return dt;
   };
@@ -89,7 +90,7 @@
   * @param days {Number} +/- days to add or remove from date
   ************************************************/
   sn.addDays = function (days) {
-    var dt = internals.getDate();
+    var dt = getDate();
     dt.setDate(dt.getDate() + days);
     return dt;
   };
@@ -99,7 +100,7 @@
   * @param months {Number} +/- months to add or remove from date
   ************************************************/
   sn.addMonths = function (months) {
-    var dt = internals.getDate();
+    var dt = getDate();
     dt.setMonth(dt.getMonth() + months);
     return dt;
   };
@@ -109,7 +110,7 @@
   * @param years {Number} +/- years to add or remove from date
   ************************************************/
   sn.addYears = function (years) {
-    var dt = internals.getDate();
+    var dt = getDate();
     dt.setFullYear(dt.getFullYear() + years);
     return dt;
   };
