@@ -188,4 +188,11 @@ describe('sn.date', function () {
   });
 
 
+  describe('Readme examples', function () {
+    it('Readme examples should be correct', function () {
+
+    });
+  });
+
+
 });
