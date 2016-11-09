@@ -793,8 +793,6 @@ sn.extend = function () {
 
 (function (sn) {
 
-    //PUBLIC
-
 
     /**************************************************
     * Remove all occurrences of substring in string
@@ -828,6 +826,10 @@ sn.extend = function () {
     * https://github.com/epeli/underscore.string
     **************************************************/
     sn.contains = function (substring, ignoreCase) {
+        if (typeof __EC__ !== 'string') {
+            return false;
+        }
+
         if (ignoreCase === true) {
             __EC__ = __EC__.toLowerCase();
             substring = substring.toLowerCase();
@@ -869,7 +871,7 @@ sn.extend = function () {
     **********************************************/
     sn.truncate = function (length, appender) {
         appender = appender || '...';
-        appender = ~~appender;
+        length = ~~length;
         return __EC__.length > length ? __EC__.slice(0, length) + appender : __EC__;
     };
 
