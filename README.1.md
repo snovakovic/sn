@@ -320,53 +320,211 @@ Module for manipulation with array and array likes.
 
 ### each
 Loop over array, array like elements and string.
-use return false in callback to break looping and return to continue looping with next item.
+use return false in callback to break looping and return to continue looping.
 
 ```javascript
-var testArr = ['a', 'b','c', 'd', 'e'];
-s(testArr).each(function(val, i) {
-  console.log(val);
-  console.log(i);
+var testArr = ['a', 'b','c', 'c', 'd', 'e'];
+sn(testArr).each(function(val, i) {
+    console.log(this); //=> ['a', 'b','c', 'd', 'e']
+    console.log(val); //=> //=> a b c d e
+    console.log(i); ////=> 0 1 2 3 4
 });
-//=> a b c d e
-//=> 0 1 2 3 4
 
-//break from each loop
-s.each(testArr, function (val, i) {
-  console.log(val);
-  if (val === 'b') {
-    return false; //break the each loop
-  }
+
+sn(testArr).each(function (val, i) {
+    //break each loop if previous value is equal to current
+    if (this[i] === val) {
+        return false;
+    }
+
+    console.log(val); //=>> a b
 });
-//=>> a b
+
+sn('test').each(function(val, i) {
+    console.log(val) //=> t e s t
+});
+
 ```
-We can also use each on DOM elements
 
-```javascript
-var p = document.querySelectorAll('p');
-
-//native forEach will throw exception when looping DOM elements
-p.forEach(function(el,i) {
-  el.innerHTML = "new string value";
-});
-
-//And this is working as expected
-s.each(p, function(el, i) {
-  el.innerHTML = "new string value";
-});
-```
 
 #### iterate
-Iterate specific number of times. Iteration starts from 0.
-Use return false in callback function to stop iterating.
+Iterate specific number of times.
+use return false in callback to break iteration and return to continue iteration.
 
 ```javascript
-s.iterate(4, function(i) {
-  console.log(i);
-}); //=> 0 1 2 3
+sn(4).iterate(function(i) {
+    console.log(i); //=> 0 1 2 3
+});
 
-s.iterate(10, function (i) {
-  console.log(i);
-  if (i === 2) { return false; }
-}); //=> 0 1 2
+sn(10).iterate(function (i) {
+    console.log(i); //=> 0 1
+    if (i === 1) {
+        return false;
+    }
+});
 ```
+
+#### shuffle
+Shuffle values in the array.
+
+```javascript
+sn(['a', 'b', 'c', 'd', 'c']).shuffle(); //=> random ordered items
+```
+
+
+#### fillArray
+Returns new array filled with default values
+
+```javascript
+sn(null).fillArray(2); //=> [null, null]
+sn(0).fillArray(4); //=> [0,0,0,0]
+sn({test: 'a'}).fillArray(2); //=> [{test: 'a'}, {test: 'a'}]
+```
+
+
+#### toArray
+If provided value is array return it.
+If provided value is not array it wraps that value with array.
+If provided value is not array and is null or undefined it returns empty array.
+
+
+```javascript
+sn([1,2,3]).toArray(); //=> [1,2,3]
+sn('test').toArray(); //=> ['test']
+sn(0).toArray(); //=> [0]
+sn({test: 'a'}).toArray(); //=> [{test: 'a'}]
+sn(undefined).toArray(); //=> []
+sn(null).toArray(); //=> []
+```
+
+
+#### unique
+Returns new array that contain only unique values from original array.
+We can compare uniqueness by object property by providing path to object property we want ot use for unique comparison
+
+```javascript
+sn([1,1,2,3,2,1,3]).unique(); //=> [1,2,3]
+sn(["a", "b", "a"]).unique(); //=> ["a","b"]
+
+var objects = [
+    {
+        id: 1,
+        deepProperty: { name: 'first' }
+    }, {
+        id: 2,
+        deepProperty: { name: 'first' }
+    }, {
+        id: 2,
+        deepProperty: { name: 'third' }
+    }];
+
+sn(objects).unique('id'); //=> [{ id: 1, deepProperty: { name: 'first' }}, { id: 2, deepProperty: { name: 'first' }}]
+sn(objects).unique('deepProperty.name'); //=> [{ id: 1, deepProperty: { name: 'first' }}, { id: 2, deepProperty: { name: 'third' }}]
+
+sn
+```
+
+#### first
+Returns first element of array that match the condition in callback function or undefined if there is no match.
+if no condition is passed it returns first element of array.
+
+```javascript
+s.first([1,1,2,3,2,1,3]); //=> 1
+s.first([1,1,2,3,2,1,3], function(e) {
+  return e === 2;
+}); //=> 2
+s.first([{name:'test'}], function(e) {
+  return e.name = 'test';
+}); //=> {name:'test'}
+```
+
+#### last
+Returns last element of array that match the condition in callback function or undefined if there is no match.
+if no condition is passed it returns last element of array.
+
+```javascript
+s.last([1,1,2,3,2,1,3]); //=> 3
+s.last([1,1,2,3,2,1,3], function(e) {
+  return e === 2;
+}); //=> 2
+s.last([{name:'test'}], function(e) {
+  return e.name = 'test';
+}); //=> {name:'test'}
+```
+
+#### stack
+Stack implementation. LIFO: last in first out.
+Stack is instantiated by calling s.stack().
+We can instantiate stack by passing optional start array s.stack([1,2,3]).
+
+Stack Operations:
+  * .add() - add new item to stack. We can one value or array of values into stack
+  * .remove() - remove item from stack. Removed items is returned or in case of empty stack null is returned.
+  * .peek() - peek next value in stack without modifying stack
+  * .length() - get size of stack
+  * .array - get raw stack array
+
+
+```javascript
+var stack = s.stack(); //instantiate new stack
+stack.add(2); //add new value in stack.
+stack.add(3);
+stack.length(); //get length of stack. => 2
+stack.array; //get raw stack array => [2,3]
+stack.peek(); //=> 3 peek next value in stack without removing it
+var val = stack.remove(); //remove last added value from stack
+console.log(val); //=> 3
+stack.length(); //=> 1
+stack.array; //=> [2]
+
+//if there is no value in stack .remove() will return null instead of removed value
+var stack2 = s.stack();
+console.log(stack2.remove()) //=> null
+stack2.array //=> []
+
+//stack can be instantiated with default array
+var stack3 = s.stack([1,2]);
+stack3.add([3,4]);
+stack3.array; //=> [1,2,3,4]
+stack3.remove(); //=> 4
+stack3.remove(); //=> 3
+stack3.array; //=> [1,2]
+```
+
+#### queue
+Queue implementation. FIFO: first in first out.
+
+Queue is instantiated by calling s.queue().
+We can instantiate queue by passing optional start array s.queue([1,2,3]).
+
+Queue Operations:
+  * .add() - add new item to queue. We can one value or array of values into stack
+  * .remove() - remove item from queue. Removed items is returned or in case of empty queue null is returned.
+  * .peek() - peek next value in queue without modifying queue
+  * .length() - get size of queue
+  * .array - get raw queue array
+
+```javascript
+var queue = s.queue(); //instantiate new queue
+queue.add(2); //add new value in queue.
+queue.add(3);
+queue.length(); //get length of queue. => 2
+queue.array; //get raw queue array => [2,3]
+stack.peek(); //=> 2 peek next value in stack without removing it
+var val = queue.remove(); //remove last added value from queue
+console.log(val); //=> 2
+queue.length(); //=> 1
+queue.array; //=> [3]
+
+//if there is no value in queue .remove() will return null instead of removed value
+var queue2 = s.queue();
+console.log(queue2.remove()) //=> null
+queue2.array //=> []
+
+//queue can be instantiated with default array
+var queue3 = s.queue([1,2]);
+queue3.add([3, 4]);
+queue3.array; //=> [1,2,3,4]
+queue3.remove(); //=> 1
+queue3.remove(); //=> 2
+queue3.array; //=> [3,4]

@@ -42,7 +42,7 @@
     * @return {Array} shuffled array
     ********************************************************/
     sn.shuffle = function () {
-        if(sn(__EC__).not.array()) {
+        if (sn(__EC__).not.array()) {
             return;
         }
 
@@ -65,53 +65,89 @@
 
 
     /*********************************************
-    * Get the new array filled with default values
+    * Get new array filled with default values
     * @param val {Any} default array value
     * @return len {Integer} size of the new array
     **********************************************/
-    sn.getFilledArray = function (val, len) {
+    sn.fillArray = function (len) {
         var rv = new Array(len);
         while (--len >= 0) {
-            rv[len] = val;
+            rv[len] = __EC__;
         }
         return rv;
     };
+
+    /*********************************************
+    * If array return unmodified array if not array creates array from provided value
+    **********************************************/
+    sn.toArray = function () {
+        if (sn.not.defined()) {
+            return [];
+        }
+
+        if (sn.not.array()) {
+            return [__EC__];
+        }
+
+        return __EC__;
+    };
+
 
 
     /*************************************************
     * Returns new array containing only unique values from original array
     * Doesn't support nested objects and array
-    * @param originalArr {Array} array form where we want to remove duplicate values
+    * @param path {String} path to object property to compare for uniqueness
     * @return array without duplicate values
     ***********************************************/
-    sn.unique = function (originalArr) {
-        var arr = [];
-        for (var i = 0; i < originalArr.length; i++) {
-            if (arr.indexOf(originalArr[i]) === -1) {
-                arr.push(originalArr[i]);
+    sn.unique = function (path) {
+        if (sn.is.array()) {
+            var pathUniqueValues = [];
+            var arr = [];
+            for (var i = 0; i < __EC__.length; i++) {
+                if (path) {
+                    var pathTokens = path.split('.');
+                    var val = __EC__[i];
+                    for (var n = 0; n < pathTokens.length; n++) {
+                        val = val[pathTokens[n]];
+                        if (!val) {
+                            throw TypeError('Invalid path. Object property does not exist');
+                        }
+                    }
+
+                    if (pathUniqueValues.indexOf(val) === -1) {
+                        arr.push(__EC__[i]);
+                        pathUniqueValues.push(val);
+                    }
+
+                }
+                else if (arr.indexOf(__EC__[i]) === -1) {
+                    arr.push(__EC__[i]);
+                }
             }
+            return arr;
         }
-        return arr;
+
+        return __EC__;
     };
 
 
     /********************************************s
     * Returns first element of array if no condition is passed,
     * else if there is condition returns first element of array that meets condition
-    * @param arr {Array} array we want to search in for value
     * @param condition {Function} function that returns true if value is found.
     * @return array item if found or undefined if not found
     **********************************************/
-    sn.first = function (arr, condition) {
-        if (arr && arr.length) {
+    sn.first = function (condition) {
+        if (__EC__ && __EC__.length) {
             if (condition) {
-                for (var i = 0; i < arr.length; i++) {
-                    if (condition(arr[i])) {
-                        return arr[i];
+                for (var i = 0; i < __EC__.length; i++) {
+                    if (condition(__EC__[i])) {
+                        return __EC__[i];
                     }
                 }
             } else {
-                return arr[0];
+                return __EC__[0];
             }
         }
 
@@ -122,20 +158,19 @@
     /**********************************************************
     * Returns last element of array if no condition is passed,
     * else if there is condition returns last element of array that meets condition
-    * @param arr {Array} [optional] array we want to search in for value
     * @param condition {Function} function that returns true if value is found.
     * @return array item if found or undefined if not found
     ***********************************************************/
-    sn.last = function (arr, condition) {
-        if (arr && arr.length) {
+    sn.last = function (condition) {
+        if (__EC__ && __EC__.length) {
             if (condition) {
-                for (var i = arr.length - 1; i >= 0; i--) {
-                    if (condition(arr[i])) {
-                        return arr[i];
+                for (var i = __EC__.length - 1; i >= 0; i--) {
+                    if (condition(__EC__[i])) {
+                        return __EC__[i];
                     }
                 }
             } else {
-                return arr[arr.length - 1];
+                return __EC__[__EC__.length - 1];
             }
         }
 

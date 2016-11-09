@@ -111,7 +111,7 @@ describe('sn.array', function () {
 
             var stringIteration = 0;
             sn('3').iterate(function () {
-                stringIteration ++;
+                stringIteration++;
             });
 
             expect(stringIteration).toEqual(3);
@@ -135,33 +135,80 @@ describe('sn.array', function () {
         });
     });
 
-    describe('getFilledArray', function () {
+    describe('fillArray', function () {
         it('should returned filled array', function () {
-            expect(sn.getFilledArray(0, 3)).toEqual([0, 0, 0]);
-            expect(sn.getFilledArray('b', 4)).toEqual(['b', 'b', 'b', 'b']);
-            expect(sn.getFilledArray({ a: 'b' }, 2)).toEqual([{ a: 'b' }, { a: 'b' }]);
-            expect(sn.getFilledArray(null, 2)).toEqual([null, null]);
+            expect(sn(0).fillArray(3)).toEqual([0, 0, 0]);
+            expect(sn('b').fillArray(4)).toEqual(['b', 'b', 'b', 'b']);
+            expect(sn({ a: 'b' }).fillArray(2)).toEqual([{ a: 'b' }, { a: 'b' }]);
+            expect(sn(null).fillArray(2)).toEqual([null, null]);
+        });
+    });
+
+    describe('toArray', function () {
+        it('readme examples should be correct', function () {
+            expect(sn([1, 2, 3]).toArray()).toEqual([1, 2, 3]);
+            expect(sn('test').toArray()).toEqual(['test']);
+            expect(sn(0).toArray()).toEqual([0]);
+            expect(sn({ test: 'a' }).toArray()).toEqual([{ test: 'a' }]);
+            expect(sn(undefined).toArray()).toEqual([]);
+            expect(sn(null).toArray()).toEqual([]);
         });
     });
 
     describe('unique', function () {
         it('should return unique values', function () {
-            expect(sn.unique([1, 1, 2, 3, 2, 1, 3])).toEqual([1, 2, 3]);
-            expect(sn.unique(['a', 'b', 'a'])).toEqual(['a', 'b']);
+            expect(sn([1, 1, 2, 3, 2, 1, 3]).unique()).toEqual([1, 2, 3]);
+            expect(sn(['a', 'b', 'a']).unique()).toEqual(['a', 'b']);
+
+            var testObjArrayWithDuplicates = testObjArray.concat([testObjArray[1]]);
+            testObjArrayWithDuplicates = testObjArrayWithDuplicates.concat(testObjArray);
+            expect(sn(testObjArrayWithDuplicates).unique('id')).toEqual(testObjArray);
+
+            var deepDuplicatesPath = [{ identity: { id: 1 }, name: 'first' }, { identity: { id: 2 }, name: 'second' }, { identity: { id: 1 }, name: 'first' }];
+            expect(sn(deepDuplicatesPath).unique('identity.id')).toEqual([{ identity: { id: 1 }, name: 'first' }, { identity: { id: 2 }, name: 'second' }]);
+        });
+
+        it('invalid values should not throw exception', function () {
+            expect(sn(null).unique()).toEqual(null);
+            expect(sn(undefined).unique()).toEqual(undefined);
+            expect(sn('test').unique()).toEqual('test');
+
+            expect(function () {
+                expect(sn(testObjArray).unique('id.dont.exist')).toEqual(testObjArray);
+            }).toThrow(new TypeError('Invalid path. Object property does not exist'));
+
+        });
+
+        it('readme example should be correct', function () {
+            var objects = [
+                {
+                    id: 1,
+                    deepProperty: { name: 'first' }
+                }, {
+                    id: 2,
+                    deepProperty: { name: 'first' }
+                }, {
+                    id: 2,
+                    deepProperty: { name: 'third' }
+                }];
+
+            expect(sn(objects).unique('id')).toEqual([{ id: 1, deepProperty: { name: 'first' } }, { id: 2, deepProperty: { name: 'first' } }]);
+            expect(sn(objects).unique('deepProperty.name')).toEqual([{ id: 1, deepProperty: { name: 'first' } }, { id: 2, deepProperty: { name: 'third' } }]);
+
         });
     });
 
     describe('first', function () {
         it('should return first array value', function () {
-            expect(sn.first(testArray)).toEqual('a');
-            expect(sn.first(testObjArray)).toEqual(testObjArray[0]);
-            expect(sn.first(undefined)).toEqual(undefined);
+            expect(sn(testArray).first()).toEqual('a');
+            expect(sn(testObjArray).first()).toEqual(testObjArray[0]);
+            expect(sn(undefined).first()).toEqual(undefined);
 
-            expect(sn.first(testArray, function (letter) {
+            expect(sn(testArray).first(function (letter) {
                 return letter === 'c';
             })).toEqual('c');
 
-            expect(sn.first(testObjArray, function (obj) {
+            expect(sn(testObjArray).first(function (obj) {
                 return obj.id === 2;
             })).toEqual(testObjArray[1]);
         });
@@ -169,15 +216,15 @@ describe('sn.array', function () {
 
     describe('last', function () {
         it('should return last array value', function () {
-            expect(sn.last(testArray)).toEqual('h');
-            expect(sn.last(testObjArray)).toEqual(testObjArray[testObjArray.length - 1]);
-            expect(sn.last(undefined)).toEqual(undefined);
+            expect(sn(testArray).last()).toEqual('h');
+            expect(sn(testObjArray).last()).toEqual(testObjArray[testObjArray.length - 1]);
+            expect(sn(null).last()).toEqual(undefined);
 
-            expect(sn.last(testArray, function (letter) {
+            expect(sn(testArray).last(function (letter) {
                 return letter === 'c';
             })).toEqual('c');
 
-            expect(sn.last(testObjArray, function (obj) {
+            expect(sn(testObjArray).last(function (obj) {
                 return obj.id === 3;
             })).toEqual(testObjArray[2]);
         });
