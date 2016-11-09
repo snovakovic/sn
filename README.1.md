@@ -423,6 +423,7 @@ sn(objects).unique('deepProperty.name'); //=> [{ id: 1, deepProperty: { name: 'f
 
 ```
 
+
 #### first
 Returns first element of array that match the condition in callback function or undefined if there is no match.
 if no condition is passed it returns first element of array.
@@ -442,6 +443,7 @@ sn(null).first(); //=> undefined
 
 ```
 
+
 #### last
 Returns last element of array that match the condition in callback function or undefined if there is no match.
 if no condition is passed it returns last element of array.
@@ -460,6 +462,7 @@ s([{name:'test'}]).last(, function(e) {
 sn(null).last(); //=> undefined
 
 ```
+
 
 #### stack
 Stack implementation. LIFO: last in first out.
@@ -500,6 +503,7 @@ stack3.remove(); //=> 3
 stack3.__array__; //=> [1,2]
 ```
 
+
 #### queue
 Queue implementation. FIFO: first in first out.
 
@@ -537,3 +541,80 @@ queue3.__array__; //=> [1,2,3,4]
 queue3.remove(); //=> 1
 queue3.remove(); //=> 2
 queue3.__array__; //=> [3,4]
+```
+
+
+String
+-----
+
+Module for manipulation with strings.
+
+#### replaceAll
+Replace all occurrences of a string with a new value.
+
+```javascript
+sn('this is old value in old string').replaceAll('old', 'new'); //=> this is new value in new string
+sn('start first start second end first end second').between('start', 'end') //=> ' first start second '
+```
+
+
+#### between
+Returns part of the string between 2 words. If there is multiple occurrences of the string it will take into consideration just first.
+
+```javascript
+sn('this is start of the string before end of same').between('start', 'end') //=> ' of the string before '
+sn('this is start of the string before end of same').between('end', 'start') //=> ' of the string before '
+sn('start first start second end first end second').between('start', 'end') //=> ' first start second '
+sn('this is start of the string before end of same').between('start') //=> undefined
+sn('this is start of the string before end of same').between('start', 'not existing') //=> undefined
+```
+
+#### capitalize
+Converts first letter of a string to uppercase.
+
+```javascript
+sn('foo').capitalize(); //=> Foo
+```
+
+
+#### contains
+Test if string contains provided substring.
+By default it's case-sensitive which can be turned of by providing last optional parameter.
+
+```javascript
+sn(stringToCheck).contains(substringToCheck, ignoreCase);
+sn('abc Da').contains('da'); //=> false
+sn('abc Da').contains('da', true); //=> true
+sn('abc Da').contains('Da'); //=> true
+```
+
+
+#### chop
+Breaks a string in array of substring
+
+```javascript
+sn('whitespace').chop(3); //=> ['whi', 'tes', 'pac', 'e']
+```
+
+
+#### clean
+Trim and replace multiple spaces with a single space.
+
+```javascript
+sn('abc').clean(); //=> 'abc';
+sn('abc ').clean(); //=> 'abc';
+sn('  ab   c  ').clean(); //=> 'ab c';
+```
+
+
+#### truncate
+Truncate string if it exceed max number of characters.
+By default if string is truncated at the end of string will be appended "..."
+This can be changed to anything by providing last optional argument
+
+```javascript
+s(originalString).truncate(length, truncateStrAppender);
+s('stefan.novakovich@gmail.com').truncate(100); //=> 'stefan.novakovich@gmail.com'
+s('stefan.novakovich@gmail.com').truncate(10); //=> 'stefan.nov...'
+s('stefan.novakovich@gmail.com').truncate(10, ' ...more'); //=> 'stefan.nov ...more'
+```
