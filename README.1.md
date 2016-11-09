@@ -174,6 +174,9 @@ sn(null).is.array(); //=> false
 Dates
 ------
 
+Module for manipulating with dates.
+
+
 #### is.lastDayOfMonth
 Check if day in date is equal to last day of date month.
 
@@ -309,3 +312,61 @@ var monthShortNames = sn.getMonths().map(function(m) { return m.shortName; });
 console.log(monthShortNames); //=> ['Jan', 'Feb', 'Nov', ....]
 ```
 
+
+Array
+------
+
+Module for manipulation with array and array likes.
+
+### each
+Loop over array, array like elements and string.
+use return false in callback to break looping and return to continue looping with next item.
+
+```javascript
+var testArr = ['a', 'b','c', 'd', 'e'];
+s(testArr).each(function(val, i) {
+  console.log(val);
+  console.log(i);
+});
+//=> a b c d e
+//=> 0 1 2 3 4
+
+//break from each loop
+s.each(testArr, function (val, i) {
+  console.log(val);
+  if (val === 'b') {
+    return false; //break the each loop
+  }
+});
+//=>> a b
+```
+We can also use each on DOM elements
+
+```javascript
+var p = document.querySelectorAll('p');
+
+//native forEach will throw exception when looping DOM elements
+p.forEach(function(el,i) {
+  el.innerHTML = "new string value";
+});
+
+//And this is working as expected
+s.each(p, function(el, i) {
+  el.innerHTML = "new string value";
+});
+```
+
+#### iterate
+Iterate specific number of times. Iteration starts from 0.
+Use return false in callback function to stop iterating.
+
+```javascript
+s.iterate(4, function(i) {
+  console.log(i);
+}); //=> 0 1 2 3
+
+s.iterate(10, function (i) {
+  console.log(i);
+  if (i === 2) { return false; }
+}); //=> 0 1 2
+```

@@ -6,20 +6,25 @@ var config = require('./gulp.config');
 
 
 gulp.task('script-full', function () {
-  return gulp.src(config.scriptSrc)
-    .pipe(sourcemaps.init())
-    .pipe(concat('sn.js'))
-    .pipe(sourcemaps.write('/'))
-    .pipe(gulp.dest(config.dest));
+    return gulp.src(config.scriptSrc)
+        .pipe(sourcemaps.init())
+        .pipe(concat('sn.js'))
+        .pipe(sourcemaps.write('/'))
+        .pipe(gulp.dest(config.dest));
 });
 
 gulp.task('script-minified', function () {
-  return gulp.src(config.scriptSrc)
-    .pipe(sourcemaps.init())
-    .pipe(concat('sn.min.js'))
-    .pipe(uglify())
-    .pipe(sourcemaps.write('/'))
-    .pipe(gulp.dest(config.dest));
+    return gulp.src(config.scriptSrc)
+        .pipe(sourcemaps.init())
+        .pipe(concat('sn.min.js'))
+        .pipe(uglify())
+        .pipe(sourcemaps.write('/'))
+        .pipe(gulp.dest(config.dest));
 });
 
-gulp.task('default', ['script-full', 'script-minified'], function () { });
+gulp.task('default', ['script-full', 'script-minified'], function () {
+    // watch for JS changes
+    gulp.watch(config.scriptSrc, function () {
+        gulp.run('default');
+    });
+});

@@ -23,404 +23,376 @@
 
 (function (sn) {
 
-  //PRIVATE
 
-  //PUBLIC
-
-  /**********************************************
-  * Loop over array. this in callback function will ber set to array.
-  * @param arr {Array} array we want to iterate
-  * @param callback {Function} callback function that will be called on each iteration
-  ************************************************/
-  sn.each = function (callback) {
-    for (var i = 0, l = __EC__.length; i < l; i++) {
-      if (callback.call(__EC__, __EC__[i], i) === false) {
-        break;
-      }
-    }
-    return sn;
-  };
+    /**********************************************
+    * Loop over array or string. this in callback function will be set to array we are looping over.
+    * @param callback {Function} callback function that will be called on each iteration
+    ************************************************/
+    sn.each = function (callback) {
+        if (__EC__ && __EC__.length) {
+            for (var i = 0; i < __EC__.length; i++) {
+                if (callback.call(__EC__, __EC__[i], i) === false) {
+                    break;
+                }
+            }
+        }
+        return sn;
+    };
 
 
-  /**********************************************
-  * Iterate specific number of times.
-  * @param l {Number} number of times we want to iterate
-  * @param callback {Function} callback function that will be called on each iteration
-  ************************************************/
-  sn.iterate = function (l, callback) {
-    for (var i = 0; i < l; i++) {
-      if (callback.call(null, i) === false) {
-        break;
-      }
-    }
-  };
-
-
-  /***********************************************
-  * Remove all occurrences of element from array
-  * @param arr {Array} array from where we want  to remove values
-  * @param elToRemove {...} element that we want to remove from array
-  * @param max {whole number integer} max number of occurrences to remove. 1 - remove first, -1 remove last.
-  * @return {Array} new array without removed values
-  ***********************************************/
-  sn.remove = function (elToRemove, max) {
-    var pos;
-
-    while (pos !== -1 && max !== 0) {
-      if (max) {
-        if (max >= 1) {
-          pos = __EC__.indexOf(elToRemove);
-          max--;
-        } else {
-          pos = __EC__.lastIndexOf(elToRemove);
-          max++;
+    /**********************************************
+    * Iterate specific number of times.
+    * @param l {Number} number of times we want to iterate
+    * @param callback {Function} callback function that will be called on each iteration
+    ************************************************/
+    sn.iterate = function (callback) {
+        var iterations = Number(__EC__);
+        if (sn(iterations).is.number()) {
+            for (var i = 0; i < iterations; i++) {
+                if (callback.call(null, i) === false) {
+                    break;
+                }
+            }
         }
 
-      } else {
-        pos = __EC__.indexOf(elToRemove);
-      }
-
-      pos > -1 && __EC__.splice(pos, 1);
-    }
-
-    return __EC__;
-  };
+        return sn;
+    };
 
 
-  /*******************************************************
-  * Shuffle values in the array
-  * https://github.com/Daplie/knuth-shuffle
-  * @param arr {Array} input array that we want to shuffle
-  * @return {Array} shuffled array
-  ********************************************************/
-  sn.shuffle = function () {
-    var currentIndex = __EC__.length;
-    var temporaryValue;
-    var randomIndex;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = __EC__[currentIndex];
-      __EC__[currentIndex] = __EC__[randomIndex];
-      __EC__[randomIndex] = temporaryValue;
-    }
-
-    return __EC__;
-  };
-
-
-  /*********************************************
-  * Get the new array filled with default values
-  * @param val {Any} default array value
-  * @return len {Integer} size of the new array
-  **********************************************/
-  sn.getFilledArray = function (val, len) {
-    var rv = new Array(len);
-    while (--len >= 0) {
-      rv[len] = val;
-    }
-    return rv;
-  };
-
-
-  /*************************************************
-  * Returns new array containing only unique values from original array
-  * Doesn't support nested objects and array
-  * @param originalArr {Array} array form where we want to remove duplicate values
-  * @return array without duplicate values
-  ***********************************************/
-  sn.unique = function (originalArr) {
-    var arr = [];
-    for (var i = 0; i < originalArr.length; i++) {
-      if (arr.indexOf(originalArr[i]) === -1) {
-        arr.push(originalArr[i]);
-      }
-    }
-    return arr;
-  };
-
-
-  /********************************************s
-  * Returns first element of array if no condition is passed,
-  * else if there is condition returns first element of array that meets condition
-  * @param arr {Array} array we want to search in for value
-  * @param condition {Function} function that returns true if value is found.
-  * @return array item if found or undefined if not found
-  **********************************************/
-  sn.first = function (arr, condition) {
-    if (arr && arr.length) {
-      if (condition) {
-        for (var i = 0; i < arr.length; i++) {
-          if (condition(arr[i])) {
-            return arr[i];
-          }
+    /*******************************************************
+    * Shuffle values in the array
+    * https://github.com/Daplie/knuth-shuffle
+    * @return {Array} shuffled array
+    ********************************************************/
+    sn.shuffle = function () {
+        if(sn(__EC__).not.array()) {
+            return;
         }
-      } else {
-        return arr[0];
-      }
-    }
 
-    return undefined;
+        var currentIndex = __EC__.length;
+        var temporaryValue;
+        var randomIndex;
 
-  };
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
 
-  /**********************************************************
-  * Returns last element of array if no condition is passed,
-  * else if there is condition returns last element of array that meets condition
-  * @param arr {Array} [optional] array we want to search in for value
-  * @param condition {Function} function that returns true if value is found.
-  * @return array item if found or undefined if not found
-  ***********************************************************/
-  sn.last = function (arr, condition) {
-    if (arr && arr.length) {
-      if (condition) {
-        for (var i = arr.length - 1; i >= 0; i--) {
-          if (condition(arr[i])) {
-            return arr[i];
-          }
+            temporaryValue = __EC__[currentIndex];
+            __EC__[currentIndex] = __EC__[randomIndex];
+            __EC__[randomIndex] = temporaryValue;
         }
-      } else {
-        return arr[arr.length - 1];
-      }
-    }
 
-    return undefined;
-
-  };
-
-  //Stack && Queue implementation
-  (function (sn) {
-
-    var stackQueueBase = function (baseArray) {
-      var _arr = this.__array__ = baseArray || [];
-
-      this.add = function (val) {
-        Array.isArray(val)
-          ? Array.prototype.push.apply(_arr, val)
-          : _arr.push(val);
-      };
-
-      this.length = function () {
-        return _arr.length;
-      };
-
-      return this;
-
+        return __EC__;
     };
 
 
     /*********************************************
-     * Stack implementation LIFO last in first out
-     * @param defaultArray [optional] {Array} default array that will be used as a stack base
-    *********************************************/
-    sn.stack = function (defaultArray) {
-      var stack = new stackQueueBase(defaultArray);
-      stack.remove = function () {
-        var _arr = this.__array__;
-        return _arr.length ? _arr.pop() : null;
-      };
-      stack.peek = function () {
-        var _arr = this.__array__;
-        return _arr.length ? _arr[_arr.length - 1] : null;
-      };
-
-      return stack;
+    * Get the new array filled with default values
+    * @param val {Any} default array value
+    * @return len {Integer} size of the new array
+    **********************************************/
+    sn.getFilledArray = function (val, len) {
+        var rv = new Array(len);
+        while (--len >= 0) {
+            rv[len] = val;
+        }
+        return rv;
     };
 
 
-    /*********************************************
-    * Queue implementation FIFO: first in first out
-    * @param defaultArray [optional] {Array} default array that will be used as a queue base
-    *********************************************/
-    sn.queue = function (defaultArray) {
-      var queue = new stackQueueBase(defaultArray);
-      queue.remove = function () {
-        var _arr = this.__array__;
-        return _arr.length ? _arr.shift() : null;
-      };
-      queue.peek = function () {
-        var _arr = this.__array__;
-        return _arr.length ? _arr[0] : null;
-      };
-
-      return queue;
+    /*************************************************
+    * Returns new array containing only unique values from original array
+    * Doesn't support nested objects and array
+    * @param originalArr {Array} array form where we want to remove duplicate values
+    * @return array without duplicate values
+    ***********************************************/
+    sn.unique = function (originalArr) {
+        var arr = [];
+        for (var i = 0; i < originalArr.length; i++) {
+            if (arr.indexOf(originalArr[i]) === -1) {
+                arr.push(originalArr[i]);
+            }
+        }
+        return arr;
     };
 
-  })(sn);
+
+    /********************************************s
+    * Returns first element of array if no condition is passed,
+    * else if there is condition returns first element of array that meets condition
+    * @param arr {Array} array we want to search in for value
+    * @param condition {Function} function that returns true if value is found.
+    * @return array item if found or undefined if not found
+    **********************************************/
+    sn.first = function (arr, condition) {
+        if (arr && arr.length) {
+            if (condition) {
+                for (var i = 0; i < arr.length; i++) {
+                    if (condition(arr[i])) {
+                        return arr[i];
+                    }
+                }
+            } else {
+                return arr[0];
+            }
+        }
+
+        return undefined;
+
+    };
+
+    /**********************************************************
+    * Returns last element of array if no condition is passed,
+    * else if there is condition returns last element of array that meets condition
+    * @param arr {Array} [optional] array we want to search in for value
+    * @param condition {Function} function that returns true if value is found.
+    * @return array item if found or undefined if not found
+    ***********************************************************/
+    sn.last = function (arr, condition) {
+        if (arr && arr.length) {
+            if (condition) {
+                for (var i = arr.length - 1; i >= 0; i--) {
+                    if (condition(arr[i])) {
+                        return arr[i];
+                    }
+                }
+            } else {
+                return arr[arr.length - 1];
+            }
+        }
+
+        return undefined;
+
+    };
+
+
+    //Stack && Queue implementation
+    (function (sn) {
+
+        var stackQueueBase = function (baseArray) {
+            var _arr = this.__array__ = baseArray || [];
+
+            this.add = function (val) {
+                Array.isArray(val)
+                    ? Array.prototype.push.apply(_arr, val)
+                    : _arr.push(val);
+            };
+
+            this.length = function () {
+                return _arr.length;
+            };
+
+            return this;
+
+        };
+
+
+        /*********************************************
+         * Stack implementation LIFO last in first out
+         * @param defaultArray [optional] {Array} default array that will be used as a stack base
+        *********************************************/
+        sn.stack = function (defaultArray) {
+            var stack = new stackQueueBase(defaultArray);
+            stack.remove = function () {
+                var _arr = this.__array__;
+                return _arr.length ? _arr.pop() : null;
+            };
+            stack.peek = function () {
+                var _arr = this.__array__;
+                return _arr.length ? _arr[_arr.length - 1] : null;
+            };
+
+            return stack;
+        };
+
+
+        /*********************************************
+        * Queue implementation FIFO: first in first out
+        * @param defaultArray [optional] {Array} default array that will be used as a queue base
+        *********************************************/
+        sn.queue = function (defaultArray) {
+            var queue = new stackQueueBase(defaultArray);
+            queue.remove = function () {
+                var _arr = this.__array__;
+                return _arr.length ? _arr.shift() : null;
+            };
+            queue.peek = function () {
+                var _arr = this.__array__;
+                return _arr.length ? _arr[0] : null;
+            };
+
+            return queue;
+        };
+
+    })(sn);
 
 
 })(sn);
 
 (function (sn) {
 
-  var internals = {
-    isString: function (testVar) {
-      return typeof testVar === 'string';
-    },
-    isNumber: function (testVar) {
-      //NaN will produce false because NaN !== NaN
-      return typeof testVar === 'number' && testVar === testVar;
-    },
-    isDate: function (testVar) {
-      return Object.prototype.toString.call(testVar) === '[object Date]';
-    },
-    assert: function (val, assertMessage) {
-      if (val) {
-        return val;
-      }
-      throw new TypeError(assertMessage);
-    }
-
-  };
-
-
-  //PUBLIC
-
-  /****************************************
-  * Safely check if two variables are the same without JS coercion gotchas
-  * == is used when comparing string and numbers (with exception for emptySting == 0 which is false as it should be)
-  * == is used for compering null and undefined
-  * for everything else === is used.
-  * ********************************* */
-  sn.is = function (t2) {
-    var t1 = __EC__;
-    if ((internals.isString(t1) || internals.isNumber(t1)) && (internals.isString(t2) || internals.isNumber(t2))) {
-      //this covers coercion between string and number without any gotchas
-      return (typeof t1 === typeof t2)
-        ? t1 === t2
-        : t1 == t2 && t1 !== '' && t2 !== '';
-
-    } else if (t1 == null && t2 == null) {
-      //This covers when vars are either null or undefined without any gotchas
-      return true;
-    }
-
-    return t1 === t2;
-
-  };
-
-
-  /****************************************************
-   * Test if variable has been defined and is not empty,
-   * Following will be treated as false
-   * sn(null).is.empty(); => true
-   * sn(undefined).is.empty(); => true
-   * sn({}).is.empty(); => true
-   * sn([]).is.empty(); => true
-   * sn(' ').is.empty(); => true
-   * sn('\n\t').is.empty(); => true
-  ********************************************************/
-  sn.is.empty = function () {
-    if (__EC__ == null
-      || (typeof __EC__ === 'string' && (/^\s*$/).test(__EC__))) {
-      return true;
-    }
-
-    if (typeof __EC__ === 'object') {
-      for (var key in __EC__) {
-        if (__EC__.hasOwnProperty(key)) {
-          return false;
+    var internals = {
+        isString: function (testVar) {
+            return typeof testVar === 'string';
+        },
+        isNumber: function (testVar) {
+            //NaN will produce false because NaN !== NaN
+            return typeof testVar === 'number' && testVar === testVar;
+        },
+        isDate: function (testVar) {
+            return Object.prototype.toString.call(testVar) === '[object Date]';
+        },
+        assert: function (val, assertMessage) {
+            if (val) {
+                return val;
+            }
+            throw new TypeError(assertMessage);
         }
-      }
-      return true;
+
+    };
+
+
+
+    /****************************************
+    * Safely check if two variables are the same without JS coercion gotchas
+    * == is used when comparing string and numbers (with exception for emptySting == 0 which is false as it should be)
+    * == is used for compering null and undefined
+    * for everything else === is used.
+    * ********************************* */
+    sn.is = function (t2) {
+        var t1 = __EC__;
+        if ((internals.isString(t1) || internals.isNumber(t1)) && (internals.isString(t2) || internals.isNumber(t2))) {
+            //this covers coercion between string and number without any gotchas
+            return (typeof t1 === typeof t2)
+                ? t1 === t2
+                : t1 == t2 && t1 !== '' && t2 !== '';
+
+        } else if (t1 == null && t2 == null) {
+            //This covers when vars are either null or undefined without any gotchas
+            return true;
+        }
+
+        return t1 === t2;
+
+    };
+
+
+    /****************************************************
+     * Test if variable has been defined and is not empty,
+     * Following will be treated as false
+     * sn(null).is.empty(); => true
+     * sn(undefined).is.empty(); => true
+     * sn({}).is.empty(); => true
+     * sn([]).is.empty(); => true
+     * sn(' ').is.empty(); => true
+     * sn('\n\t').is.empty(); => true
+    ********************************************************/
+    sn.is.empty = function () {
+        if (__EC__ == null
+            || (typeof __EC__ === 'string' && (/^\s*$/).test(__EC__))) {
+            return true;
+        }
+
+        if (typeof __EC__ === 'object') {
+            for (var key in __EC__) {
+                if (__EC__.hasOwnProperty(key)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        return false;
+    };
+
+
+    /***************************************
+     * START: data type checks
+     **************************************/
+    sn.is.string = function () {
+        return internals.isString(__EC__);
+    };
+
+    sn.is.number = function () {
+        return internals.isNumber(__EC__);
+    };
+
+    sn.is.boolean = function () {
+        return typeof __EC__ === 'boolean';
+    };
+
+    sn.is.null = function () {
+        return __EC__ === null;
+    };
+
+    sn.is.undefined = function () {
+        typeof __EC__ === 'undefined';
+    };
+
+    //not null and undefined
+    sn.is.defined = function () {
+        return __EC__ != null;
+    };
+
+    sn.is.object = function () {
+        return typeof __EC__ === 'object'
+            && __EC__ !== null
+            && !Array.isArray(__EC__);
+    };
+
+    sn.is.function = function () {
+        return typeof __EC__ === 'function';
+    };
+
+    sn.is.array = function () {
+        return typeof __EC__ === 'object' && Array.isArray(__EC__);
+    };
+
+    sn.is.date = function () {
+        return internals.isDate(__EC__);
+    };
+
+    /***************************************
+    * END: data type checks
+    **************************************/
+
+
+    /*************************************
+    * START: ASSERT && NOT MODULE DEFINITION
+    **************************************/
+    sn.not = function (val) {
+        return !sn.is(val);
+    };
+
+    sn.assert = {
+        is: function (val) {
+            return internals.assert(sn.is(val), 'Values are not the same.');
+        },
+        not: function (val) {
+            return internals.assert(!sn.is(val), 'Values are the same.');
+        }
+    };
+
+    for (var prop in sn.is) {
+        if (sn.is.hasOwnProperty(prop)) {
+            (function (prop) {
+                sn.not[prop] = function () {
+                    return !sn.is[prop]();
+                };
+                sn.assert.is[prop] = function () {
+                    return internals.assert(sn.is[prop](), 'Provided value is not ' + prop + '.');
+                };
+                sn.assert.not[prop] = function () {
+                    return internals.assert(!sn.is[prop](), 'Provided value is ' + prop + '.');
+                };
+            })(prop);
+        }
     }
 
-    return false;
-  };
-
-
-  /***************************************
-   * START: data type checks
-   **************************************/
-  sn.is.string = function () {
-    return internals.isString(__EC__);
-  };
-
-  sn.is.number = function () {
-    return internals.isNumber(__EC__);
-  };
-
-  sn.is.boolean = function () {
-    return typeof __EC__ === 'boolean';
-  };
-
-  sn.is.null = function () {
-    return __EC__ === null;
-  };
-
-  sn.is.undefined = function () {
-    typeof __EC__ === 'undefined';
-  };
-
-  //not null and undefined
-  sn.is.defined = function () {
-    return __EC__ != null;
-  };
-
-  sn.is.object = function () {
-    return typeof __EC__ === 'object'
-      && __EC__ !== null
-      && !Array.isArray(__EC__);
-  };
-
-  sn.is.function = function () {
-    return typeof __EC__ === 'function';
-  };
-
-  sn.is.array = function () {
-    return typeof __EC__ === 'object' && Array.isArray(__EC__);
-  };
-
-  sn.is.date = function () {
-    return internals.isDate(__EC__);
-  };
-
-  /***************************************
-  * END: data type checks
-  **************************************/
-
-
-  /*************************************
-  * START: ASSERT && NOT MODULE DEFINITION
-  **************************************/
-  sn.not = function (val) {
-    return !sn.is(val);
-  };
-
-  sn.assert = {
-    is: function (val) {
-      return internals.assert(sn.is(val), 'Values are not the same.');
-    },
-    not: function (val) {
-      return internals.assert(!sn.is(val), 'Values are the same.');
-    }
-  };
-
-  for (var prop in sn.is) {
-    if (sn.is.hasOwnProperty(prop)) {
-      (function (prop) {
-        sn.not[prop] = function () {
-          return !sn.is[prop]();
-        };
-        sn.assert.is[prop] = function () {
-          return internals.assert(sn.is[prop](), 'Provided value is not ' + prop + '.');
-        };
-        sn.assert.not[prop] = function () {
-          return internals.assert(!sn.is[prop](), 'Provided value is ' + prop + '.');
-        };
-      })(prop);
-    }
-  }
-
-  /*************************************
-  * END: ASSERT MODULE DEFINITION
-  **************************************/
+    /*************************************
+    * END: ASSERT MODULE DEFINITION
+    **************************************/
 
 
 })(sn);
@@ -734,37 +706,36 @@ sn.execute = function(executeFn) {
 //DeepFreez / DeepSeal
 (function (sn) {
 
-  /**********************************************
-  * Apply Object.freez on object and each children object as deep as it goes.
-  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
-  ************************************************/
-  sn.deepFreez = function deepFreez(obj) {
-    return deepSealOrFreez(obj, Object.freez);
-  };
+    /**********************************************
+    * Apply Object.freez on object and each children object as deep as it goes.
+    * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
+    ************************************************/
+    sn.deepFreez = function deepFreez(obj) {
+        return deepSealOrFreez(obj, Object.freez);
+    };
 
-  /**********************************************
-  * Apply Object.seal on object and each children object as deep as it goes.
-  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
-  ************************************************/
-  sn.deepSeal = function deepSeal(obj) {
-    return deepSealOrFreez(obj, Object.seal);
-  };
+    /**********************************************
+    * Apply Object.seal on object and each children object as deep as it goes.
+    * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
+    ************************************************/
+    sn.deepSeal = function deepSeal(obj) {
+        return deepSealOrFreez(obj, Object.seal);
+    };
 
-  function deepSealOrFreez(obj, action) {
-    action(obj);
+    function deepSealOrFreez(obj, action) {
+        action(obj);
 
-    Object.getOwnPropertyNames(obj).forEach(function (key) {
-      if (obj.hasOwnProperty(key)
-        && obj[key] !== null
-        && (typeof obj[key] === 'object' || typeof obj[key] === 'function')
-        && !Object.isSealed(obj[key]))
-      {
-        deepSealOrFreez(obj[key]);
-      }
-    });
+        Object.getOwnPropertyNames(obj).forEach(function (key) {
+            if (obj.hasOwnProperty(key)
+                && obj[key] !== null
+                && (typeof obj[key] === 'object' || typeof obj[key] === 'function')
+                && !Object.isSealed(obj[key])) {
+                deepSealOrFreez(obj[key]);
+            }
+        });
 
-    return obj;
-  }
+        return obj;
+    }
 
 })(sn);
 
@@ -774,15 +745,15 @@ sn.execute = function(executeFn) {
 * Extend object with the properties from other provided objects.
 * In case of same propertie names value from first object will be overriden with the value from second object
 ************************************************/
-sn.extend = function() {
-  for(var i=1; i < arguments.length; i++) {
-    Object.getOwnPropertyNames(arguments[i]).forEach(function (key) {
-      if(arguments[i].hasOwnProperty(key)) {
-        arguments[0][key] = arguments[i][key]
-      }
-    });
-  }
-  return arguments[0];
+sn.extend = function () {
+    for (var i = 1; i < arguments.length; i++) {
+        Object.getOwnPropertyNames(arguments[i]).forEach(function (key) {
+            if (arguments[i].hasOwnProperty(key)) {
+                arguments[0][key] = arguments[i][key]
+            }
+        });
+    }
+    return arguments[0];
 };
 
 (function (sn) {
