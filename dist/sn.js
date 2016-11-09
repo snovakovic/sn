@@ -434,225 +434,225 @@
 
 (function (sn) {
 
-  //PRIVATE
-  var getDate = function () {
-    if (__EC__) {
-      sn.assert.is.date(__EC__);
-      return __EC__;
-    }
-    return new Date();
-  };
+    //PRIVATE
+    var getDate = function () {
+        if (__EC__) {
+            sn.assert.is.date(__EC__);
+            return __EC__;
+        }
+        return new Date();
+    };
 
 
 
-  //PUBLIC
+    //PUBLIC
 
-  /**********************************************
-  * Change provided date so that it point to last day of current month
-  ************************************************/
-  sn.setLastDayOfMonth = function () {
-    var dt = getDate();
-    dt.setMonth(dt.getMonth() + 1, 0);
-    return dt;
-  };
-
-
-  /**********************************************
-  * Check if day in date is last day of month
-  * @return true -> day is last day of month; false - day is not last day of month
-  ************************************************/
-  sn.is.lastDayOfMonth = function () {
-    var dt = getDate();
-    var test = new Date(dt.getTime());
-    test.setDate(test.getDate() + 1);
-    return test.getDate() === 1;
-  };
+    /**********************************************
+    * Change provided date so that it point to last day of current month
+    ************************************************/
+    sn.setLastDayOfMonth = function () {
+        var dt = getDate();
+        dt.setMonth(dt.getMonth() + 1, 0);
+        return dt;
+    };
 
 
-  /**********************************************
-  * Check if day in date is last day of month
-  * @return true -> day is last day of month; false - day is not last day of month
-  ************************************************/
-  sn.getLastDayOfMonth = function () {
-    var dt = getDate();
-    return (new Date(dt.getFullYear(), dt.getMonth() + 1, 0)).getDate();
-  };
+    /**********************************************
+    * Check if day in date is last day of month
+    * @return true -> day is last day of month; false - day is not last day of month
+    ************************************************/
+    sn.is.lastDayOfMonth = function () {
+        var dt = getDate();
+        var test = new Date(dt.getTime());
+        test.setDate(test.getDate() + 1);
+        return test.getDate() === 1;
+    };
 
 
-  /**********************************************
-  * Add or remove dates from provided date
-  * @param milliseconds {Number} +/- milliseconds to add or remove from date
-  ************************************************/
-  sn.addMilliseconds = function (milliseconds) {
-    var dt = getDate();
-    dt.setMilliseconds(dt.getMilliseconds() + milliseconds);
-    return dt;
-  };
+    /**********************************************
+    * Check if day in date is last day of month
+    * @return true -> day is last day of month; false - day is not last day of month
+    ************************************************/
+    sn.getLastDayOfMonth = function () {
+        var dt = getDate();
+        return (new Date(dt.getFullYear(), dt.getMonth() + 1, 0)).getDate();
+    };
 
-  /**********************************************
-  * Add or remove dates from provided date
-  * @param seconds {Number} +/- seconds to add or remove from date
-  ************************************************/
-  sn.addSeconds = function (seconds) {
-    var dt = getDate();
-    dt.setSeconds(dt.getSeconds() + seconds);
-    return dt;
-  };
 
-  /**********************************************
-  * Add or remove dates from provided date
-  * @param minutes {Number} +/- minutes to add or remove from date
-  ************************************************/
-  sn.addMinutes = function (minutes) {
-    var dt = getDate();
-    dt.setMinutes(dt.getMinutes() + minutes);
-    return dt;
-  };
+    /**********************************************
+    * Add or remove dates from provided date
+    * @param milliseconds {Number} +/- milliseconds to add or remove from date
+    ************************************************/
+    sn.addMilliseconds = function (milliseconds) {
+        var dt = getDate();
+        dt.setMilliseconds(dt.getMilliseconds() + milliseconds);
+        return dt;
+    };
 
-  /**********************************************
-  * Add or remove dates from provided date
-  * @param hours {Number} +/- hours to add or remove from date
-  ************************************************/
-  sn.addHours = function (hours) {
-    var dt = getDate();
-    dt.setHours(dt.getHours() + hours);
-    return dt;
-  };
+    /**********************************************
+    * Add or remove dates from provided date
+    * @param seconds {Number} +/- seconds to add or remove from date
+    ************************************************/
+    sn.addSeconds = function (seconds) {
+        var dt = getDate();
+        dt.setSeconds(dt.getSeconds() + seconds);
+        return dt;
+    };
 
-  /**********************************************
-  * Add or remove dates from provided date
-  * @param days {Number} +/- days to add or remove from date
-  ************************************************/
-  sn.addDays = function (days) {
-    var dt = getDate();
-    dt.setDate(dt.getDate() + days);
-    return dt;
-  };
+    /**********************************************
+    * Add or remove dates from provided date
+    * @param minutes {Number} +/- minutes to add or remove from date
+    ************************************************/
+    sn.addMinutes = function (minutes) {
+        var dt = getDate();
+        dt.setMinutes(dt.getMinutes() + minutes);
+        return dt;
+    };
 
-  /**********************************************
-  * Add or remove dates from provided date
-  * @param months {Number} +/- months to add or remove from date
-  ************************************************/
-  sn.addMonths = function (months) {
-    var dt = getDate();
-    dt.setMonth(dt.getMonth() + months);
-    return dt;
-  };
+    /**********************************************
+    * Add or remove dates from provided date
+    * @param hours {Number} +/- hours to add or remove from date
+    ************************************************/
+    sn.addHours = function (hours) {
+        var dt = getDate();
+        dt.setHours(dt.getHours() + hours);
+        return dt;
+    };
 
-  /**********************************************
-  * Add or remove dates from provided date
-  * @param years {Number} +/- years to add or remove from date
-  ************************************************/
-  sn.addYears = function (years) {
-    var dt = getDate();
-    dt.setFullYear(dt.getFullYear() + years);
-    return dt;
-  };
+    /**********************************************
+    * Add or remove dates from provided date
+    * @param days {Number} +/- days to add or remove from date
+    ************************************************/
+    sn.addDays = function (days) {
+        var dt = getDate();
+        dt.setDate(dt.getDate() + days);
+        return dt;
+    };
 
-  /**********************************************
-  * Get the list of english months with fullName, shortName and month index
-  ************************************************/
-  sn.getMonths = function () {
-    return [
-      {
-        index: 0,
-        get month() {
-          return this.index + 1;
-        },
-        name: 'January',
-        shortName: 'Jan',
-        days: 31
-      }, {
-        index: 1,
-        get month() {
-          return this.index + 1;
-        },
-        name: 'February',
-        shortName: 'Feb',
-        days: [28, 29]
-      }, {
-        index: 2,
-        get month() {
-          return this.index + 1;
-        },
-        name: 'March',
-        shortName: 'Mar',
-        days: 31
-      }, {
-        index: 3,
-        get month() {
-          return this.index + 1;
-        },
-        name: 'April',
-        shortName: 'Apr',
-        days: 30
-      }, {
-        index: 4,
-        get month() {
-          return this.index + 1;
-        },
-        name: 'May',
-        shortName: 'May',
-        days: 31
-      }, {
-        index: 5,
-        get month() {
-          return this.index + 1;
-        },
-        name: 'June',
-        shortName: 'Jun',
-        days: 30
-      }, {
-        index: 6,
-        get month() {
-          return this.index + 1;
-        },
-        name: 'July',
-        shortName: 'Jul',
-        days: 31
-      }, {
-        index: 7,
-        get month() {
-          return this.index + 1;
-        },
-        name: 'August',
-        shortName: 'Aug',
-        days: 31
-      }, {
-        index: 8,
-        get month() {
-          return this.index + 1;
-        },
-        name: 'September',
-        shortName: 'Sep',
-        days: 30
-      }, {
-        index: 9,
-        get month() {
-          return this.index + 1;
-        },
-        name: 'October',
-        shortName: 'Oct',
-        days: 31
-      }, {
-        index: 10,
-        get month() {
-          return this.index + 1;
-        },
-        name: 'November',
-        shortName: 'Nov',
-        days: 30
-      }, {
-        index: 11,
-        get month() {
-          return this.index + 1;
-        },
-        name: 'December',
-        shortName: 'Dec',
-        days: 31
-      }
-    ];
-  };
+    /**********************************************
+    * Add or remove dates from provided date
+    * @param months {Number} +/- months to add or remove from date
+    ************************************************/
+    sn.addMonths = function (months) {
+        var dt = getDate();
+        dt.setMonth(dt.getMonth() + months);
+        return dt;
+    };
+
+    /**********************************************
+    * Add or remove dates from provided date
+    * @param years {Number} +/- years to add or remove from date
+    ************************************************/
+    sn.addYears = function (years) {
+        var dt = getDate();
+        dt.setFullYear(dt.getFullYear() + years);
+        return dt;
+    };
+
+    /**********************************************
+    * Get the list of english months with fullName, shortName and month index
+    ************************************************/
+    sn.getMonths = function () {
+        return [
+            {
+                index: 0,
+                get month() {
+                    return this.index + 1;
+                },
+                name: 'January',
+                shortName: 'Jan',
+                days: 31
+            }, {
+                index: 1,
+                get month() {
+                    return this.index + 1;
+                },
+                name: 'February',
+                shortName: 'Feb',
+                days: [28, 29]
+            }, {
+                index: 2,
+                get month() {
+                    return this.index + 1;
+                },
+                name: 'March',
+                shortName: 'Mar',
+                days: 31
+            }, {
+                index: 3,
+                get month() {
+                    return this.index + 1;
+                },
+                name: 'April',
+                shortName: 'Apr',
+                days: 30
+            }, {
+                index: 4,
+                get month() {
+                    return this.index + 1;
+                },
+                name: 'May',
+                shortName: 'May',
+                days: 31
+            }, {
+                index: 5,
+                get month() {
+                    return this.index + 1;
+                },
+                name: 'June',
+                shortName: 'Jun',
+                days: 30
+            }, {
+                index: 6,
+                get month() {
+                    return this.index + 1;
+                },
+                name: 'July',
+                shortName: 'Jul',
+                days: 31
+            }, {
+                index: 7,
+                get month() {
+                    return this.index + 1;
+                },
+                name: 'August',
+                shortName: 'Aug',
+                days: 31
+            }, {
+                index: 8,
+                get month() {
+                    return this.index + 1;
+                },
+                name: 'September',
+                shortName: 'Sep',
+                days: 30
+            }, {
+                index: 9,
+                get month() {
+                    return this.index + 1;
+                },
+                name: 'October',
+                shortName: 'Oct',
+                days: 31
+            }, {
+                index: 10,
+                get month() {
+                    return this.index + 1;
+                },
+                name: 'November',
+                shortName: 'Nov',
+                days: 30
+            }, {
+                index: 11,
+                get month() {
+                    return this.index + 1;
+                },
+                name: 'December',
+                shortName: 'Dec',
+                days: 31
+            }
+        ];
+    };
 
 })(sn);
 
@@ -660,81 +660,81 @@
 * returns function that can be executed only once
 * Result of function execution is cached and can be accesed latter by calling that function
 ************************************************/
-sn.once = function(fn) {
-  var result;
-  return function() {
-    if (fn) {
-      result = fn.apply(this, arguments);
-      fn = null;
-    }
-    return result;
-  };
+sn.once = function (fn) {
+    var result;
+    return function () {
+        if (fn) {
+            result = fn.apply(this, arguments);
+            fn = null;
+        }
+        return result;
+    };
 };
 
 /**********************************************
 * Returns a function, that, as long as it continues to be invoked, will not be triggered
 * Default wait time for debounce is 200ms.
  ************************************************/
-sn.debounce = function(fn, wait) {
-  var timeout;
-  return function() {
-    var callNow = !timeout;
+sn.debounce = function (fn, wait) {
+    var timeout;
+    return function () {
+        var callNow = !timeout;
 
-    clearTimeout(timeout);
-    timeout = setTimeout(function() {
-      timeout = null;
-    }, wait);
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+            timeout = null;
+        }, wait);
 
-    if (callNow) { fn.apply(this, arguments); }
-  };
+        if (callNow) { fn.apply(this, arguments); }
+    };
 };
 
 /*************************
 * execute function when condition becomes true
 ************************/
-sn.execute = function(executeFn) {
-  return (function() {
-    var tick;
-    var maxTicks;
+sn.execute = function (executeFn) {
+    return (function () {
+        var tick;
+        var maxTicks;
 
-    function executer(conditionFn) {
-      if (maxTicks < -tick) {
-        return;
-      } else if (!isNaN(maxTicks)) {
-        maxTicks -= tick;
-      }
+        function executer(conditionFn) {
+            if (maxTicks < -tick) {
+                return;
+            } else if (!isNaN(maxTicks)) {
+                maxTicks -= tick;
+            }
 
-      conditionFn() ? executeFn() : setTimeout(executer.bind(null, conditionFn), tick);
-    }
+            conditionFn() ? executeFn() : setTimeout(executer.bind(null, conditionFn), tick);
+        }
 
-    return {
-      when: function(conditionFb, _tick, _maxTicks) {
-        tick = _tick || 5;
-        maxTicks = _maxTicks;
-        executer(conditionFb);
-      }
+        return {
+            when: function (conditionFb, _tick, _maxTicks) {
+                tick = _tick || 5;
+                maxTicks = _maxTicks;
+                executer(conditionFb);
+            }
 
-    };
-  })();
+        };
+    })();
 };
 
 /*****************************
  * sMsg - broadcast messages
  ****************************/
-(function(sn) {
-  var subscribers = {};
+(function (sn) {
+    var subscribers = {};
 
-  sn.broadcast = function(to) {
-    var callArguments = Array.prototype.slice.call(arguments, 1, arguments.length);
-    for (var i = 0; i < subscribers[to].length; i++) {
-      subscribers[to][i].apply(this, callArguments);
-    }
-  };
+    sn.broadcast = function (to) {
+        var callArguments = Array.prototype.slice.call(arguments, 1, arguments.length);
+        for (var i = 0; i < subscribers[to].length; i++) {
+            subscribers[to][i].apply(this, callArguments);
+        }
+    };
 
-  sn.listen = function(subscribe, cb) {
-    subscribers[subscribe] = subscribers[subscribe] || [];
-    subscribers[subscribe].push(cb);
-  };
+    sn.listen = function (subscribe, cb) {
+        subscribers[subscribe] = subscribers[subscribe] || [];
+        subscribers[subscribe].push(cb);
+    };
 
 })(sn);
 
@@ -793,104 +793,104 @@ sn.extend = function () {
 
 (function (sn) {
 
-  //PUBLIC
+    //PUBLIC
 
 
-  /**************************************************
-  * Remove all occurrences of substring in string
-  * @param whatToReplace {String}
-  * @param replaceWith {String}
-  * @return {String} string with replaced old values with new values
-  **************************************************/
-  sn.replaceAll = function (whatToReplace, replaceWith) {
-    return typeof __EC__ === 'string'
-      ? __EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
-      : __EC__;
-  };
+    /**************************************************
+    * Remove all occurrences of substring in string
+    * @param whatToReplace {String}
+    * @param replaceWith {String}
+    * @return {String} string with replaced old values with new values
+    **************************************************/
+    sn.replaceAll = function (whatToReplace, replaceWith) {
+        return typeof __EC__ === 'string'
+            ? __EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
+            : __EC__;
+    };
 
 
-  /**************************************************
-  * Capitalize string
-  * @return {String} capitalized string
-  **************************************************/
-  sn.capitalize = function () {
-    return typeof __EC__ === 'string'
-      ? __EC__[(0)].toUpperCase() + __EC__.slice(1)
-      : __EC__;
-  };
+    /**************************************************
+    * Capitalize string
+    * @return {String} capitalized string
+    **************************************************/
+    sn.capitalize = function () {
+        return typeof __EC__ === 'string'
+            ? __EC__[(0)].toUpperCase() + __EC__.slice(1)
+            : __EC__;
+    };
 
 
-  /**************************************************
-  * test if string contains substring
-  * @param substring {String} substring we want to check for existance
-  * @param ignoreCase {Boolean} if true ignore case when comparing string
-  * @example capitalize('foo Bar', 'oo'); => 'Foo Bar'; capitalize('FOO Bar', true); => 'Foo bar'
-  * https://github.com/epeli/underscore.string
-  **************************************************/
-  sn.contains = function (substring, ignoreCase) {
-    if (ignoreCase === true) {
-      __EC__ = __EC__.toLowerCase();
-      substring = substring.toLowerCase();
-    }
+    /**************************************************
+    * test if string contains substring
+    * @param substring {String} substring we want to check for existance
+    * @param ignoreCase {Boolean} if true ignore case when comparing string
+    * @example capitalize('foo Bar', 'oo'); => 'Foo Bar'; capitalize('FOO Bar', true); => 'Foo bar'
+    * https://github.com/epeli/underscore.string
+    **************************************************/
+    sn.contains = function (substring, ignoreCase) {
+        if (ignoreCase === true) {
+            __EC__ = __EC__.toLowerCase();
+            substring = substring.toLowerCase();
+        }
 
-    return __EC__.indexOf(substring) !== -1;
-  };
-
-
-  /**************************************************
-  * Break string in array of substring.
-  * @param step {Number} length of chopped substrings
-  * @example: chop("whitespace", 3); => ['whi', 'tes', 'pac', 'e']
-  * @return {Array} array containing chopped substrings
-  **************************************************/
-  sn.chop = function (step) {
-    if (!__EC__) { return []; }
-    __EC__ = String(__EC__);
-    step = ~~step;
-    return step > 0 ? __EC__.match(new RegExp('.{1,' + step + '}', 'g')) : [__EC__];
-  };
+        return __EC__.indexOf(substring) !== -1;
+    };
 
 
-  /**************************************************
-  * Trim and replace multiple spaces with a single space.
-  * @return {String} trimmed and cleaned string
-  **************************************************/
-  sn.clean = function () {
-    return __EC__.trim().replace(/\s\s+/g, ' ');
-  };
+    /**************************************************
+    * Break string in array of substring.
+    * @param step {Number} length of chopped substrings
+    * @example: chop("whitespace", 3); => ['whi', 'tes', 'pac', 'e']
+    * @return {Array} array containing chopped substrings
+    **************************************************/
+    sn.chop = function (step) {
+        if (!__EC__) { return []; }
+        __EC__ = String(__EC__);
+        step = ~~step;
+        return step > 0 ? __EC__.match(new RegExp('.{1,' + step + '}', 'g')) : [__EC__];
+    };
 
 
-  /**********************************************
-  * Truncate string if it exceed max number of characters,
-  * apply provided truncate string at the end of truncated string (default: '...')
-  * @param length {Number} cut the string after this number of characters
-  * @param appender [optional, default: '...'] {String} string that will be appended to truncated string
-  * @return {String} truncated string
-  **********************************************/
-  sn.truncate = function (length, appender) {
-    appender = appender || '...';
-    appender = ~~appender;
-    return __EC__.length > length ? __EC__.slice(0, length) + appender : __EC__;
-  };
+    /**************************************************
+    * Trim and replace multiple spaces with a single space.
+    * @return {String} trimmed and cleaned string
+    **************************************************/
+    sn.clean = function () {
+        return __EC__.trim().replace(/\s\s+/g, ' ');
+    };
 
 
-  /**********************************************
-  * get part of the string between 2 words.
-  * @param startStr {String}
-  * @param endStr {String}
-  * @return {String} string between startStr and endStr
-  ***********************************************/
-  sn.between = function (startStr, endStr) {
-    var startIndex = __EC__.indexOf(startStr);
-    var endIndex = __EC__.indexOf(endStr);
+    /**********************************************
+    * Truncate string if it exceed max number of characters,
+    * apply provided truncate string at the end of truncated string (default: '...')
+    * @param length {Number} cut the string after this number of characters
+    * @param appender [optional, default: '...'] {String} string that will be appended to truncated string
+    * @return {String} truncated string
+    **********************************************/
+    sn.truncate = function (length, appender) {
+        appender = appender || '...';
+        appender = ~~appender;
+        return __EC__.length > length ? __EC__.slice(0, length) + appender : __EC__;
+    };
 
-    if (startIndex === -1 || startIndex === -1) {
-      return undefined;
-    }
 
-    startIndex += startStr.length;
-    return __EC__.substr(startIndex, endIndex - startIndex);
-  };
+    /**********************************************
+    * get part of the string between 2 words.
+    * @param startStr {String}
+    * @param endStr {String}
+    * @return {String} string between startStr and endStr
+    ***********************************************/
+    sn.between = function (startStr, endStr) {
+        var startIndex = __EC__.indexOf(startStr);
+        var endIndex = __EC__.indexOf(endStr);
+
+        if (startIndex === -1 || startIndex === -1) {
+            return undefined;
+        }
+
+        startIndex += startStr.length;
+        return __EC__.substr(startIndex, endIndex - startIndex);
+    };
 
 })(sn);
 
