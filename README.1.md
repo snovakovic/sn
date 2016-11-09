@@ -319,7 +319,7 @@ Array
 Module for manipulation with array and array likes.
 
 ### each
-Loop over array, array like elements and string.
+Loop over array, array like elements and strings.
 use return false in callback to break looping and return to continue looping.
 
 ```javascript
@@ -384,8 +384,8 @@ sn({test: 'a'}).fillArray(2); //=> [{test: 'a'}, {test: 'a'}]
 
 #### toArray
 If provided value is array return it.
-If provided value is not array it wraps that value with array.
-If provided value is not array and is null or undefined it returns empty array.
+If provided value is not array return value wrapped with array.
+If provided value is not array and is null or undefined return empty array.
 
 
 ```javascript
@@ -421,7 +421,6 @@ var objects = [
 sn(objects).unique('id'); //=> [{ id: 1, deepProperty: { name: 'first' }}, { id: 2, deepProperty: { name: 'first' }}]
 sn(objects).unique('deepProperty.name'); //=> [{ id: 1, deepProperty: { name: 'first' }}, { id: 2, deepProperty: { name: 'third' }}]
 
-sn
 ```
 
 #### first
@@ -429,13 +428,18 @@ Returns first element of array that match the condition in callback function or 
 if no condition is passed it returns first element of array.
 
 ```javascript
-s.first([1,1,2,3,2,1,3]); //=> 1
-s.first([1,1,2,3,2,1,3], function(e) {
+sn([1,1,2,3,2,1,3]).first(); //=> 1
+
+sn([1,1,2,3,2,1,3]).first(function(e) {
   return e === 2;
 }); //=> 2
-s.first([{name:'test'}], function(e) {
+
+sn([{name:'test'}]).first(function(e) {
   return e.name = 'test';
-}); //=> {name:'test'}
+}); //=> { name:'test' }
+
+sn(null).first(); //=> undefined
+
 ```
 
 #### last
@@ -443,59 +447,64 @@ Returns last element of array that match the condition in callback function or u
 if no condition is passed it returns last element of array.
 
 ```javascript
-s.last([1,1,2,3,2,1,3]); //=> 3
-s.last([1,1,2,3,2,1,3], function(e) {
+sn([1,1,2,3,2,1,3]).last(); //=> 3
+
+sn([1,1,2,3,2,1,3]).last(function(e) {
   return e === 2;
 }); //=> 2
-s.last([{name:'test'}], function(e) {
+
+s([{name:'test'}]).last(, function(e) {
   return e.name = 'test';
 }); //=> {name:'test'}
+
+sn(null).last(); //=> undefined
+
 ```
 
 #### stack
 Stack implementation. LIFO: last in first out.
-Stack is instantiated by calling s.stack().
-We can instantiate stack by passing optional start array s.stack([1,2,3]).
+Stack is instantiated by calling sn.stack().
+We can instantiate stack by passing optional default stack array e.g. sn.stack([1,2,3]).
 
 Stack Operations:
   * .add() - add new item to stack. We can one value or array of values into stack
   * .remove() - remove item from stack. Removed items is returned or in case of empty stack null is returned.
   * .peek() - peek next value in stack without modifying stack
   * .length() - get size of stack
-  * .array - get raw stack array
+  * .__array__ - get raw stack array
 
 
 ```javascript
-var stack = s.stack(); //instantiate new stack
+var stack = sn.stack(); //instantiate new stack
 stack.add(2); //add new value in stack.
 stack.add(3);
 stack.length(); //get length of stack. => 2
-stack.array; //get raw stack array => [2,3]
+stack.__array__; //get raw stack array => [2,3]
 stack.peek(); //=> 3 peek next value in stack without removing it
 var val = stack.remove(); //remove last added value from stack
 console.log(val); //=> 3
 stack.length(); //=> 1
-stack.array; //=> [2]
+stack.__array__; //=> [2]
 
 //if there is no value in stack .remove() will return null instead of removed value
-var stack2 = s.stack();
+var stack2 = sn.stack();
 console.log(stack2.remove()) //=> null
-stack2.array //=> []
+stack2.__array__ //=> []
 
 //stack can be instantiated with default array
-var stack3 = s.stack([1,2]);
+var stack3 = sn.stack([1,2]);
 stack3.add([3,4]);
-stack3.array; //=> [1,2,3,4]
+stack3.__array__; //=> [1,2,3,4]
 stack3.remove(); //=> 4
 stack3.remove(); //=> 3
-stack3.array; //=> [1,2]
+stack3.__array__; //=> [1,2]
 ```
 
 #### queue
 Queue implementation. FIFO: first in first out.
 
-Queue is instantiated by calling s.queue().
-We can instantiate queue by passing optional start array s.queue([1,2,3]).
+Queue is instantiated by calling sn.queue().
+We can instantiate queue by passing optional default quey array e.g. sn.queue([1,2,3]).
 
 Queue Operations:
   * .add() - add new item to queue. We can one value or array of values into stack
@@ -505,26 +514,26 @@ Queue Operations:
   * .array - get raw queue array
 
 ```javascript
-var queue = s.queue(); //instantiate new queue
+var queue = sn.queue(); //instantiate new queue
 queue.add(2); //add new value in queue.
 queue.add(3);
 queue.length(); //get length of queue. => 2
-queue.array; //get raw queue array => [2,3]
+queue.__array__; //get raw queue array => [2,3]
 stack.peek(); //=> 2 peek next value in stack without removing it
 var val = queue.remove(); //remove last added value from queue
 console.log(val); //=> 2
 queue.length(); //=> 1
-queue.array; //=> [3]
+queue.__array__; //=> [3]
 
 //if there is no value in queue .remove() will return null instead of removed value
-var queue2 = s.queue();
+var queue2 = sn.queue();
 console.log(queue2.remove()) //=> null
-queue2.array //=> []
+queue2.__array__ //=> []
 
 //queue can be instantiated with default array
-var queue3 = s.queue([1,2]);
+var queue3 = sn.queue([1,2]);
 queue3.add([3, 4]);
-queue3.array; //=> [1,2,3,4]
+queue3.__array__; //=> [1,2,3,4]
 queue3.remove(); //=> 1
 queue3.remove(); //=> 2
-queue3.array; //=> [3,4]
+queue3.__array__; //=> [3,4]

@@ -211,6 +211,8 @@ describe('sn.array', function () {
             expect(sn(testObjArray).first(function (obj) {
                 return obj.id === 2;
             })).toEqual(testObjArray[1]);
+
+            expect(sn(null).first()).toEqual(undefined);
         });
     });
 
@@ -227,6 +229,9 @@ describe('sn.array', function () {
             expect(sn(testObjArray).last(function (obj) {
                 return obj.id === 3;
             })).toEqual(testObjArray[2]);
+
+            expect(sn(null).last()).toEqual(undefined);
+
         });
     });
 
