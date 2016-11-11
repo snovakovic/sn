@@ -45,17 +45,42 @@ describe('sn.object', function () {
     });
 
 
-    // describe('extend', function () {
-    //     it('should extend object', function () {
-    //         var ob1 = {
-    //             a: 1,
-    //             b: 2
-    //         };
+    describe('extend', function () {
+        it('should clone object', function () {
+            var ob1 = {
+                a: 1,
+                b: 2
+            };
 
-    //         var ob2 = sn({}).extend(ob2);
+            var ob2 = sn({}).extend(ob1);
 
-    //     });
-    // });
+            //clone object with extend
+            ob2.a = 'test';
+
+            expect(ob1.a).toEqual(1);
+            expect(ob2.a).toEqual('test');
+            expect(ob2.b).toEqual(2);
+
+        });
+
+        it('should extend multiple object', function () {
+
+            var ob = {
+                a: 1,
+                z: 1
+            };
+
+            sn(ob).extend({a: 2, b: 2, c: 2 }, {a: 3, c: 3});
+
+            expect(ob).toEqual({
+                a: 3,
+                z: 1,
+                b: 2,
+                c: 3,
+            });
+
+        });
+    });
 
 
 });
