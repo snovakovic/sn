@@ -19,6 +19,8 @@
         }
     };
 
+
+
     /**********************************************
     * Loop over array or string. this in callback function will be set to array we are looping over.
     * @param callback {Function} callback function that will be called on each iteration
@@ -97,6 +99,7 @@
         return _return(rv);
     };
 
+
     /*********************************************
     * If array return unmodified array if not array creates array from provided value
     **********************************************/
@@ -119,7 +122,6 @@
 
         return _return(returnValue);
     };
-
 
 
     /*************************************************
@@ -184,6 +186,7 @@
 
     };
 
+
     /**********************************************************
     * Returns last element of array if no condition is passed,
     * else if there is condition returns last element of array that meets condition
@@ -206,7 +209,6 @@
         return _return(undefined);
 
     };
-
 
 
     /*********************************************

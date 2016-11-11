@@ -17,6 +17,7 @@
         }
     };
 
+
     /**********************************************
     * Apply Object.freez recursively on object and property of object.
     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
@@ -25,6 +26,7 @@
         return _return(internals.deepSealOrFreez(__EC__, Object.freeze, Object.isFrozen));
     };
 
+
     /**********************************************
     * Apply Object.seal recursively on object and property of object.
     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
@@ -32,7 +34,6 @@
     global.deepSeal = function deepSeal() {
         return _return(internals.deepSealOrFreez(__EC__, Object.seal, Object.isSealed));
     };
-
 
 
     /**********************************************

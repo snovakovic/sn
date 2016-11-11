@@ -82,26 +82,32 @@
         return internals.isString(__EC__);
     };
 
+
     global.is.number = function () {
         return internals.isNumber(__EC__);
     };
+
 
     global.is.boolean = function () {
         return typeof __EC__ === 'boolean';
     };
 
+
     global.is.null = function () {
         return __EC__ === null;
     };
+
 
     global.is.undefined = function () {
         return typeof __EC__ === 'undefined';
     };
 
+
     //not null and undefined
     global.is.defined = function () {
         return __EC__ != null;
     };
+
 
     global.is.object = function () {
         return typeof __EC__ === 'object'
@@ -109,29 +115,30 @@
             && !Array.isArray(__EC__);
     };
 
+
     global.is.function = function () {
         return typeof __EC__ === 'function';
     };
+
 
     global.is.array = function () {
         return typeof __EC__ === 'object' && Array.isArray(__EC__);
     };
 
+
     global.is.date = function () {
         return internals.isDate(__EC__);
     };
-
-    /***************************************
-    * END: data type checks
-    **************************************/
 
 
     /*************************************
     * START: ASSERT && NOT MODULE DEFINITION
     **************************************/
+
     global.not = function (val) {
         return !global.is(val);
     };
+
 
     global.assert = {
         is: function (val) {
@@ -141,6 +148,7 @@
             return internals.assert(!global.is(val), 'Values are the same.');
         }
     };
+
 
     for (var prop in global.is) {
         if (global.is.hasOwnProperty(prop)) {
@@ -157,10 +165,6 @@
             })(prop);
         }
     }
-
-    /*************************************
-    * END: ASSERT MODULE DEFINITION
-    **************************************/
 
 
 })(sn);

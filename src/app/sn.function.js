@@ -17,6 +17,7 @@
         };
     };
 
+
     /**********************************************
     * Returns a function, that, as long as it continues to be invoked, will not be triggered
     * Default wait time for debounce is 200ms.
@@ -34,6 +35,7 @@
             if (callNow) { fn.apply(this, arguments); }
         };
     };
+
 
     /*************************
     * execute function when condition becomes true
@@ -76,6 +78,7 @@
             subscribers[to][i].apply(this, callArguments);
         }
     };
+
 
     global.listen = function (subscribe, cb) {
         subscribers[subscribe] = subscribers[subscribe] || [];

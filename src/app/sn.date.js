@@ -55,6 +55,7 @@
         return _return(dt);
     };
 
+
     /**********************************************
     * Add or remove dates from provided date
     * @param seconds {Number} +/- seconds to add or remove from date
@@ -64,6 +65,7 @@
         dt.setSeconds(dt.getSeconds() + seconds);
         return _return(dt);
     };
+
 
     /**********************************************
     * Add or remove dates from provided date
@@ -75,6 +77,7 @@
         return _return(dt);
     };
 
+
     /**********************************************
     * Add or remove dates from provided date
     * @param hours {Number} +/- hours to add or remove from date
@@ -84,6 +87,7 @@
         dt.setHours(dt.getHours() + hours);
         return _return(dt);
     };
+
 
     /**********************************************
     * Add or remove dates from provided date
@@ -95,6 +99,7 @@
         return _return(dt);
     };
 
+
     /**********************************************
     * Add or remove dates from provided date
     * @param months {Number} +/- months to add or remove from date
@@ -105,6 +110,7 @@
         return _return(dt);
     };
 
+
     /**********************************************
     * Add or remove dates from provided date
     * @param years {Number} +/- years to add or remove from date
@@ -114,6 +120,7 @@
         dt.setFullYear(dt.getFullYear() + years);
         return _return(dt);
     };
+
 
     /**********************************************
     * Get the list of english months with fullName, shortName and month index

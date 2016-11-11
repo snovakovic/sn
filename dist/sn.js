@@ -70,6 +70,8 @@
         }
     };
 
+
+
     /**********************************************
     * Loop over array or string. this in callback function will be set to array we are looping over.
     * @param callback {Function} callback function that will be called on each iteration
@@ -148,6 +150,7 @@
         return _return(rv);
     };
 
+
     /*********************************************
     * If array return unmodified array if not array creates array from provided value
     **********************************************/
@@ -170,7 +173,6 @@
 
         return _return(returnValue);
     };
-
 
 
     /*************************************************
@@ -235,6 +237,7 @@
 
     };
 
+
     /**********************************************************
     * Returns last element of array if no condition is passed,
     * else if there is condition returns last element of array that meets condition
@@ -257,7 +260,6 @@
         return _return(undefined);
 
     };
-
 
 
     /*********************************************
@@ -384,26 +386,32 @@
         return internals.isString(__EC__);
     };
 
+
     global.is.number = function () {
         return internals.isNumber(__EC__);
     };
+
 
     global.is.boolean = function () {
         return typeof __EC__ === 'boolean';
     };
 
+
     global.is.null = function () {
         return __EC__ === null;
     };
+
 
     global.is.undefined = function () {
         return typeof __EC__ === 'undefined';
     };
 
+
     //not null and undefined
     global.is.defined = function () {
         return __EC__ != null;
     };
+
 
     global.is.object = function () {
         return typeof __EC__ === 'object'
@@ -411,29 +419,30 @@
             && !Array.isArray(__EC__);
     };
 
+
     global.is.function = function () {
         return typeof __EC__ === 'function';
     };
+
 
     global.is.array = function () {
         return typeof __EC__ === 'object' && Array.isArray(__EC__);
     };
 
+
     global.is.date = function () {
         return internals.isDate(__EC__);
     };
-
-    /***************************************
-    * END: data type checks
-    **************************************/
 
 
     /*************************************
     * START: ASSERT && NOT MODULE DEFINITION
     **************************************/
+
     global.not = function (val) {
         return !global.is(val);
     };
+
 
     global.assert = {
         is: function (val) {
@@ -443,6 +452,7 @@
             return internals.assert(!global.is(val), 'Values are the same.');
         }
     };
+
 
     for (var prop in global.is) {
         if (global.is.hasOwnProperty(prop)) {
@@ -459,10 +469,6 @@
             })(prop);
         }
     }
-
-    /*************************************
-    * END: ASSERT MODULE DEFINITION
-    **************************************/
 
 
 })(sn);
@@ -524,6 +530,7 @@
         return _return(dt);
     };
 
+
     /**********************************************
     * Add or remove dates from provided date
     * @param seconds {Number} +/- seconds to add or remove from date
@@ -533,6 +540,7 @@
         dt.setSeconds(dt.getSeconds() + seconds);
         return _return(dt);
     };
+
 
     /**********************************************
     * Add or remove dates from provided date
@@ -544,6 +552,7 @@
         return _return(dt);
     };
 
+
     /**********************************************
     * Add or remove dates from provided date
     * @param hours {Number} +/- hours to add or remove from date
@@ -553,6 +562,7 @@
         dt.setHours(dt.getHours() + hours);
         return _return(dt);
     };
+
 
     /**********************************************
     * Add or remove dates from provided date
@@ -564,6 +574,7 @@
         return _return(dt);
     };
 
+
     /**********************************************
     * Add or remove dates from provided date
     * @param months {Number} +/- months to add or remove from date
@@ -574,6 +585,7 @@
         return _return(dt);
     };
 
+
     /**********************************************
     * Add or remove dates from provided date
     * @param years {Number} +/- years to add or remove from date
@@ -583,6 +595,7 @@
         dt.setFullYear(dt.getFullYear() + years);
         return _return(dt);
     };
+
 
     /**********************************************
     * Get the list of english months with fullName, shortName and month index
@@ -710,6 +723,7 @@
         };
     };
 
+
     /**********************************************
     * Returns a function, that, as long as it continues to be invoked, will not be triggered
     * Default wait time for debounce is 200ms.
@@ -727,6 +741,7 @@
             if (callNow) { fn.apply(this, arguments); }
         };
     };
+
 
     /*************************
     * execute function when condition becomes true
@@ -770,6 +785,7 @@
         }
     };
 
+
     global.listen = function (subscribe, cb) {
         subscribers[subscribe] = subscribers[subscribe] || [];
         subscribers[subscribe].push(cb);
@@ -797,6 +813,7 @@
         }
     };
 
+
     /**********************************************
     * Apply Object.freez recursively on object and property of object.
     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
@@ -805,6 +822,7 @@
         return _return(internals.deepSealOrFreez(__EC__, Object.freeze, Object.isFrozen));
     };
 
+
     /**********************************************
     * Apply Object.seal recursively on object and property of object.
     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
@@ -812,7 +830,6 @@
     global.deepSeal = function deepSeal() {
         return _return(internals.deepSealOrFreez(__EC__, Object.seal, Object.isSealed));
     };
-
 
 
     /**********************************************
