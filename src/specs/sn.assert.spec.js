@@ -335,6 +335,32 @@ describe('sn().assert', function () {
         });
     });
 
+    describe('is.null', function () {
+        it('should show correct values for is.null', function () {
+            expect(sn(undefined).is.null()).toEqual(false);
+            expect(sn(null).is.null()).toEqual(true);
+            expect(sn(func).is.null()).toEqual(false);
+        });
+
+        it('should show correct values for not.null', function () {
+            expect(sn(undefined).not.null()).toEqual(true);
+            expect(sn(null).not.null()).toEqual(false);
+        });
+    });
+
+    describe('is.undefined', function () {
+        it('should show correct values for is.undefined', function () {
+            expect(sn(null).is.undefined()).toEqual(false);
+            expect(sn(undefined).is.undefined()).toEqual(true);
+            expect(sn(func).is.undefined()).toEqual(false);
+        });
+
+        it('should show correct values for not.undefined', function () {
+            expect(sn(null).not.undefined()).toEqual(true);
+            expect(sn(undefined).not.undefined()).toEqual(false);
+        });
+    });
+
     describe('is.date', function () {
 
         it('should correctly handle is date', function () {

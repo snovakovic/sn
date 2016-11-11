@@ -182,6 +182,10 @@ describe('sn.date', function () {
             expect(months.length).toEqual(12);
             expect(months[0].name).toEqual('January');
             expect(months[5].shortName).toEqual('Jun');
+
+            months.forEach(function (month) {
+                expect(month.month).toEqual(month.index + 1);
+            });
         });
 
     });

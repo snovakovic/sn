@@ -95,7 +95,7 @@
     };
 
     global.is.undefined = function () {
-        typeof __EC__ === 'undefined';
+        return typeof __EC__ === 'undefined';
     };
 
     //not null and undefined
