@@ -384,8 +384,10 @@ sn({test: 'a'}).fillArray(2); //=> [{test: 'a'}, {test: 'a'}]
 
 #### toArray
 If provided value is array return it.
-If provided value is not array return value wrapped with array.
 If provided value is not array and is null or undefined return empty array.
+If provided value is array-like (e.g function arguments) convert it to array
+else wrap value with array.
+
 
 
 ```javascript
@@ -395,6 +397,15 @@ sn(0).toArray(); //=> [0]
 sn({test: 'a'}).toArray(); //=> [{test: 'a'}]
 sn(undefined).toArray(); //=> []
 sn(null).toArray(); //=> []
+
+function foo() {
+    var argumentList = sn(arguments).toArray(); //[1, 2, 3]
+    argumentList.forEach(function() {});
+}
+
+foo(1,2,3);
+
+
 ```
 
 

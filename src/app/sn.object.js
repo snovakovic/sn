@@ -1,50 +1,56 @@
 (function (global) {
 
+    var internals = {
+        deepSealOrFreez: function deepSealOrFreez(obj, action, check) {
+            action(obj);
+
+            Object.getOwnPropertyNames(obj).forEach(function (key) {
+                if (obj.hasOwnProperty(key)
+                    && obj[key] !== null
+                    && (typeof obj[key] === 'object' || typeof obj[key] === 'function')
+                    && !check(obj[key])) {
+                    deepSealOrFreez(obj[key], action, check);
+                }
+            });
+
+            return obj;
+        }
+    };
+
     /**********************************************
-    * Apply Object.freez on object and each children object as deep as it goes.
+    * Apply Object.freez recursively on object and property of object.
     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
     ************************************************/
-    global.deepFreez = function deepFreez(obj) {
-        return deepSealOrFreez(obj, Object.freez);
+    global.deepFreeze = function deepFreez() {
+        return internals.deepSealOrFreez(__EC__, Object.freeze, Object.isFrozen);
     };
 
     /**********************************************
-    * Apply Object.seal on object and each children object as deep as it goes.
+    * Apply Object.seal recursively on object and property of object.
     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
     ************************************************/
-    global.deepSeal = function deepSeal(obj) {
-        return deepSealOrFreez(obj, Object.seal);
+    global.deepSeal = function deepSeal() {
+        return internals.deepSealOrFreez(__EC__, Object.seal, Object.isSealed);
     };
 
-    function deepSealOrFreez(obj, action) {
-        action(obj);
-
-        Object.getOwnPropertyNames(obj).forEach(function (key) {
-            if (obj.hasOwnProperty(key)
-                && obj[key] !== null
-                && (typeof obj[key] === 'object' || typeof obj[key] === 'function')
-                && !Object.isSealed(obj[key])) {
-                deepSealOrFreez(obj[key]);
-            }
-        });
-
-        return obj;
-    }
 
 
     /**********************************************
     * Extend object with the properties from other provided objects.
-    * In case of same propertie names value from first object will be overriden with the value from second object
+    * In case of same properties names value from first object will be overriden with the value from second object
     ************************************************/
     global.extend = function () {
-        for (var i = 1; i < arguments.length; i++) {
-            Object.getOwnPropertyNames(arguments[i]).forEach(function (key) {
-                if (arguments[i].hasOwnProperty(key)) {
-                    arguments[0][key] = arguments[i][key]
+        var objects = Array.prototype.slice.call(arguments);
+        objects.unshift(__EC__);
+
+        for (var i = 1; i < objects.length; i++) {
+            Object.getOwnPropertyNames(objects[i]).forEach(function (key) {
+                if (objects[i].hasOwnProperty(key)) {
+                    objects[0][key] = objects[i][key];
                 }
             });
         }
-        return arguments[0];
+        return objects[0];
     };
 
 })(sn);

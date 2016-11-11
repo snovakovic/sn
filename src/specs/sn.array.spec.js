@@ -152,6 +152,14 @@ describe('sn.array', function () {
             expect(sn({ test: 'a' }).toArray()).toEqual([{ test: 'a' }]);
             expect(sn(undefined).toArray()).toEqual([]);
             expect(sn(null).toArray()).toEqual([]);
+
+            function arg() {
+                var toList = sn(arguments).toArray();
+
+                expect(toList).toEqual([1, 2, 3]);
+            }
+
+            arg(1, 2, 3);
         });
     });
 

@@ -1,5 +1,23 @@
 (function (global) {
 
+    var internals = {
+        stackQueueBase: function (baseArray) {
+            var _arr = this.__array__ = baseArray || [];
+
+            this.add = function (val) {
+                Array.isArray(val)
+                    ? Array.prototype.push.apply(_arr, val)
+                    : _arr.push(val);
+            };
+
+            this.length = function () {
+                return _arr.length;
+            };
+
+            return this;
+
+        }
+    };
 
     /**********************************************
     * Loop over array or string. this in callback function will be set to array we are looping over.
@@ -81,15 +99,18 @@
     * If array return unmodified array if not array creates array from provided value
     **********************************************/
     global.toArray = function () {
-        if (global.not.defined()) {
+        if (__EC__ == null) {
             return [];
         }
 
-        if (global.not.array()) {
-            return [__EC__];
+        if (Array.isArray(__EC__)) {
+            return __EC__;
         }
 
-        return __EC__;
+        //convert array like object to array or otherwise wrap values with array.
+        return typeof __EC__ === 'object' && __EC__.hasOwnProperty('length') && typeof __EC__.length === 'number'
+            ? Array.prototype.slice.call(__EC__)
+            : [__EC__];
     };
 
 
@@ -179,65 +200,43 @@
     };
 
 
-    //Stack && Queue implementation
-    (function (sn) {
 
-        var stackQueueBase = function (baseArray) {
-            var _arr = this.__array__ = baseArray || [];
-
-            this.add = function (val) {
-                Array.isArray(val)
-                    ? Array.prototype.push.apply(_arr, val)
-                    : _arr.push(val);
-            };
-
-            this.length = function () {
-                return _arr.length;
-            };
-
-            return this;
-
+    /*********************************************
+     * Stack implementation LIFO last in first out
+     * @param defaultArray [optional] {Array} default array that will be used as a stack base
+    *********************************************/
+    global.stack = function (defaultArray) {
+        var stack = new internals.stackQueueBase(defaultArray);
+        stack.remove = function () {
+            var _arr = this.__array__;
+            return _arr.length ? _arr.pop() : null;
+        };
+        stack.peek = function () {
+            var _arr = this.__array__;
+            return _arr.length ? _arr[_arr.length - 1] : null;
         };
 
+        return stack;
+    };
 
-        /*********************************************
-         * Stack implementation LIFO last in first out
-         * @param defaultArray [optional] {Array} default array that will be used as a stack base
-        *********************************************/
-        global.stack = function (defaultArray) {
-            var stack = new stackQueueBase(defaultArray);
-            stack.remove = function () {
-                var _arr = this.__array__;
-                return _arr.length ? _arr.pop() : null;
-            };
-            stack.peek = function () {
-                var _arr = this.__array__;
-                return _arr.length ? _arr[_arr.length - 1] : null;
-            };
 
-            return stack;
+    /*********************************************
+    * Queue implementation FIFO: first in first out
+    * @param defaultArray [optional] {Array} default array that will be used as a queue base
+    *********************************************/
+    global.queue = function (defaultArray) {
+        var queue = new internals.stackQueueBase(defaultArray);
+        queue.remove = function () {
+            var _arr = this.__array__;
+            return _arr.length ? _arr.shift() : null;
+        };
+        queue.peek = function () {
+            var _arr = this.__array__;
+            return _arr.length ? _arr[0] : null;
         };
 
-
-        /*********************************************
-        * Queue implementation FIFO: first in first out
-        * @param defaultArray [optional] {Array} default array that will be used as a queue base
-        *********************************************/
-        global.queue = function (defaultArray) {
-            var queue = new stackQueueBase(defaultArray);
-            queue.remove = function () {
-                var _arr = this.__array__;
-                return _arr.length ? _arr.shift() : null;
-            };
-            queue.peek = function () {
-                var _arr = this.__array__;
-                return _arr.length ? _arr[0] : null;
-            };
-
-            return queue;
-        };
-
-    })(sn);
+        return queue;
+    };
 
 
 })(sn);

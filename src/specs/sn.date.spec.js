@@ -7,7 +7,6 @@ describe('sn.date', function () {
         return new Date(1987, 11, 14);
     }
 
-    //TODO: add validation for invalid date
 
     beforeEach(function () {
         today = new Date();
