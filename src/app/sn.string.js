@@ -1,4 +1,4 @@
-﻿(function (sn) {
+﻿(function (global) {
 
     function isString() {
         for (var i = 0; i < arguments.length; i++) {
@@ -16,7 +16,7 @@
     * @param replaceWith {String}
     * @return {String} string with replaced old values with new values
     **************************************************/
-    sn.replaceAll = function (whatToReplace, replaceWith) {
+    global.replaceAll = function (whatToReplace, replaceWith) {
         return isString(__EC__, whatToReplace, replaceWith)
             ? __EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
             : __EC__;
@@ -27,7 +27,7 @@
     * Capitalize string
     * @return {String} capitalized string
     **************************************************/
-    sn.capitalize = function () {
+    global.capitalize = function () {
         return isString(__EC__)
             ? __EC__[(0)].toUpperCase() + __EC__.slice(1)
             : __EC__;
@@ -41,7 +41,7 @@
     * @example capitalize('foo Bar', 'oo'); => 'Foo Bar'; capitalize('FOO Bar', true); => 'Foo bar'
     * https://github.com/epeli/underscore.string
     **************************************************/
-    sn.contains = function (substring, ignoreCase) {
+    global.contains = function (substring, ignoreCase) {
 
         if (isString(__EC__, substring)) {
             if (ignoreCase === true) {
@@ -63,7 +63,7 @@
     * @example: chop("whitespace", 3); => ['whi', 'tes', 'pac', 'e']
     * @return {Array} array containing chopped substrings
     **************************************************/
-    sn.chop = function (step) {
+    global.chop = function (step) {
         if (isString(__EC__)) {
             __EC__ = String(__EC__);
             step = ~~step;
@@ -78,7 +78,7 @@
     * Trim and replace multiple spaces with a single space.
     * @return {String} trimmed and cleaned string
     **************************************************/
-    sn.clean = function () {
+    global.clean = function () {
         return isString(__EC__)
             ? __EC__.trim().replace(/\s\s+/g, ' ')
             : __EC__;
@@ -92,7 +92,7 @@
     * @param appender [optional, default: '...'] {String} string that will be appended to truncated string
     * @return {String} truncated string
     **********************************************/
-    sn.truncate = function (length, appender) {
+    global.truncate = function (length, appender) {
         appender = appender || '...';
         length = ~~length;
         return (isString(__EC__) && __EC__.length > length)
@@ -107,7 +107,7 @@
     * @param str2 {String}
     * @return {String} string between startStr and endStr
     ***********************************************/
-    sn.between = function (str1, str2) {
+    global.between = function (str1, str2) {
         if (isString(__EC__, str1, str2)) {
             var index1 = __EC__.indexOf(str1);
             var index2 = __EC__.indexOf(str2);

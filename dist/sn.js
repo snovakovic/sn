@@ -21,14 +21,14 @@
   //app files will be concatenated here and then this will be closed with sn.end.js
 
 
-(function (sn) {
+(function (global) {
 
 
     /**********************************************
     * Loop over array or string. this in callback function will be set to array we are looping over.
     * @param callback {Function} callback function that will be called on each iteration
     ************************************************/
-    sn.each = function (callback) {
+    global.each = function (callback) {
         if (__EC__ && __EC__.length) {
             for (var i = 0; i < __EC__.length; i++) {
                 if (callback.call(__EC__, __EC__[i], i) === false) {
@@ -45,7 +45,7 @@
     * @param l {Number} number of times we want to iterate
     * @param callback {Function} callback function that will be called on each iteration
     ************************************************/
-    sn.iterate = function (callback) {
+    global.iterate = function (callback) {
         var iterations = Number(__EC__);
         if (sn(iterations).is.number()) {
             for (var i = 0; i < iterations; i++) {
@@ -64,7 +64,7 @@
     * https://github.com/Daplie/knuth-shuffle
     * @return {Array} shuffled array
     ********************************************************/
-    sn.shuffle = function () {
+    global.shuffle = function () {
         if (sn(__EC__).not.array()) {
             return;
         }
@@ -92,7 +92,7 @@
     * @param val {Any} default array value
     * @return len {Integer} size of the new array
     **********************************************/
-    sn.fillArray = function (len) {
+    global.fillArray = function (len) {
         var rv = new Array(len);
         while (--len >= 0) {
             rv[len] = __EC__;
@@ -103,12 +103,12 @@
     /*********************************************
     * If array return unmodified array if not array creates array from provided value
     **********************************************/
-    sn.toArray = function () {
-        if (sn.not.defined()) {
+    global.toArray = function () {
+        if (global.not.defined()) {
             return [];
         }
 
-        if (sn.not.array()) {
+        if (global.not.array()) {
             return [__EC__];
         }
 
@@ -123,8 +123,8 @@
     * @param path {String} path to object property to compare for uniqueness
     * @return array without duplicate values
     ***********************************************/
-    sn.unique = function (path) {
-        if (sn.is.array()) {
+    global.unique = function (path) {
+        if (global.is.array()) {
             var pathUniqueValues = [];
             var arr = [];
             for (var i = 0; i < __EC__.length; i++) {
@@ -161,7 +161,7 @@
     * @param condition {Function} function that returns true if value is found.
     * @return array item if found or undefined if not found
     **********************************************/
-    sn.first = function (condition) {
+    global.first = function (condition) {
         if (__EC__ && __EC__.length) {
             if (condition) {
                 for (var i = 0; i < __EC__.length; i++) {
@@ -184,7 +184,7 @@
     * @param condition {Function} function that returns true if value is found.
     * @return array item if found or undefined if not found
     ***********************************************************/
-    sn.last = function (condition) {
+    global.last = function (condition) {
         if (__EC__ && __EC__.length) {
             if (condition) {
                 for (var i = __EC__.length - 1; i >= 0; i--) {
@@ -227,7 +227,7 @@
          * Stack implementation LIFO last in first out
          * @param defaultArray [optional] {Array} default array that will be used as a stack base
         *********************************************/
-        sn.stack = function (defaultArray) {
+        global.stack = function (defaultArray) {
             var stack = new stackQueueBase(defaultArray);
             stack.remove = function () {
                 var _arr = this.__array__;
@@ -246,7 +246,7 @@
         * Queue implementation FIFO: first in first out
         * @param defaultArray [optional] {Array} default array that will be used as a queue base
         *********************************************/
-        sn.queue = function (defaultArray) {
+        global.queue = function (defaultArray) {
             var queue = new stackQueueBase(defaultArray);
             queue.remove = function () {
                 var _arr = this.__array__;
@@ -265,7 +265,7 @@
 
 })(sn);
 
-(function (sn) {
+(function (global) {
 
     var internals = {
         isString: function (testVar) {
@@ -295,7 +295,7 @@
     * == is used for compering null and undefined
     * for everything else === is used.
     * ********************************* */
-    sn.is = function (t2) {
+    global.is = function (t2) {
         var t1 = __EC__;
         if ((internals.isString(t1) || internals.isNumber(t1)) && (internals.isString(t2) || internals.isNumber(t2))) {
             //this covers coercion between string and number without any gotchas
@@ -323,7 +323,7 @@
      * sn(' ').is.empty(); => true
      * sn('\n\t').is.empty(); => true
     ********************************************************/
-    sn.is.empty = function () {
+    global.is.empty = function () {
         if (__EC__ == null
             || (typeof __EC__ === 'string' && (/^\s*$/).test(__EC__))) {
             return true;
@@ -345,46 +345,46 @@
     /***************************************
      * START: data type checks
      **************************************/
-    sn.is.string = function () {
+    global.is.string = function () {
         return internals.isString(__EC__);
     };
 
-    sn.is.number = function () {
+    global.is.number = function () {
         return internals.isNumber(__EC__);
     };
 
-    sn.is.boolean = function () {
+    global.is.boolean = function () {
         return typeof __EC__ === 'boolean';
     };
 
-    sn.is.null = function () {
+    global.is.null = function () {
         return __EC__ === null;
     };
 
-    sn.is.undefined = function () {
+    global.is.undefined = function () {
         typeof __EC__ === 'undefined';
     };
 
     //not null and undefined
-    sn.is.defined = function () {
+    global.is.defined = function () {
         return __EC__ != null;
     };
 
-    sn.is.object = function () {
+    global.is.object = function () {
         return typeof __EC__ === 'object'
             && __EC__ !== null
             && !Array.isArray(__EC__);
     };
 
-    sn.is.function = function () {
+    global.is.function = function () {
         return typeof __EC__ === 'function';
     };
 
-    sn.is.array = function () {
+    global.is.array = function () {
         return typeof __EC__ === 'object' && Array.isArray(__EC__);
     };
 
-    sn.is.date = function () {
+    global.is.date = function () {
         return internals.isDate(__EC__);
     };
 
@@ -396,30 +396,30 @@
     /*************************************
     * START: ASSERT && NOT MODULE DEFINITION
     **************************************/
-    sn.not = function (val) {
-        return !sn.is(val);
+    global.not = function (val) {
+        return !global.is(val);
     };
 
-    sn.assert = {
+    global.assert = {
         is: function (val) {
-            return internals.assert(sn.is(val), 'Values are not the same.');
+            return internals.assert(global.is(val), 'Values are not the same.');
         },
         not: function (val) {
-            return internals.assert(!sn.is(val), 'Values are the same.');
+            return internals.assert(!global.is(val), 'Values are the same.');
         }
     };
 
-    for (var prop in sn.is) {
-        if (sn.is.hasOwnProperty(prop)) {
+    for (var prop in global.is) {
+        if (global.is.hasOwnProperty(prop)) {
             (function (prop) {
-                sn.not[prop] = function () {
-                    return !sn.is[prop]();
+                global.not[prop] = function () {
+                    return !global.is[prop]();
                 };
-                sn.assert.is[prop] = function () {
-                    return internals.assert(sn.is[prop](), 'Provided value is not ' + prop + '.');
+                global.assert.is[prop] = function () {
+                    return internals.assert(global.is[prop](), 'Provided value is not ' + prop + '.');
                 };
-                sn.assert.not[prop] = function () {
-                    return internals.assert(!sn.is[prop](), 'Provided value is ' + prop + '.');
+                global.assert.not[prop] = function () {
+                    return internals.assert(!global.is[prop](), 'Provided value is ' + prop + '.');
                 };
             })(prop);
         }
@@ -432,12 +432,12 @@
 
 })(sn);
 
-(function (sn) {
+(function (global) {
 
     //PRIVATE
     var getDate = function () {
         if (__EC__) {
-            sn.assert.is.date(__EC__);
+            global.assert.is.date(__EC__);
             return __EC__;
         }
         return new Date();
@@ -450,7 +450,7 @@
     /**********************************************
     * Change provided date so that it point to last day of current month
     ************************************************/
-    sn.setLastDayOfMonth = function () {
+    global.setLastDayOfMonth = function () {
         var dt = getDate();
         dt.setMonth(dt.getMonth() + 1, 0);
         return dt;
@@ -461,7 +461,7 @@
     * Check if day in date is last day of month
     * @return true -> day is last day of month; false - day is not last day of month
     ************************************************/
-    sn.is.lastDayOfMonth = function () {
+    global.is.lastDayOfMonth = function () {
         var dt = getDate();
         var test = new Date(dt.getTime());
         test.setDate(test.getDate() + 1);
@@ -473,7 +473,7 @@
     * Check if day in date is last day of month
     * @return true -> day is last day of month; false - day is not last day of month
     ************************************************/
-    sn.getLastDayOfMonth = function () {
+    global.getLastDayOfMonth = function () {
         var dt = getDate();
         return (new Date(dt.getFullYear(), dt.getMonth() + 1, 0)).getDate();
     };
@@ -483,7 +483,7 @@
     * Add or remove dates from provided date
     * @param milliseconds {Number} +/- milliseconds to add or remove from date
     ************************************************/
-    sn.addMilliseconds = function (milliseconds) {
+    global.addMilliseconds = function (milliseconds) {
         var dt = getDate();
         dt.setMilliseconds(dt.getMilliseconds() + milliseconds);
         return dt;
@@ -493,7 +493,7 @@
     * Add or remove dates from provided date
     * @param seconds {Number} +/- seconds to add or remove from date
     ************************************************/
-    sn.addSeconds = function (seconds) {
+    global.addSeconds = function (seconds) {
         var dt = getDate();
         dt.setSeconds(dt.getSeconds() + seconds);
         return dt;
@@ -503,7 +503,7 @@
     * Add or remove dates from provided date
     * @param minutes {Number} +/- minutes to add or remove from date
     ************************************************/
-    sn.addMinutes = function (minutes) {
+    global.addMinutes = function (minutes) {
         var dt = getDate();
         dt.setMinutes(dt.getMinutes() + minutes);
         return dt;
@@ -513,7 +513,7 @@
     * Add or remove dates from provided date
     * @param hours {Number} +/- hours to add or remove from date
     ************************************************/
-    sn.addHours = function (hours) {
+    global.addHours = function (hours) {
         var dt = getDate();
         dt.setHours(dt.getHours() + hours);
         return dt;
@@ -523,7 +523,7 @@
     * Add or remove dates from provided date
     * @param days {Number} +/- days to add or remove from date
     ************************************************/
-    sn.addDays = function (days) {
+    global.addDays = function (days) {
         var dt = getDate();
         dt.setDate(dt.getDate() + days);
         return dt;
@@ -533,7 +533,7 @@
     * Add or remove dates from provided date
     * @param months {Number} +/- months to add or remove from date
     ************************************************/
-    sn.addMonths = function (months) {
+    global.addMonths = function (months) {
         var dt = getDate();
         dt.setMonth(dt.getMonth() + months);
         return dt;
@@ -543,7 +543,7 @@
     * Add or remove dates from provided date
     * @param years {Number} +/- years to add or remove from date
     ************************************************/
-    sn.addYears = function (years) {
+    global.addYears = function (years) {
         var dt = getDate();
         dt.setFullYear(dt.getFullYear() + years);
         return dt;
@@ -552,7 +552,7 @@
     /**********************************************
     * Get the list of english months with fullName, shortName and month index
     ************************************************/
-    sn.getMonths = function () {
+    global.getMonths = function () {
         return [
             {
                 index: 0,
@@ -742,14 +742,13 @@
 
 })(sn);
 
-//DeepFreez / DeepSeal
-(function (sn) {
+(function (global) {
 
     /**********************************************
     * Apply Object.freez on object and each children object as deep as it goes.
     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
     ************************************************/
-    sn.deepFreez = function deepFreez(obj) {
+    global.deepFreez = function deepFreez(obj) {
         return deepSealOrFreez(obj, Object.freez);
     };
 
@@ -757,7 +756,7 @@
     * Apply Object.seal on object and each children object as deep as it goes.
     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
     ************************************************/
-    sn.deepSeal = function deepSeal(obj) {
+    global.deepSeal = function deepSeal(obj) {
         return deepSealOrFreez(obj, Object.seal);
     };
 
@@ -776,26 +775,29 @@
         return obj;
     }
 
+
+    /**********************************************
+    * Extend object with the properties from other provided objects.
+    * In case of same propertie names value from first object will be overriden with the value from second object
+    ************************************************/
+    global.extend = function () {
+        for (var i = 1; i < arguments.length; i++) {
+            Object.getOwnPropertyNames(arguments[i]).forEach(function (key) {
+                if (arguments[i].hasOwnProperty(key)) {
+                    arguments[0][key] = arguments[i][key]
+                }
+            });
+        }
+        return arguments[0];
+    };
+
 })(sn);
 
 
 
-/**********************************************
-* Extend object with the properties from other provided objects.
-* In case of same propertie names value from first object will be overriden with the value from second object
-************************************************/
-sn.extend = function () {
-    for (var i = 1; i < arguments.length; i++) {
-        Object.getOwnPropertyNames(arguments[i]).forEach(function (key) {
-            if (arguments[i].hasOwnProperty(key)) {
-                arguments[0][key] = arguments[i][key]
-            }
-        });
-    }
-    return arguments[0];
-};
 
-(function (sn) {
+
+(function (global) {
 
     function isString() {
         for (var i = 0; i < arguments.length; i++) {
@@ -813,7 +815,7 @@ sn.extend = function () {
     * @param replaceWith {String}
     * @return {String} string with replaced old values with new values
     **************************************************/
-    sn.replaceAll = function (whatToReplace, replaceWith) {
+    global.replaceAll = function (whatToReplace, replaceWith) {
         return isString(__EC__, whatToReplace, replaceWith)
             ? __EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
             : __EC__;
@@ -824,7 +826,7 @@ sn.extend = function () {
     * Capitalize string
     * @return {String} capitalized string
     **************************************************/
-    sn.capitalize = function () {
+    global.capitalize = function () {
         return isString(__EC__)
             ? __EC__[(0)].toUpperCase() + __EC__.slice(1)
             : __EC__;
@@ -838,7 +840,7 @@ sn.extend = function () {
     * @example capitalize('foo Bar', 'oo'); => 'Foo Bar'; capitalize('FOO Bar', true); => 'Foo bar'
     * https://github.com/epeli/underscore.string
     **************************************************/
-    sn.contains = function (substring, ignoreCase) {
+    global.contains = function (substring, ignoreCase) {
 
         if (isString(__EC__, substring)) {
             if (ignoreCase === true) {
@@ -860,7 +862,7 @@ sn.extend = function () {
     * @example: chop("whitespace", 3); => ['whi', 'tes', 'pac', 'e']
     * @return {Array} array containing chopped substrings
     **************************************************/
-    sn.chop = function (step) {
+    global.chop = function (step) {
         if (isString(__EC__)) {
             __EC__ = String(__EC__);
             step = ~~step;
@@ -875,7 +877,7 @@ sn.extend = function () {
     * Trim and replace multiple spaces with a single space.
     * @return {String} trimmed and cleaned string
     **************************************************/
-    sn.clean = function () {
+    global.clean = function () {
         return isString(__EC__)
             ? __EC__.trim().replace(/\s\s+/g, ' ')
             : __EC__;
@@ -889,7 +891,7 @@ sn.extend = function () {
     * @param appender [optional, default: '...'] {String} string that will be appended to truncated string
     * @return {String} truncated string
     **********************************************/
-    sn.truncate = function (length, appender) {
+    global.truncate = function (length, appender) {
         appender = appender || '...';
         length = ~~length;
         return (isString(__EC__) && __EC__.length > length)
@@ -904,7 +906,7 @@ sn.extend = function () {
     * @param str2 {String}
     * @return {String} string between startStr and endStr
     ***********************************************/
-    sn.between = function (str1, str2) {
+    global.between = function (str1, str2) {
         if (isString(__EC__, str1, str2)) {
             var index1 = __EC__.indexOf(str1);
             var index2 = __EC__.indexOf(str2);

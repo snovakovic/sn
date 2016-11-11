@@ -1,40 +1,40 @@
 <?xml version="1.0"?>
-<testsuite name="PhantomJS 2.1.1 (Linux 0.0.0)" package="" timestamp="2016-11-11T14:05:48" id="0" hostname="snovakovic-desktop" tests="76" errors="0" failures="0" time="0.458">
+<testsuite name="PhantomJS 2.1.1 (Linux 0.0.0)" package="" timestamp="2016-11-11T14:10:23" id="0" hostname="snovakovic-desktop" tests="76" errors="0" failures="0" time="0.44">
   <properties>
     <property name="browser.fullName" value="Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1"/>
   </properties>
-  <testcase name="sn.array each should loop correctly" time="0.089" classname="sn.array"/>
-  <testcase name="sn.array iterate should iterate correctly" time="0.089" classname="sn.array"/>
-  <testcase name="sn.array shuffle should shuffle array" time="0.011" classname="sn.array"/>
-  <testcase name="sn.array fillArray should returned filled array" time="0.011" classname="sn.array"/>
+  <testcase name="sn.array each should loop correctly" time="0.088" classname="sn.array"/>
+  <testcase name="sn.array iterate should iterate correctly" time="0.087" classname="sn.array"/>
+  <testcase name="sn.array shuffle should shuffle array" time="0.012" classname="sn.array"/>
+  <testcase name="sn.array fillArray should returned filled array" time="0.012" classname="sn.array"/>
   <testcase name="sn.array toArray readme examples should be correct" time="0.01" classname="sn.array"/>
   <testcase name="sn.array unique should return unique values" time="0.012" classname="sn.array"/>
   <testcase name="sn.array unique invalid values should not throw exception" time="0.012" classname="sn.array"/>
   <testcase name="sn.array unique readme example should be correct" time="0.012" classname="sn.array"/>
-  <testcase name="sn.array first should return first array value" time="0.012" classname="sn.array"/>
-  <testcase name="sn.array last should return last array value" time="0.015" classname="sn.array"/>
-  <testcase name="sn.array stack should operate with stack correctly" time="0.012" classname="sn.array"/>
+  <testcase name="sn.array first should return first array value" time="0.01" classname="sn.array"/>
+  <testcase name="sn.array last should return last array value" time="0.012" classname="sn.array"/>
+  <testcase name="sn.array stack should operate with stack correctly" time="0.011" classname="sn.array"/>
   <testcase name="sn.array stack should operate with default stack correctly" time="0.011" classname="sn.array"/>
-  <testcase name="sn.array stack stack arrays should operate independently" time="0.015" classname="sn.array"/>
-  <testcase name="sn.array stack add multiple values should work as expected" time="0.014" classname="sn.array"/>
-  <testcase name="sn.array stack readme example should be correct" time="0.012" classname="sn.array"/>
-  <testcase name="sn.array queue should operate with queue correctly" time="0.015" classname="sn.array"/>
-  <testcase name="sn.array queue should operate with default queue correctly" time="0.014" classname="sn.array"/>
-  <testcase name="sn.array queue queue arrays should operate independently" time="0.013" classname="sn.array"/>
-  <testcase name="sn.array queue add multiple values should work as expected" time="0.013" classname="sn.array"/>
-  <testcase name="sn.array queue readme example should be correct" time="0.01" classname="sn.array"/>
+  <testcase name="sn.array stack stack arrays should operate independently" time="0.014" classname="sn.array"/>
+  <testcase name="sn.array stack add multiple values should work as expected" time="0.012" classname="sn.array"/>
+  <testcase name="sn.array stack readme example should be correct" time="0.013" classname="sn.array"/>
+  <testcase name="sn.array queue should operate with queue correctly" time="0.013" classname="sn.array"/>
+  <testcase name="sn.array queue should operate with default queue correctly" time="0.013" classname="sn.array"/>
+  <testcase name="sn.array queue queue arrays should operate independently" time="0.012" classname="sn.array"/>
+  <testcase name="sn.array queue add multiple values should work as expected" time="0.01" classname="sn.array"/>
+  <testcase name="sn.array queue readme example should be correct" time="0.012" classname="sn.array"/>
   <testcase name="sn().assert is should correctly handle is" time="0.001" classname="sn().assert"/>
   <testcase name="sn().assert is should correctly handle not" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is should correctly handle assert is" time="0.001" classname="sn().assert"/>
   <testcase name="sn().assert is.empty should correctly handle is.empty" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.empty should correctly handle not.empty" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.empty should correctly handle assert.is.empty" time="0" classname="sn().assert"/>
-  <testcase name="sn().assert is.number should show correct values for is.number" time="0.002" classname="sn().assert"/>
+  <testcase name="sn().assert is.number should show correct values for is.number" time="0.001" classname="sn().assert"/>
   <testcase name="sn().assert is.number should show correct values for not.number" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.number should show correctly assert number" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.string should show correct values for is.string" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.string should show correct values for not.string" time="0" classname="sn().assert"/>
-  <testcase name="sn().assert is.string should handle assert string" time="0" classname="sn().assert"/>
+  <testcase name="sn().assert is.string should handle assert string" time="0.001" classname="sn().assert"/>
   <testcase name="sn().assert is.boolean should show correct values for is.boolean" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.boolean should show correct values for not.boolean" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.boolean should correctly handle assert boolean" time="0" classname="sn().assert"/>
@@ -47,36 +47,36 @@
   <testcase name="sn().assert is.array should show correct values for is.array" time="0.002" classname="sn().assert"/>
   <testcase name="sn().assert is.array should show correct values for not.array" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.array should correctly handle assert array" time="0" classname="sn().assert"/>
-  <testcase name="sn().assert is.date should correctly handle is date" time="0.001" classname="sn().assert"/>
+  <testcase name="sn().assert is.date should correctly handle is date" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.date should correctly handle not date" time="0" classname="sn().assert"/>
   <testcase name="sn().assert is.date should correctly handle assert is date" time="0.001" classname="sn().assert"/>
-  <testcase name="sn().assert Readme examples Readme examples should be correct" time="0.002" classname="sn().assert"/>
-  <testcase name="sn.date isLastDayOfMonth Should correctly show if date is last day of month" time="0.001" classname="sn.date"/>
-  <testcase name="sn.date setLastDayOfMonth Should correctly set last day of month" time="0" classname="sn.date"/>
+  <testcase name="sn().assert Readme examples Readme examples should be correct" time="0.001" classname="sn().assert"/>
+  <testcase name="sn.date isLastDayOfMonth Should correctly show if date is last day of month" time="0" classname="sn.date"/>
+  <testcase name="sn.date setLastDayOfMonth Should correctly set last day of month" time="0.001" classname="sn.date"/>
   <testcase name="sn.date getLastDayOfMonth Should correctly get last day of month from date" time="0.001" classname="sn.date"/>
   <testcase name="sn.date addMilliseconds should correctly add milliseconds" time="0" classname="sn.date"/>
   <testcase name="sn.date addSeconds should correctly add seconds" time="0" classname="sn.date"/>
-  <testcase name="sn.date addMinutes should correctly add minutes" time="0.001" classname="sn.date"/>
-  <testcase name="sn.date addHours should correctly add hours" time="0" classname="sn.date"/>
+  <testcase name="sn.date addMinutes should correctly add minutes" time="0" classname="sn.date"/>
+  <testcase name="sn.date addHours should correctly add hours" time="0.001" classname="sn.date"/>
   <testcase name="sn.date addDays should correctly add days" time="0" classname="sn.date"/>
   <testcase name="sn.date addMonths should correctly add months" time="0" classname="sn.date"/>
   <testcase name="sn.date addYears should correctly add years" time="0" classname="sn.date"/>
   <testcase name="sn.date getMonths should display list of months" time="0.001" classname="sn.date"/>
   <testcase name="sn.date Readme examples Readme examples should be correct" time="0" classname="sn.date"/>
   <testcase name="sn.function once should call function only once" time="0" classname="sn.function"/>
-  <testcase name="sn.function once should call function only once and pass correct arguments" time="0.001" classname="sn.function"/>
-  <testcase name="sn.function debounce should call function only twice" time="0.004" classname="sn.function"/>
+  <testcase name="sn.function once should call function only once and pass correct arguments" time="0" classname="sn.function"/>
+  <testcase name="sn.function debounce should call function only twice" time="0.005" classname="sn.function"/>
   <testcase name="sn.function debounce should call function once" time="0.004" classname="sn.function"/>
-  <testcase name="sn.function execute should execute on async condition change" time="0.008" classname="sn.function"/>
+  <testcase name="sn.function execute should execute on async condition change" time="0.005" classname="sn.function"/>
   <testcase name="sn.function execute should exceed max tries count" time="0.019" classname="sn.function"/>
-  <testcase name="sn.function sn.msg should receive messages without object" time="0.001" classname="sn.function"/>
+  <testcase name="sn.function sn.msg should receive messages without object" time="0" classname="sn.function"/>
   <testcase name="sn.function sn.msg should receive messages with object" time="0" classname="sn.function"/>
   <testcase name="sn.function sn.msg should handle multiple listeners" time="0" classname="sn.function"/>
   <testcase name="sn.string replaceAll should replace all ocurance of string" time="0.001" classname="sn.string"/>
   <testcase name="sn.string between return correct substring" time="0" classname="sn.string"/>
   <testcase name="sn.string capitalize should capitalize string" time="0" classname="sn.string"/>
-  <testcase name="sn.string contains should contain string" time="0" classname="sn.string"/>
-  <testcase name="sn.string chop should chop string" time="0" classname="sn.string"/>
+  <testcase name="sn.string contains should contain string" time="0.001" classname="sn.string"/>
+  <testcase name="sn.string chop should chop string" time="0.001" classname="sn.string"/>
   <testcase name="sn.string clean should clean string" time="0.004" classname="sn.string"/>
   <testcase name="sn.string truncate should truncate string correctly" time="0" classname="sn.string"/>
   <system-out>

@@ -1,9 +1,9 @@
-(function (sn) {
+(function (global) {
 
     //PRIVATE
     var getDate = function () {
         if (__EC__) {
-            sn.assert.is.date(__EC__);
+            global.assert.is.date(__EC__);
             return __EC__;
         }
         return new Date();
@@ -16,7 +16,7 @@
     /**********************************************
     * Change provided date so that it point to last day of current month
     ************************************************/
-    sn.setLastDayOfMonth = function () {
+    global.setLastDayOfMonth = function () {
         var dt = getDate();
         dt.setMonth(dt.getMonth() + 1, 0);
         return dt;
@@ -27,7 +27,7 @@
     * Check if day in date is last day of month
     * @return true -> day is last day of month; false - day is not last day of month
     ************************************************/
-    sn.is.lastDayOfMonth = function () {
+    global.is.lastDayOfMonth = function () {
         var dt = getDate();
         var test = new Date(dt.getTime());
         test.setDate(test.getDate() + 1);
@@ -39,7 +39,7 @@
     * Check if day in date is last day of month
     * @return true -> day is last day of month; false - day is not last day of month
     ************************************************/
-    sn.getLastDayOfMonth = function () {
+    global.getLastDayOfMonth = function () {
         var dt = getDate();
         return (new Date(dt.getFullYear(), dt.getMonth() + 1, 0)).getDate();
     };
@@ -49,7 +49,7 @@
     * Add or remove dates from provided date
     * @param milliseconds {Number} +/- milliseconds to add or remove from date
     ************************************************/
-    sn.addMilliseconds = function (milliseconds) {
+    global.addMilliseconds = function (milliseconds) {
         var dt = getDate();
         dt.setMilliseconds(dt.getMilliseconds() + milliseconds);
         return dt;
@@ -59,7 +59,7 @@
     * Add or remove dates from provided date
     * @param seconds {Number} +/- seconds to add or remove from date
     ************************************************/
-    sn.addSeconds = function (seconds) {
+    global.addSeconds = function (seconds) {
         var dt = getDate();
         dt.setSeconds(dt.getSeconds() + seconds);
         return dt;
@@ -69,7 +69,7 @@
     * Add or remove dates from provided date
     * @param minutes {Number} +/- minutes to add or remove from date
     ************************************************/
-    sn.addMinutes = function (minutes) {
+    global.addMinutes = function (minutes) {
         var dt = getDate();
         dt.setMinutes(dt.getMinutes() + minutes);
         return dt;
@@ -79,7 +79,7 @@
     * Add or remove dates from provided date
     * @param hours {Number} +/- hours to add or remove from date
     ************************************************/
-    sn.addHours = function (hours) {
+    global.addHours = function (hours) {
         var dt = getDate();
         dt.setHours(dt.getHours() + hours);
         return dt;
@@ -89,7 +89,7 @@
     * Add or remove dates from provided date
     * @param days {Number} +/- days to add or remove from date
     ************************************************/
-    sn.addDays = function (days) {
+    global.addDays = function (days) {
         var dt = getDate();
         dt.setDate(dt.getDate() + days);
         return dt;
@@ -99,7 +99,7 @@
     * Add or remove dates from provided date
     * @param months {Number} +/- months to add or remove from date
     ************************************************/
-    sn.addMonths = function (months) {
+    global.addMonths = function (months) {
         var dt = getDate();
         dt.setMonth(dt.getMonth() + months);
         return dt;
@@ -109,7 +109,7 @@
     * Add or remove dates from provided date
     * @param years {Number} +/- years to add or remove from date
     ************************************************/
-    sn.addYears = function (years) {
+    global.addYears = function (years) {
         var dt = getDate();
         dt.setFullYear(dt.getFullYear() + years);
         return dt;
@@ -118,7 +118,7 @@
     /**********************************************
     * Get the list of english months with fullName, shortName and month index
     ************************************************/
-    sn.getMonths = function () {
+    global.getMonths = function () {
         return [
             {
                 index: 0,

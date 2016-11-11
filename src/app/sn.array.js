@@ -1,11 +1,11 @@
-(function (sn) {
+(function (global) {
 
 
     /**********************************************
     * Loop over array or string. this in callback function will be set to array we are looping over.
     * @param callback {Function} callback function that will be called on each iteration
     ************************************************/
-    sn.each = function (callback) {
+    global.each = function (callback) {
         if (__EC__ && __EC__.length) {
             for (var i = 0; i < __EC__.length; i++) {
                 if (callback.call(__EC__, __EC__[i], i) === false) {
@@ -22,7 +22,7 @@
     * @param l {Number} number of times we want to iterate
     * @param callback {Function} callback function that will be called on each iteration
     ************************************************/
-    sn.iterate = function (callback) {
+    global.iterate = function (callback) {
         var iterations = Number(__EC__);
         if (sn(iterations).is.number()) {
             for (var i = 0; i < iterations; i++) {
@@ -41,7 +41,7 @@
     * https://github.com/Daplie/knuth-shuffle
     * @return {Array} shuffled array
     ********************************************************/
-    sn.shuffle = function () {
+    global.shuffle = function () {
         if (sn(__EC__).not.array()) {
             return;
         }
@@ -69,7 +69,7 @@
     * @param val {Any} default array value
     * @return len {Integer} size of the new array
     **********************************************/
-    sn.fillArray = function (len) {
+    global.fillArray = function (len) {
         var rv = new Array(len);
         while (--len >= 0) {
             rv[len] = __EC__;
@@ -80,12 +80,12 @@
     /*********************************************
     * If array return unmodified array if not array creates array from provided value
     **********************************************/
-    sn.toArray = function () {
-        if (sn.not.defined()) {
+    global.toArray = function () {
+        if (global.not.defined()) {
             return [];
         }
 
-        if (sn.not.array()) {
+        if (global.not.array()) {
             return [__EC__];
         }
 
@@ -100,8 +100,8 @@
     * @param path {String} path to object property to compare for uniqueness
     * @return array without duplicate values
     ***********************************************/
-    sn.unique = function (path) {
-        if (sn.is.array()) {
+    global.unique = function (path) {
+        if (global.is.array()) {
             var pathUniqueValues = [];
             var arr = [];
             for (var i = 0; i < __EC__.length; i++) {
@@ -138,7 +138,7 @@
     * @param condition {Function} function that returns true if value is found.
     * @return array item if found or undefined if not found
     **********************************************/
-    sn.first = function (condition) {
+    global.first = function (condition) {
         if (__EC__ && __EC__.length) {
             if (condition) {
                 for (var i = 0; i < __EC__.length; i++) {
@@ -161,7 +161,7 @@
     * @param condition {Function} function that returns true if value is found.
     * @return array item if found or undefined if not found
     ***********************************************************/
-    sn.last = function (condition) {
+    global.last = function (condition) {
         if (__EC__ && __EC__.length) {
             if (condition) {
                 for (var i = __EC__.length - 1; i >= 0; i--) {
@@ -204,7 +204,7 @@
          * Stack implementation LIFO last in first out
          * @param defaultArray [optional] {Array} default array that will be used as a stack base
         *********************************************/
-        sn.stack = function (defaultArray) {
+        global.stack = function (defaultArray) {
             var stack = new stackQueueBase(defaultArray);
             stack.remove = function () {
                 var _arr = this.__array__;
@@ -223,7 +223,7 @@
         * Queue implementation FIFO: first in first out
         * @param defaultArray [optional] {Array} default array that will be used as a queue base
         *********************************************/
-        sn.queue = function (defaultArray) {
+        global.queue = function (defaultArray) {
             var queue = new stackQueueBase(defaultArray);
             queue.remove = function () {
                 var _arr = this.__array__;
