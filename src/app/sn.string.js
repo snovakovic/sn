@@ -1,14 +1,17 @@
-﻿(function (global) {
+﻿(function(global) {
 
-    function isString() {
-        for (var i = 0; i < arguments.length; i++) {
-            if (typeof arguments[i] !== 'string') {
-                return false;
+    var internals = {
+        isString: function() {
+            for (var i = 0; i < arguments.length; i++) {
+                if (typeof arguments[i] !== 'string') {
+                    return false;
+                }
             }
-        }
 
-        return true;
-    }
+            return true;
+        }
+    };
+
 
     /**************************************************
     * Remove all occurrences of substring in string
@@ -16,10 +19,10 @@
     * @param replaceWith {String}
     * @return {String} string with replaced old values with new values
     **************************************************/
-    global.replaceAll = function (whatToReplace, replaceWith) {
-        return isString(__EC__, whatToReplace, replaceWith)
+    global.replaceAll = function(whatToReplace, replaceWith) {
+        return _return(internals.isString(__EC__, whatToReplace, replaceWith)
             ? __EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
-            : __EC__;
+            : __EC__);
     };
 
 
@@ -27,10 +30,10 @@
     * Capitalize string
     * @return {String} capitalized string
     **************************************************/
-    global.capitalize = function () {
-        return isString(__EC__)
+    global.capitalize = function() {
+        return _return(internals.isString(__EC__)
             ? __EC__[(0)].toUpperCase() + __EC__.slice(1)
-            : __EC__;
+            : __EC__);
     };
 
 
@@ -41,18 +44,18 @@
     * @example capitalize('foo Bar', 'oo'); => 'Foo Bar'; capitalize('FOO Bar', true); => 'Foo bar'
     * https://github.com/epeli/underscore.string
     **************************************************/
-    global.contains = function (substring, ignoreCase) {
+    global.contains = function(substring, ignoreCase) {
 
-        if (isString(__EC__, substring)) {
+        if (internals.isString(__EC__, substring)) {
             if (ignoreCase === true) {
                 __EC__ = __EC__.toLowerCase();
                 substring = substring.toLowerCase();
             }
 
-            return __EC__.indexOf(substring) !== -1;
+            return _return(__EC__.indexOf(substring) !== -1);
         }
 
-        return false;
+        return _return(false);
 
     };
 
@@ -63,14 +66,16 @@
     * @example: chop("whitespace", 3); => ['whi', 'tes', 'pac', 'e']
     * @return {Array} array containing chopped substrings
     **************************************************/
-    global.chop = function (step) {
-        if (isString(__EC__)) {
+    global.chop = function(step) {
+        if (internals.isString(__EC__)) {
             __EC__ = String(__EC__);
             step = ~~step;
-            return step > 0 ? __EC__.match(new RegExp('.{1,' + step + '}', 'g')) : [__EC__];
+            return _return(step > 0
+                ? __EC__.match(new RegExp('.{1,' + step + '}', 'g'))
+                : [__EC__]);
         }
 
-        return [];
+        return _return([]);
     };
 
 
@@ -78,10 +83,10 @@
     * Trim and replace multiple spaces with a single space.
     * @return {String} trimmed and cleaned string
     **************************************************/
-    global.clean = function () {
-        return isString(__EC__)
+    global.clean = function() {
+        return _return(internals.isString(__EC__)
             ? __EC__.trim().replace(/\s\s+/g, ' ')
-            : __EC__;
+            : __EC__);
     };
 
 
@@ -92,12 +97,12 @@
     * @param appender [optional, default: '...'] {String} string that will be appended to truncated string
     * @return {String} truncated string
     **********************************************/
-    global.truncate = function (length, appender) {
+    global.truncate = function(length, appender) {
         appender = appender || '...';
         length = ~~length;
-        return (isString(__EC__) && __EC__.length > length)
+        return _return((internals.isString(__EC__) && __EC__.length > length)
             ? __EC__.slice(0, length) + appender
-            : __EC__;
+            : __EC__);
     };
 
 
@@ -107,23 +112,29 @@
     * @param str2 {String}
     * @return {String} string between startStr and endStr
     ***********************************************/
-    global.between = function (str1, str2) {
-        if (isString(__EC__, str1, str2)) {
+    global.between = function(str1, str2) {
+        var returnValue;
+        if (internals.isString(__EC__, str1, str2)) {
             var index1 = __EC__.indexOf(str1);
             var index2 = __EC__.indexOf(str2);
 
             if (index1 === -1 || index2 === -1) {
-                return undefined;
+                returnValue = undefined;
             }
 
-            if (index2 > index1) {
+            else if (index2 > index1) {
                 index1 += str1.length;
-                return __EC__.substr(index1, index2 - index1);
-            } else {
-                index2 += str2.length;
-                return __EC__.substr(index2, index1 - index2);
+                returnValue = __EC__.substr(index1, index2 - index1);
             }
+
+            else {
+                index2 += str2.length;
+                returnValue = __EC__.substr(index2, index1 - index2);
+            }
+
         }
+
+        return _return(returnValue);
 
     };
 

@@ -6,6 +6,7 @@
     * Result of function execution is cached and can be accesed latter by calling that function
     ************************************************/
     global.once = function (fn) {
+        //TODO: Should this be chainable or not??
         var result;
         return function () {
             if (fn) {

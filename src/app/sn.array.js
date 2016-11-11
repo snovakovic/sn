@@ -1,16 +1,16 @@
-(function (global) {
+(function(global) {
 
     var internals = {
-        stackQueueBase: function (baseArray) {
+        stackQueueBase: function(baseArray) {
             var _arr = this.__array__ = baseArray || [];
 
-            this.add = function (val) {
+            this.add = function(val) {
                 Array.isArray(val)
                     ? Array.prototype.push.apply(_arr, val)
                     : _arr.push(val);
             };
 
-            this.length = function () {
+            this.length = function() {
                 return _arr.length;
             };
 
@@ -23,7 +23,7 @@
     * Loop over array or string. this in callback function will be set to array we are looping over.
     * @param callback {Function} callback function that will be called on each iteration
     ************************************************/
-    global.each = function (callback) {
+    global.each = function(callback) {
         if (__EC__ && __EC__.length) {
             for (var i = 0; i < __EC__.length; i++) {
                 if (callback.call(__EC__, __EC__[i], i) === false) {
@@ -31,7 +31,9 @@
                 }
             }
         }
-        return sn;
+
+        //TODO: IS THIS DESIRED BEHAVIOUR OR NOT??
+        return _return();
     };
 
 
@@ -40,7 +42,7 @@
     * @param l {Number} number of times we want to iterate
     * @param callback {Function} callback function that will be called on each iteration
     ************************************************/
-    global.iterate = function (callback) {
+    global.iterate = function(callback) {
         var iterations = Number(__EC__);
         if (sn(iterations).is.number()) {
             for (var i = 0; i < iterations; i++) {
@@ -50,7 +52,7 @@
             }
         }
 
-        return sn;
+        return _return(sn);
     };
 
 
@@ -59,9 +61,9 @@
     * https://github.com/Daplie/knuth-shuffle
     * @return {Array} shuffled array
     ********************************************************/
-    global.shuffle = function () {
+    global.shuffle = function() {
         if (sn(__EC__).not.array()) {
-            return;
+            return _return();
         }
 
         var currentIndex = __EC__.length;
@@ -78,7 +80,7 @@
             __EC__[randomIndex] = temporaryValue;
         }
 
-        return __EC__;
+        return _return(__EC__);
     };
 
 
@@ -87,30 +89,35 @@
     * @param val {Any} default array value
     * @return len {Integer} size of the new array
     **********************************************/
-    global.fillArray = function (len) {
+    global.fillArray = function(len) {
         var rv = new Array(len);
         while (--len >= 0) {
             rv[len] = __EC__;
         }
-        return rv;
+        return _return(rv);
     };
 
     /*********************************************
     * If array return unmodified array if not array creates array from provided value
     **********************************************/
-    global.toArray = function () {
+    global.toArray = function() {
+        var returnValue;
         if (__EC__ == null) {
-            return [];
+            returnValue = [];
         }
 
-        if (Array.isArray(__EC__)) {
-            return __EC__;
+        else if (Array.isArray(__EC__)) {
+            returnValue = __EC__;
         }
 
-        //convert array like object to array or otherwise wrap values with array.
-        return typeof __EC__ === 'object' && __EC__.hasOwnProperty('length') && typeof __EC__.length === 'number'
-            ? Array.prototype.slice.call(__EC__)
-            : [__EC__];
+        else {
+            //convert array like object to array or otherwise wrap values with array.
+            returnValue = typeof __EC__ === 'object' && __EC__.hasOwnProperty('length') && typeof __EC__.length === 'number'
+                ? Array.prototype.slice.call(__EC__)
+                : [__EC__];
+        }
+
+        return _return(returnValue);
     };
 
 
@@ -121,7 +128,7 @@
     * @param path {String} path to object property to compare for uniqueness
     * @return array without duplicate values
     ***********************************************/
-    global.unique = function (path) {
+    global.unique = function(path) {
         if (global.is.array()) {
             var pathUniqueValues = [];
             var arr = [];
@@ -146,10 +153,11 @@
                     arr.push(__EC__[i]);
                 }
             }
-            return arr;
+
+            return _return(arr);
         }
 
-        return __EC__;
+        return _return(__EC__);
     };
 
 
@@ -159,20 +167,20 @@
     * @param condition {Function} function that returns true if value is found.
     * @return array item if found or undefined if not found
     **********************************************/
-    global.first = function (condition) {
+    global.first = function(condition) {
         if (__EC__ && __EC__.length) {
             if (condition) {
                 for (var i = 0; i < __EC__.length; i++) {
                     if (condition(__EC__[i])) {
-                        return __EC__[i];
+                        return _return(__EC__[i]);
                     }
                 }
             } else {
-                return __EC__[0];
+                return _return(__EC__[0]);
             }
         }
 
-        return undefined;
+        return _return(undefined);
 
     };
 
@@ -182,20 +190,20 @@
     * @param condition {Function} function that returns true if value is found.
     * @return array item if found or undefined if not found
     ***********************************************************/
-    global.last = function (condition) {
+    global.last = function(condition) {
         if (__EC__ && __EC__.length) {
             if (condition) {
                 for (var i = __EC__.length - 1; i >= 0; i--) {
                     if (condition(__EC__[i])) {
-                        return __EC__[i];
+                        return _return(__EC__[i]);
                     }
                 }
             } else {
-                return __EC__[__EC__.length - 1];
+                return _return(__EC__[__EC__.length - 1]);
             }
         }
 
-        return undefined;
+        return _return(undefined);
 
     };
 
@@ -205,13 +213,13 @@
      * Stack implementation LIFO last in first out
      * @param defaultArray [optional] {Array} default array that will be used as a stack base
     *********************************************/
-    global.stack = function (defaultArray) {
+    global.stack = function(defaultArray) {
         var stack = new internals.stackQueueBase(defaultArray);
-        stack.remove = function () {
+        stack.remove = function() {
             var _arr = this.__array__;
             return _arr.length ? _arr.pop() : null;
         };
-        stack.peek = function () {
+        stack.peek = function() {
             var _arr = this.__array__;
             return _arr.length ? _arr[_arr.length - 1] : null;
         };
@@ -224,13 +232,13 @@
     * Queue implementation FIFO: first in first out
     * @param defaultArray [optional] {Array} default array that will be used as a queue base
     *********************************************/
-    global.queue = function (defaultArray) {
+    global.queue = function(defaultArray) {
         var queue = new internals.stackQueueBase(defaultArray);
-        queue.remove = function () {
+        queue.remove = function() {
             var _arr = this.__array__;
             return _arr.length ? _arr.shift() : null;
         };
-        queue.peek = function () {
+        queue.peek = function() {
             var _arr = this.__array__;
             return _arr.length ? _arr[0] : null;
         };

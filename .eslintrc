@@ -14,7 +14,8 @@
     "sn": true,
     "require": true,
     "module": true,
-    "__EC__": true
+    "__EC__": true,
+    "_return": true
   },
   "rules": {
     "no-console": 1,

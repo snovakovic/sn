@@ -19,7 +19,7 @@
     global.setLastDayOfMonth = function () {
         var dt = getDate();
         dt.setMonth(dt.getMonth() + 1, 0);
-        return dt;
+        return _return(dt);
     };
 
 
@@ -31,7 +31,7 @@
         var dt = getDate();
         var test = new Date(dt.getTime());
         test.setDate(test.getDate() + 1);
-        return test.getDate() === 1;
+        return _return(test.getDate() === 1);
     };
 
 
@@ -41,7 +41,7 @@
     ************************************************/
     global.getLastDayOfMonth = function () {
         var dt = getDate();
-        return (new Date(dt.getFullYear(), dt.getMonth() + 1, 0)).getDate();
+        return _return((new Date(dt.getFullYear(), dt.getMonth() + 1, 0)).getDate());
     };
 
 
@@ -52,7 +52,7 @@
     global.addMilliseconds = function (milliseconds) {
         var dt = getDate();
         dt.setMilliseconds(dt.getMilliseconds() + milliseconds);
-        return dt;
+        return _return(dt);
     };
 
     /**********************************************
@@ -62,7 +62,7 @@
     global.addSeconds = function (seconds) {
         var dt = getDate();
         dt.setSeconds(dt.getSeconds() + seconds);
-        return dt;
+        return _return(dt);
     };
 
     /**********************************************
@@ -72,7 +72,7 @@
     global.addMinutes = function (minutes) {
         var dt = getDate();
         dt.setMinutes(dt.getMinutes() + minutes);
-        return dt;
+        return _return(dt);
     };
 
     /**********************************************
@@ -82,7 +82,7 @@
     global.addHours = function (hours) {
         var dt = getDate();
         dt.setHours(dt.getHours() + hours);
-        return dt;
+        return _return(dt);
     };
 
     /**********************************************
@@ -92,7 +92,7 @@
     global.addDays = function (days) {
         var dt = getDate();
         dt.setDate(dt.getDate() + days);
-        return dt;
+        return _return(dt);
     };
 
     /**********************************************
@@ -102,7 +102,7 @@
     global.addMonths = function (months) {
         var dt = getDate();
         dt.setMonth(dt.getMonth() + months);
-        return dt;
+        return _return(dt);
     };
 
     /**********************************************
@@ -112,14 +112,14 @@
     global.addYears = function (years) {
         var dt = getDate();
         dt.setFullYear(dt.getFullYear() + years);
-        return dt;
+        return _return(dt);
     };
 
     /**********************************************
     * Get the list of english months with fullName, shortName and month index
     ************************************************/
     global.getMonths = function () {
-        return [
+        return _return([
             {
                 index: 0,
                 get month() {
@@ -217,7 +217,7 @@
                 shortName: 'Dec',
                 days: 31
             }
-        ];
+        ]);
     };
 
 })(sn);
