@@ -1,4 +1,4 @@
-﻿(function(global) {
+﻿(function (global) {
 
     /****************************************
     * Safely check if two variables are the same without JS coercion gotchas
@@ -6,7 +6,7 @@
     * == is used for compering null and undefined
     * for everything else === is used.
     * ********************************* */
-    global.is = function(t2) {
+    global.is = function (t2) {
         var t1 = __EC__;
         if ((_isString(t1) || _isNumber(t1)) && (_isString(t2) || _isNumber(t2))) {
             //this covers coercion between string and number without any gotchas
@@ -34,7 +34,7 @@
      * sn(' ').is.empty(); => true
      * sn('\n\t').is.empty(); => true
     ********************************************************/
-    global.is.empty = function() {
+    global.is.empty = function () {
         if (__EC__ == null
             || (typeof __EC__ === 'string' && (/^\s*$/).test(__EC__))) {
             return _returnImmediate(true);
@@ -56,55 +56,53 @@
     /***************************************
      * START: data type checks
      **************************************/
-    global.is.string = function() {
+    global.is.string = function () {
         return _returnImmediate(_isString(__EC__));
     };
 
 
-    global.is.number = function() {
+    global.is.number = function () {
         return _returnImmediate(_isNumber(__EC__));
     };
 
 
-    global.is.boolean = function() {
+    global.is.boolean = function () {
         return _returnImmediate(typeof __EC__ === 'boolean');
     };
 
 
-    global.is.null = function() {
+    global.is.null = function () {
         return _returnImmediate(__EC__ === null);
     };
 
 
-    global.is.undefined = function() {
+    global.is.undefined = function () {
         return _returnImmediate(typeof __EC__ === 'undefined');
     };
 
 
     //not null and undefined
-    global.is.defined = function() {
+    global.is.defined = function () {
         return _returnImmediate(__EC__ != null);
     };
 
 
-    global.is.object = function() {
-        return _returnImmediate(typeof __EC__ === 'object'
-            && __EC__ !== null
-            && !_isArray(__EC__));
+    global.is.object = function () {
+        return _returnImmediate(_isObject(__EC__));
     };
 
 
-    global.is.function = function() {
+    global.is.function = function () {
         return _returnImmediate(typeof __EC__ === 'function');
     };
 
 
-    global.is.array = function() {
+    global.is.array = function () {
         return _returnImmediate(_isArray(__EC__));
     };
 
 
-    global.is.date = function() {
+    global.is.date = function () {
         return _returnImmediate(_isDate(__EC__));
     };
 
@@ -113,7 +111,7 @@
     * START: ASSERT && NOT MODULE DEFINITION
     **************************************/
 
-    global.not = function(val) {
+    global.not = function (val) {
         return !global.is(val);
     };
 
@@ -125,10 +123,10 @@
     }
 
     global.assert = {
-        is: function(val) {
+        is: function (val) {
             return assert(global.is(val), 'Values are not the same.');
         },
-        not: function(val) {
+        not: function (val) {
             return assert(!global.is(val), 'Values are the same.');
         }
     };
@@ -136,14 +134,14 @@
 
     for (var prop in global.is) {
         if (global.is.hasOwnProperty(prop)) {
-            (function(prop) {
-                global.not[prop] = function() {
+            (function (prop) {
+                global.not[prop] = function () {
                     return !global.is[prop]();
                 };
-                global.assert.is[prop] = function() {
+                global.assert.is[prop] = function () {
                     return assert(global.is[prop](), 'Provided value is not ' + prop + '.');
                 };
-                global.assert.not[prop] = function() {
+                global.assert.not[prop] = function () {
                     return assert(!global.is[prop](), 'Provided value is ' + prop + '.');
                 };
             })(prop);

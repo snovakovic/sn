@@ -1,17 +1,4 @@
-﻿(function(global) {
-
-    var internals = {
-        isString: function() {
-            for (var i = 0; i < arguments.length; i++) {
-                if (typeof arguments[i] !== 'string') {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-    };
-
+﻿(function (global) {
 
     /**************************************************
     * Remove all occurrences of substring in string
@@ -19,10 +6,12 @@
     * @param replaceWith {String}
     * @return {String} string with replaced old values with new values
     **************************************************/
-    global.replaceAll = function(whatToReplace, replaceWith) {
-        return _return(internals.isString(__EC__, whatToReplace, replaceWith)
+    global.replaceAll = function (whatToReplace, replaceWith) {
+        var newString = _isString(__EC__, whatToReplace, replaceWith)
             ? __EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
-            : __EC__);
+            : __EC__;
+
+        return _return(newString);
     };
 
 
@@ -30,10 +19,12 @@
     * Capitalize string
     * @return {String} capitalized string
     **************************************************/
-    global.capitalize = function() {
-        return _return(internals.isString(__EC__)
+    global.capitalize = function () {
+        var newString = _isString(__EC__)
             ? __EC__[(0)].toUpperCase() + __EC__.slice(1)
-            : __EC__);
+            : __EC__;
+
+        return _return(newString);
     };
 
 
@@ -44,9 +35,9 @@
     * @example capitalize('foo Bar', 'oo'); => 'Foo Bar'; capitalize('FOO Bar', true); => 'Foo bar'
     * https://github.com/epeli/underscore.string
     **************************************************/
-    global.contains = function(substring, ignoreCase) {
+    global.contains = function (substring, ignoreCase) {
 
-        if (internals.isString(__EC__, substring)) {
+        if (_isString(__EC__, substring)) {
             if (ignoreCase === true) {
                 __EC__ = __EC__.toLowerCase();
                 substring = substring.toLowerCase();
@@ -66,8 +57,8 @@
     * @example: chop("whitespace", 3); => ['whi', 'tes', 'pac', 'e']
     * @return {Array} array containing chopped substrings
     **************************************************/
-    global.chop = function(step) {
-        if (internals.isString(__EC__)) {
+    global.chop = function (step) {
+        if (_isString(__EC__)) {
             __EC__ = String(__EC__);
             step = ~~step;
             return _return(step > 0
@@ -83,8 +74,8 @@
     * Trim and replace multiple spaces with a single space.
     * @return {String} trimmed and cleaned string
     **************************************************/
-    global.clean = function() {
-        return _return(internals.isString(__EC__)
+    global.clean = function () {
+        return _return(_isString(__EC__)
             ? __EC__.trim().replace(/\s\s+/g, ' ')
             : __EC__);
     };
@@ -97,10 +88,10 @@
     * @param appender [optional, default: '...'] {String} string that will be appended to truncated string
     * @return {String} truncated string
     **********************************************/
-    global.truncate = function(length, appender) {
+    global.truncate = function (length, appender) {
         appender = appender || '...';
         length = ~~length;
-        return _return((internals.isString(__EC__) && __EC__.length > length)
+        return _return((_isString(__EC__) && __EC__.length > length)
             ? __EC__.slice(0, length) + appender
             : __EC__);
     };
@@ -112,9 +103,9 @@
     * @param str2 {String}
     * @return {String} string between startStr and endStr
     ***********************************************/
-    global.between = function(str1, str2) {
+    global.between = function (str1, str2) {
         var returnValue;
-        if (internals.isString(__EC__, str1, str2)) {
+        if (_isString(__EC__, str1, str2)) {
             var index1 = __EC__.indexOf(str1);
             var index2 = __EC__.indexOf(str2);
 

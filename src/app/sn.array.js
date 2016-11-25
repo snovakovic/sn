@@ -1,26 +1,5 @@
 (function (global) {
 
-    var internals = {
-        stackQueueBase: function (baseArray) {
-            var _arr = this.__array__ = baseArray || [];
-
-            this.add = function (val) {
-                _isArray(val)
-                    ? Array.prototype.push.apply(_arr, val)
-                    : _arr.push(val);
-            };
-
-            this.length = function () {
-                return _arr.length;
-            };
-
-            return this;
-
-        }
-    };
-
-
-
     /**********************************************
     * Loop over array or string. this in callback function will be set to array we are looping over.
     * @param callback {Function} callback function that will be called on each iteration
@@ -49,7 +28,7 @@
     * @param callback {Function} callback function that will be called on each iteration
     ************************************************/
     global.iterate = function (callback) {
-        var iterations = Number(__EC__);
+        var iterations = ~~__EC__;
         if (_isNumber(iterations)) {
             for (var i = 0; i < iterations; i++) {
                 if (callback.call(null, i) === false) {
@@ -69,21 +48,19 @@
     ********************************************************/
     global.shuffle = function () {
         if (!_isArray(__EC__)) {
-            return _return(__EC__);
-        }
+            var currentIndex = __EC__.length;
+            var temporaryValue;
+            var randomIndex;
 
-        var currentIndex = __EC__.length;
-        var temporaryValue;
-        var randomIndex;
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
 
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-
-            temporaryValue = __EC__[currentIndex];
-            __EC__[currentIndex] = __EC__[randomIndex];
-            __EC__[randomIndex] = temporaryValue;
+                temporaryValue = __EC__[currentIndex];
+                __EC__[currentIndex] = __EC__[randomIndex];
+                __EC__[randomIndex] = temporaryValue;
+            }
         }
 
         return _return(__EC__);
@@ -122,7 +99,7 @@
 
         else {
             //convert array like object to array or otherwise wrap values with array.
-            returnValue = typeof __EC__ === 'object' && __EC__.hasOwnProperty('length') && typeof __EC__.length === 'number'
+            returnValue = _isObject(__EC__) && __EC__.hasOwnProperty('length') && _isNumber(__EC__.length)
                 ? Array.prototype.slice.call(__EC__)
                 : [__EC__];
         }
@@ -177,7 +154,7 @@
     * @return array item if found or undefined if not found
     **********************************************/
     global.first = function (condition) {
-        if (__EC__ && __EC__.length) {
+        if (__EC__) {
             if (condition) {
                 for (var i = 0; i < __EC__.length; i++) {
                     if (condition(__EC__[i])) {
@@ -217,13 +194,33 @@
 
     };
 
+    /*********************************************
+     * Base implementation for stack and queue
+     * @param {Array} [baseArray] default array that will be used as a stack base
+    *********************************************/
+    function stackQueueBase(baseArray) {
+        var _arr = this.__array__ = baseArray || [];
+
+        this.add = function (val) {
+            _isArray(val)
+                ? Array.prototype.push.apply(_arr, val)
+                : _arr.push(val);
+        };
+
+        this.length = function () {
+            return _arr.length;
+        };
+
+        return this;
+
+    }
 
     /*********************************************
      * Stack implementation LIFO last in first out
      * @param defaultArray [optional] {Array} default array that will be used as a stack base
     *********************************************/
     global.stack = function (defaultArray) {
-        var stack = new internals.stackQueueBase(defaultArray);
+        var stack = new stackQueueBase(defaultArray);
         stack.remove = function () {
             var _arr = this.__array__;
             return _arr.length ? _arr.pop() : null;
@@ -242,7 +239,7 @@
     * @param defaultArray [optional] {Array} default array that will be used as a queue base
     *********************************************/
     global.queue = function (defaultArray) {
-        var queue = new internals.stackQueueBase(defaultArray);
+        var queue = new stackQueueBase(defaultArray);
         queue.remove = function () {
             var _arr = this.__array__;
             return _arr.length ? _arr.shift() : null;

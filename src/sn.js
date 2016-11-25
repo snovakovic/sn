@@ -3,11 +3,11 @@
     author: stefan.novakovich@gmail.com
     version: 0.0.1
  ***************************************************/
-(function (global, factory) {
+(function(global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
         typeof define === 'function' && define.amd ? define(factory) :
             (global.sn = factory());
-} (this, (function () {
+} (this, (function() {
 
     'use strict';
 
@@ -23,7 +23,7 @@
     * chaining operator allows us to chain methods sn().metod1()._.metod2()
     ************************************************/
     Object.defineProperty(sn, '_', {
-        get: function () {
+        get: function() {
             __chain__ = true;
             return sn;
         }
@@ -58,8 +58,19 @@
 
 
     //CORE FUNCTIONS USED ACCROSS MODULES
+
+
+    /**********************************************
+    * Test if all pased arguments are string
+    ************************************************/
     function _isString(val) {
-        return typeof val === 'string';
+        for (var i = 0; i < arguments.length; i++) {
+            if (typeof arguments[i] !== 'string') {
+                return false;
+            }
+        }
+
+        return !!arguments.length;
     }
 
     function _isNumber(val) {
@@ -69,6 +80,12 @@
 
     function _isDate(val) {
         return !!val && Object.prototype.toString.call(val) === '[object Date]';
+    }
+
+    function _isObject(val) {
+        return typeof val === 'object'
+            && val !== null
+            && !_isArray(val);
     }
 
     function _isArray(val) {

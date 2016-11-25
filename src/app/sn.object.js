@@ -5,8 +5,7 @@
         action(obj);
 
         Object.getOwnPropertyNames(obj).forEach(function (key) {
-            if (obj.hasOwnProperty(key)
-                && obj[key] !== null
+            if (obj[key] !== null
                 && (typeof obj[key] === 'object' || typeof obj[key] === 'function')
                 && !check(obj[key])) {
                 deepSealOrFreez(obj[key], action, check);
@@ -44,9 +43,7 @@
 
         for (var i = 1; i < objects.length; i++) {
             Object.getOwnPropertyNames(objects[i]).forEach(function (key) {
-                if (objects[i].hasOwnProperty(key)) {
-                    objects[0][key] = objects[i][key];
-                }
+                objects[0][key] = objects[i][key];
             });
         }
 

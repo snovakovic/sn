@@ -21,7 +21,8 @@
     "_isString": true,
     "_isNumber": true,
     "_isDate": true,
-    "_isArray": true
+    "_isArray": true,
+    "_isObject": true
   },
   "rules": {
     "no-console": 1,

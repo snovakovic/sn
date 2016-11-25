@@ -3,11 +3,11 @@
     author: stefan.novakovich@gmail.com
     version: 0.0.1
  ***************************************************/
-(function (global, factory) {
+(function(global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
         typeof define === 'function' && define.amd ? define(factory) :
             (global.sn = factory());
-} (this, (function () {
+} (this, (function() {
 
     'use strict';
 
@@ -23,7 +23,7 @@
     * chaining operator allows us to chain methods sn().metod1()._.metod2()
     ************************************************/
     Object.defineProperty(sn, '_', {
-        get: function () {
+        get: function() {
             __chain__ = true;
             return sn;
         }
@@ -58,8 +58,19 @@
 
 
     //CORE FUNCTIONS USED ACCROSS MODULES
-    function _isString(val) {
-        return typeof val === 'string';
+
+
+    /**********************************************
+    * Test if all pased arguments are string
+    ************************************************/
+    function _isString() {
+        for (var i = 0; i < arguments.length; i++) {
+            if (typeof arguments[i] !== 'string') {
+                return false;
+            }
+        }
+
+        return !!arguments.length;
     }
 
     function _isNumber(val) {
@@ -71,6 +82,12 @@
         return !!val && Object.prototype.toString.call(val) === '[object Date]';
     }
 
+    function _isObject(val) {
+        return typeof val === 'object'
+            && val !== null
+            && !_isArray(val);
+    }
+
     function _isArray(val) {
         return Array.isArray(val);
     }
@@ -80,27 +97,6 @@
 
 
 (function (global) {
-
-    var internals = {
-        stackQueueBase: function (baseArray) {
-            var _arr = this.__array__ = baseArray || [];
-
-            this.add = function (val) {
-                _isArray(val)
-                    ? Array.prototype.push.apply(_arr, val)
-                    : _arr.push(val);
-            };
-
-            this.length = function () {
-                return _arr.length;
-            };
-
-            return this;
-
-        }
-    };
-
-
 
     /**********************************************
     * Loop over array or string. this in callback function will be set to array we are looping over.
@@ -130,7 +126,7 @@
     * @param callback {Function} callback function that will be called on each iteration
     ************************************************/
     global.iterate = function (callback) {
-        var iterations = Number(__EC__);
+        var iterations = ~~__EC__;
         if (_isNumber(iterations)) {
             for (var i = 0; i < iterations; i++) {
                 if (callback.call(null, i) === false) {
@@ -150,21 +146,19 @@
     ********************************************************/
     global.shuffle = function () {
         if (!_isArray(__EC__)) {
-            return _return(__EC__);
-        }
+            var currentIndex = __EC__.length;
+            var temporaryValue;
+            var randomIndex;
 
-        var currentIndex = __EC__.length;
-        var temporaryValue;
-        var randomIndex;
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
 
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-
-            temporaryValue = __EC__[currentIndex];
-            __EC__[currentIndex] = __EC__[randomIndex];
-            __EC__[randomIndex] = temporaryValue;
+                temporaryValue = __EC__[currentIndex];
+                __EC__[currentIndex] = __EC__[randomIndex];
+                __EC__[randomIndex] = temporaryValue;
+            }
         }
 
         return _return(__EC__);
@@ -203,7 +197,7 @@
 
         else {
             //convert array like object to array or otherwise wrap values with array.
-            returnValue = typeof __EC__ === 'object' && __EC__.hasOwnProperty('length') && typeof __EC__.length === 'number'
+            returnValue = _isObject(__EC__) && __EC__.hasOwnProperty('length') && _isNumber(__EC__.length)
                 ? Array.prototype.slice.call(__EC__)
                 : [__EC__];
         }
@@ -258,7 +252,7 @@
     * @return array item if found or undefined if not found
     **********************************************/
     global.first = function (condition) {
-        if (__EC__ && __EC__.length) {
+        if (__EC__) {
             if (condition) {
                 for (var i = 0; i < __EC__.length; i++) {
                     if (condition(__EC__[i])) {
@@ -298,13 +292,33 @@
 
     };
 
+    /*********************************************
+     * Base implementation for stack and queue
+     * @param {Array} [baseArray] default array that will be used as a stack base
+    *********************************************/
+    function stackQueueBase(baseArray) {
+        var _arr = this.__array__ = baseArray || [];
+
+        this.add = function (val) {
+            _isArray(val)
+                ? Array.prototype.push.apply(_arr, val)
+                : _arr.push(val);
+        };
+
+        this.length = function () {
+            return _arr.length;
+        };
+
+        return this;
+
+    }
 
     /*********************************************
      * Stack implementation LIFO last in first out
      * @param defaultArray [optional] {Array} default array that will be used as a stack base
     *********************************************/
     global.stack = function (defaultArray) {
-        var stack = new internals.stackQueueBase(defaultArray);
+        var stack = new stackQueueBase(defaultArray);
         stack.remove = function () {
             var _arr = this.__array__;
             return _arr.length ? _arr.pop() : null;
@@ -323,7 +337,7 @@
     * @param defaultArray [optional] {Array} default array that will be used as a queue base
     *********************************************/
     global.queue = function (defaultArray) {
-        var queue = new internals.stackQueueBase(defaultArray);
+        var queue = new stackQueueBase(defaultArray);
         queue.remove = function () {
             var _arr = this.__array__;
             return _arr.length ? _arr.shift() : null;
@@ -339,7 +353,7 @@
 
 })(sn);
 
-(function(global) {
+(function (global) {
 
     /****************************************
     * Safely check if two variables are the same without JS coercion gotchas
@@ -347,7 +361,7 @@
     * == is used for compering null and undefined
     * for everything else === is used.
     * ********************************* */
-    global.is = function(t2) {
+    global.is = function (t2) {
         var t1 = __EC__;
         if ((_isString(t1) || _isNumber(t1)) && (_isString(t2) || _isNumber(t2))) {
             //this covers coercion between string and number without any gotchas
@@ -375,7 +389,7 @@
      * sn(' ').is.empty(); => true
      * sn('\n\t').is.empty(); => true
     ********************************************************/
-    global.is.empty = function() {
+    global.is.empty = function () {
         if (__EC__ == null
             || (typeof __EC__ === 'string' && (/^\s*$/).test(__EC__))) {
             return _returnImmediate(true);
@@ -397,55 +411,53 @@
     /***************************************
      * START: data type checks
      **************************************/
-    global.is.string = function() {
+    global.is.string = function () {
         return _returnImmediate(_isString(__EC__));
     };
 
 
-    global.is.number = function() {
+    global.is.number = function () {
         return _returnImmediate(_isNumber(__EC__));
     };
 
 
-    global.is.boolean = function() {
+    global.is.boolean = function () {
         return _returnImmediate(typeof __EC__ === 'boolean');
     };
 
 
-    global.is.null = function() {
+    global.is.null = function () {
         return _returnImmediate(__EC__ === null);
     };
 
 
-    global.is.undefined = function() {
+    global.is.undefined = function () {
         return _returnImmediate(typeof __EC__ === 'undefined');
     };
 
 
     //not null and undefined
-    global.is.defined = function() {
+    global.is.defined = function () {
         return _returnImmediate(__EC__ != null);
     };
 
 
-    global.is.object = function() {
-        return _returnImmediate(typeof __EC__ === 'object'
-            && __EC__ !== null
-            && !_isArray(__EC__));
+    global.is.object = function () {
+        return _returnImmediate(_isObject(__EC__));
     };
 
 
-    global.is.function = function() {
+    global.is.function = function () {
         return _returnImmediate(typeof __EC__ === 'function');
     };
 
 
-    global.is.array = function() {
+    global.is.array = function () {
         return _returnImmediate(_isArray(__EC__));
     };
 
 
-    global.is.date = function() {
+    global.is.date = function () {
         return _returnImmediate(_isDate(__EC__));
     };
 
@@ -454,7 +466,7 @@
     * START: ASSERT && NOT MODULE DEFINITION
     **************************************/
 
-    global.not = function(val) {
+    global.not = function (val) {
         return !global.is(val);
     };
 
@@ -466,10 +478,10 @@
     }
 
     global.assert = {
-        is: function(val) {
+        is: function (val) {
             return assert(global.is(val), 'Values are not the same.');
         },
-        not: function(val) {
+        not: function (val) {
             return assert(!global.is(val), 'Values are the same.');
         }
     };
@@ -477,14 +489,14 @@
 
     for (var prop in global.is) {
         if (global.is.hasOwnProperty(prop)) {
-            (function(prop) {
-                global.not[prop] = function() {
+            (function (prop) {
+                global.not[prop] = function () {
                     return !global.is[prop]();
                 };
-                global.assert.is[prop] = function() {
+                global.assert.is[prop] = function () {
                     return assert(global.is[prop](), 'Provided value is not ' + prop + '.');
                 };
-                global.assert.not[prop] = function() {
+                global.assert.not[prop] = function () {
                     return assert(!global.is[prop](), 'Provided value is ' + prop + '.');
                 };
             })(prop);
@@ -826,8 +838,7 @@
         action(obj);
 
         Object.getOwnPropertyNames(obj).forEach(function (key) {
-            if (obj.hasOwnProperty(key)
-                && obj[key] !== null
+            if (obj[key] !== null
                 && (typeof obj[key] === 'object' || typeof obj[key] === 'function')
                 && !check(obj[key])) {
                 deepSealOrFreez(obj[key], action, check);
@@ -865,9 +876,7 @@
 
         for (var i = 1; i < objects.length; i++) {
             Object.getOwnPropertyNames(objects[i]).forEach(function (key) {
-                if (objects[i].hasOwnProperty(key)) {
-                    objects[0][key] = objects[i][key];
-                }
+                objects[0][key] = objects[i][key];
             });
         }
 
@@ -876,20 +885,7 @@
 
 })(sn);
 
-(function(global) {
-
-    var internals = {
-        isString: function() {
-            for (var i = 0; i < arguments.length; i++) {
-                if (typeof arguments[i] !== 'string') {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-    };
-
+(function (global) {
 
     /**************************************************
     * Remove all occurrences of substring in string
@@ -897,10 +893,12 @@
     * @param replaceWith {String}
     * @return {String} string with replaced old values with new values
     **************************************************/
-    global.replaceAll = function(whatToReplace, replaceWith) {
-        return _return(internals.isString(__EC__, whatToReplace, replaceWith)
+    global.replaceAll = function (whatToReplace, replaceWith) {
+        var newString = _isString(__EC__, whatToReplace, replaceWith)
             ? __EC__.replace(new RegExp(whatToReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replaceWith)
-            : __EC__);
+            : __EC__;
+
+        return _return(newString);
     };
 
 
@@ -908,10 +906,12 @@
     * Capitalize string
     * @return {String} capitalized string
     **************************************************/
-    global.capitalize = function() {
-        return _return(internals.isString(__EC__)
+    global.capitalize = function () {
+        var newString = _isString(__EC__)
             ? __EC__[(0)].toUpperCase() + __EC__.slice(1)
-            : __EC__);
+            : __EC__;
+
+        return _return(newString);
     };
 
 
@@ -922,9 +922,9 @@
     * @example capitalize('foo Bar', 'oo'); => 'Foo Bar'; capitalize('FOO Bar', true); => 'Foo bar'
     * https://github.com/epeli/underscore.string
     **************************************************/
-    global.contains = function(substring, ignoreCase) {
+    global.contains = function (substring, ignoreCase) {
 
-        if (internals.isString(__EC__, substring)) {
+        if (_isString(__EC__, substring)) {
             if (ignoreCase === true) {
                 __EC__ = __EC__.toLowerCase();
                 substring = substring.toLowerCase();
@@ -944,8 +944,8 @@
     * @example: chop("whitespace", 3); => ['whi', 'tes', 'pac', 'e']
     * @return {Array} array containing chopped substrings
     **************************************************/
-    global.chop = function(step) {
-        if (internals.isString(__EC__)) {
+    global.chop = function (step) {
+        if (_isString(__EC__)) {
             __EC__ = String(__EC__);
             step = ~~step;
             return _return(step > 0
@@ -961,8 +961,8 @@
     * Trim and replace multiple spaces with a single space.
     * @return {String} trimmed and cleaned string
     **************************************************/
-    global.clean = function() {
-        return _return(internals.isString(__EC__)
+    global.clean = function () {
+        return _return(_isString(__EC__)
             ? __EC__.trim().replace(/\s\s+/g, ' ')
             : __EC__);
     };
@@ -975,10 +975,10 @@
     * @param appender [optional, default: '...'] {String} string that will be appended to truncated string
     * @return {String} truncated string
     **********************************************/
-    global.truncate = function(length, appender) {
+    global.truncate = function (length, appender) {
         appender = appender || '...';
         length = ~~length;
-        return _return((internals.isString(__EC__) && __EC__.length > length)
+        return _return((_isString(__EC__) && __EC__.length > length)
             ? __EC__.slice(0, length) + appender
             : __EC__);
     };
@@ -990,9 +990,9 @@
     * @param str2 {String}
     * @return {String} string between startStr and endStr
     ***********************************************/
-    global.between = function(str1, str2) {
+    global.between = function (str1, str2) {
         var returnValue;
-        if (internals.isString(__EC__, str1, str2)) {
+        if (_isString(__EC__, str1, str2)) {
             var index1 = __EC__.indexOf(str1);
             var index2 = __EC__.indexOf(str2);
 
