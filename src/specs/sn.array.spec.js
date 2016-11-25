@@ -132,6 +132,8 @@ describe('sn.array', function () {
             expect(testArray.indexOf('a')).not.toEqual(-1);
             expect(testArray.indexOf('b')).not.toEqual(-1);
             expect(testArray.indexOf('c')).not.toEqual(-1);
+
+            expect(sn({}).shuffle()).toEqual({});
         });
     });
 

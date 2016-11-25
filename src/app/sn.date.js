@@ -2,10 +2,10 @@
 
     //PRIVATE
     var getDate = function () {
-        if (__EC__) {
-            global.assert.is.date(__EC__);
+        if (_isDate(__EC__)) {
             return __EC__;
         }
+
         return new Date();
     };
 
@@ -125,6 +125,7 @@
     /**********************************************
     * Get the list of english months with fullName, shortName and month index
     ************************************************/
+    //TODO: Make this shorter list of full name and short names + init forach
     global.getMonths = function () {
         return _return([
             {

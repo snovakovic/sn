@@ -15,7 +15,13 @@
     "require": true,
     "module": true,
     "__EC__": true,
-    "_return": true
+    "_return": true,
+    "_returnImmediate": true,
+    "_clearContext": true,
+    "_isString": true,
+    "_isNumber": true,
+    "_isDate": true,
+    "_isArray": true
   },
   "rules": {
     "no-console": 1,

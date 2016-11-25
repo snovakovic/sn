@@ -3,11 +3,11 @@
     author: stefan.novakovich@gmail.com
     version: 0.0.1
  ***************************************************/
-(function(global, factory) {
+(function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
         typeof define === 'function' && define.amd ? define(factory) :
             (global.sn = factory());
-} (this, (function() {
+} (this, (function () {
 
     'use strict';
 
@@ -23,7 +23,7 @@
     * chaining operator allows us to chain methods sn().metod1()._.metod2()
     ************************************************/
     Object.defineProperty(sn, '_', {
-        get: function() {
+        get: function () {
             __chain__ = true;
             return sn;
         }
@@ -41,27 +41,57 @@
             return sn;
         }
 
-        __EC__ = undefined;
+        return _returnImmediate(returnValue);
+    }
+
+    /**********************************************
+    * Used for functions that does not support chaining
+    ************************************************/
+    function _returnImmediate(returnValue) {
+        _clearContext();
         return returnValue;
+    }
+
+    function _clearContext() {
+        __EC__ = undefined;
+    }
+
+
+    //CORE FUNCTIONS USED ACCROSS MODULES
+    function _isString(val) {
+        return typeof val === 'string';
+    }
+
+    function _isNumber(val) {
+        //NaN will produce false because NaN !== NaN
+        return typeof val === 'number' && val === val;
+    }
+
+    function _isDate(val) {
+        return !!val && Object.prototype.toString.call(val) === '[object Date]';
+    }
+
+    function _isArray(val) {
+        return Array.isArray(val);
     }
 
 
   //app files will be concatenated here and then this will be closed with sn.end.js
 
 
-(function(global) {
+(function (global) {
 
     var internals = {
-        stackQueueBase: function(baseArray) {
+        stackQueueBase: function (baseArray) {
             var _arr = this.__array__ = baseArray || [];
 
-            this.add = function(val) {
-                Array.isArray(val)
+            this.add = function (val) {
+                _isArray(val)
                     ? Array.prototype.push.apply(_arr, val)
                     : _arr.push(val);
             };
 
-            this.length = function() {
+            this.length = function () {
                 return _arr.length;
             };
 
@@ -76,18 +106,22 @@
     * Loop over array or string. this in callback function will be set to array we are looping over.
     * @param callback {Function} callback function that will be called on each iteration
     ************************************************/
-    global.each = function(callback) {
-        if (__EC__ && __EC__.length) {
+    function each(cb) {
+        if (__EC__) {
             for (var i = 0; i < __EC__.length; i++) {
-                if (callback.call(__EC__, __EC__[i], i) === false) {
+                if (cb.call(__EC__, __EC__[i], i) === false) {
                     break;
                 }
             }
         }
 
-        //TODO: IS THIS DESIRED BEHAVIOUR OR NOT??
-        return _return();
-    };
+        return _returnImmediate();
+
+    }
+
+    global.each = each;
+
+    global.forEach = each;
 
 
     /**********************************************
@@ -95,9 +129,9 @@
     * @param l {Number} number of times we want to iterate
     * @param callback {Function} callback function that will be called on each iteration
     ************************************************/
-    global.iterate = function(callback) {
+    global.iterate = function (callback) {
         var iterations = Number(__EC__);
-        if (sn(iterations).is.number()) {
+        if (_isNumber(iterations)) {
             for (var i = 0; i < iterations; i++) {
                 if (callback.call(null, i) === false) {
                     break;
@@ -105,7 +139,7 @@
             }
         }
 
-        return _return(sn);
+        return _returnImmediate();
     };
 
 
@@ -114,9 +148,9 @@
     * https://github.com/Daplie/knuth-shuffle
     * @return {Array} shuffled array
     ********************************************************/
-    global.shuffle = function() {
-        if (sn(__EC__).not.array()) {
-            return _return();
+    global.shuffle = function () {
+        if (!_isArray(__EC__)) {
+            return _return(__EC__);
         }
 
         var currentIndex = __EC__.length;
@@ -142,7 +176,7 @@
     * @param val {Any} default array value
     * @return len {Integer} size of the new array
     **********************************************/
-    global.fillArray = function(len) {
+    global.fillArray = function (len) {
         var rv = new Array(len);
         while (--len >= 0) {
             rv[len] = __EC__;
@@ -152,15 +186,18 @@
 
 
     /*********************************************
-    * If array return unmodified array if not array creates array from provided value
+    * Returns array.
+    * Convert array likes to array (arrguments etc..)
+    * If array return unmodified array
+    * Wrap any other value with array
     **********************************************/
-    global.toArray = function() {
+    global.toArray = function () {
         var returnValue;
         if (__EC__ == null) {
             returnValue = [];
         }
 
-        else if (Array.isArray(__EC__)) {
+        else if (_isArray(__EC__)) {
             returnValue = __EC__;
         }
 
@@ -179,10 +216,10 @@
     * Returns new array containing only unique values from original array
     * Doesn't support nested objects and array
     * @param path {String} path to object property to compare for uniqueness
-    * @return array without duplicate values
+    * @return array without duplicate values :""LK
     ***********************************************/
-    global.unique = function(path) {
-        if (global.is.array()) {
+    global.unique = function (path) {
+        if (_isArray(__EC__)) {
             var pathUniqueValues = [];
             var arr = [];
             for (var i = 0; i < __EC__.length; i++) {
@@ -220,7 +257,7 @@
     * @param condition {Function} function that returns true if value is found.
     * @return array item if found or undefined if not found
     **********************************************/
-    global.first = function(condition) {
+    global.first = function (condition) {
         if (__EC__ && __EC__.length) {
             if (condition) {
                 for (var i = 0; i < __EC__.length; i++) {
@@ -244,7 +281,7 @@
     * @param condition {Function} function that returns true if value is found.
     * @return array item if found or undefined if not found
     ***********************************************************/
-    global.last = function(condition) {
+    global.last = function (condition) {
         if (__EC__ && __EC__.length) {
             if (condition) {
                 for (var i = __EC__.length - 1; i >= 0; i--) {
@@ -266,13 +303,13 @@
      * Stack implementation LIFO last in first out
      * @param defaultArray [optional] {Array} default array that will be used as a stack base
     *********************************************/
-    global.stack = function(defaultArray) {
+    global.stack = function (defaultArray) {
         var stack = new internals.stackQueueBase(defaultArray);
-        stack.remove = function() {
+        stack.remove = function () {
             var _arr = this.__array__;
             return _arr.length ? _arr.pop() : null;
         };
-        stack.peek = function() {
+        stack.peek = function () {
             var _arr = this.__array__;
             return _arr.length ? _arr[_arr.length - 1] : null;
         };
@@ -285,13 +322,13 @@
     * Queue implementation FIFO: first in first out
     * @param defaultArray [optional] {Array} default array that will be used as a queue base
     *********************************************/
-    global.queue = function(defaultArray) {
+    global.queue = function (defaultArray) {
         var queue = new internals.stackQueueBase(defaultArray);
-        queue.remove = function() {
+        queue.remove = function () {
             var _arr = this.__array__;
             return _arr.length ? _arr.shift() : null;
         };
-        queue.peek = function() {
+        queue.peek = function () {
             var _arr = this.__array__;
             return _arr.length ? _arr[0] : null;
         };
@@ -302,29 +339,7 @@
 
 })(sn);
 
-(function (global) {
-
-    var internals = {
-        isString: function (testVar) {
-            return typeof testVar === 'string';
-        },
-        isNumber: function (testVar) {
-            //NaN will produce false because NaN !== NaN
-            return typeof testVar === 'number' && testVar === testVar;
-        },
-        isDate: function (testVar) {
-            return Object.prototype.toString.call(testVar) === '[object Date]';
-        },
-        assert: function (val, assertMessage) {
-            if (val) {
-                return val;
-            }
-            throw new TypeError(assertMessage);
-        }
-
-    };
-
-
+(function(global) {
 
     /****************************************
     * Safely check if two variables are the same without JS coercion gotchas
@@ -332,20 +347,20 @@
     * == is used for compering null and undefined
     * for everything else === is used.
     * ********************************* */
-    global.is = function (t2) {
+    global.is = function(t2) {
         var t1 = __EC__;
-        if ((internals.isString(t1) || internals.isNumber(t1)) && (internals.isString(t2) || internals.isNumber(t2))) {
+        if ((_isString(t1) || _isNumber(t1)) && (_isString(t2) || _isNumber(t2))) {
             //this covers coercion between string and number without any gotchas
-            return (typeof t1 === typeof t2)
+            return _returnImmediate((typeof t1 === typeof t2)
                 ? t1 === t2
-                : t1 == t2 && t1 !== '' && t2 !== '';
+                : t1 == t2 && t1 !== '' && t2 !== '');
 
         } else if (t1 == null && t2 == null) {
             //This covers when vars are either null or undefined without any gotchas
-            return true;
+            return _returnImmediate(true);
         }
 
-        return t1 === t2;
+        return _returnImmediate(t1 === t2);
 
     };
 
@@ -360,78 +375,78 @@
      * sn(' ').is.empty(); => true
      * sn('\n\t').is.empty(); => true
     ********************************************************/
-    global.is.empty = function () {
+    global.is.empty = function() {
         if (__EC__ == null
             || (typeof __EC__ === 'string' && (/^\s*$/).test(__EC__))) {
-            return true;
+            return _returnImmediate(true);
         }
 
         if (typeof __EC__ === 'object') {
             for (var key in __EC__) {
                 if (__EC__.hasOwnProperty(key)) {
-                    return false;
+                    return _returnImmediate(false);
                 }
             }
-            return true;
+            return _returnImmediate(true);
         }
 
-        return false;
+        return _returnImmediate(false);
     };
 
 
     /***************************************
      * START: data type checks
      **************************************/
-    global.is.string = function () {
-        return internals.isString(__EC__);
+    global.is.string = function() {
+        return _returnImmediate(_isString(__EC__));
     };
 
 
-    global.is.number = function () {
-        return internals.isNumber(__EC__);
+    global.is.number = function() {
+        return _returnImmediate(_isNumber(__EC__));
     };
 
 
-    global.is.boolean = function () {
-        return typeof __EC__ === 'boolean';
+    global.is.boolean = function() {
+        return _returnImmediate(typeof __EC__ === 'boolean');
     };
 
 
-    global.is.null = function () {
-        return __EC__ === null;
+    global.is.null = function() {
+        return _returnImmediate(__EC__ === null);
     };
 
 
-    global.is.undefined = function () {
-        return typeof __EC__ === 'undefined';
+    global.is.undefined = function() {
+        return _returnImmediate(typeof __EC__ === 'undefined');
     };
 
 
     //not null and undefined
-    global.is.defined = function () {
-        return __EC__ != null;
+    global.is.defined = function() {
+        return _returnImmediate(__EC__ != null);
     };
 
 
-    global.is.object = function () {
-        return typeof __EC__ === 'object'
+    global.is.object = function() {
+        return _returnImmediate(typeof __EC__ === 'object'
             && __EC__ !== null
-            && !Array.isArray(__EC__);
+            && !_isArray(__EC__));
     };
 
 
-    global.is.function = function () {
-        return typeof __EC__ === 'function';
+    global.is.function = function() {
+        return _returnImmediate(typeof __EC__ === 'function');
     };
 
 
-    global.is.array = function () {
-        return typeof __EC__ === 'object' && Array.isArray(__EC__);
+    global.is.array = function() {
+        return _returnImmediate(_isArray(__EC__));
     };
 
 
-    global.is.date = function () {
-        return internals.isDate(__EC__);
+    global.is.date = function() {
+        return _returnImmediate(_isDate(__EC__));
     };
 
 
@@ -439,32 +454,38 @@
     * START: ASSERT && NOT MODULE DEFINITION
     **************************************/
 
-    global.not = function (val) {
+    global.not = function(val) {
         return !global.is(val);
     };
 
+    function assert(val, assertMessage) {
+        if (val) {
+            return val;
+        }
+        throw new TypeError(assertMessage);
+    }
 
     global.assert = {
-        is: function (val) {
-            return internals.assert(global.is(val), 'Values are not the same.');
+        is: function(val) {
+            return assert(global.is(val), 'Values are not the same.');
         },
-        not: function (val) {
-            return internals.assert(!global.is(val), 'Values are the same.');
+        not: function(val) {
+            return assert(!global.is(val), 'Values are the same.');
         }
     };
 
 
     for (var prop in global.is) {
         if (global.is.hasOwnProperty(prop)) {
-            (function (prop) {
-                global.not[prop] = function () {
+            (function(prop) {
+                global.not[prop] = function() {
                     return !global.is[prop]();
                 };
-                global.assert.is[prop] = function () {
-                    return internals.assert(global.is[prop](), 'Provided value is not ' + prop + '.');
+                global.assert.is[prop] = function() {
+                    return assert(global.is[prop](), 'Provided value is not ' + prop + '.');
                 };
-                global.assert.not[prop] = function () {
-                    return internals.assert(!global.is[prop](), 'Provided value is ' + prop + '.');
+                global.assert.not[prop] = function() {
+                    return assert(!global.is[prop](), 'Provided value is ' + prop + '.');
                 };
             })(prop);
         }
@@ -477,10 +498,10 @@
 
     //PRIVATE
     var getDate = function () {
-        if (__EC__) {
-            global.assert.is.date(__EC__);
+        if (_isDate(__EC__)) {
             return __EC__;
         }
+
         return new Date();
     };
 
@@ -600,6 +621,7 @@
     /**********************************************
     * Get the list of english months with fullName, shortName and month index
     ************************************************/
+    //TODO: Make this shorter list of full name and short names + init forach
     global.getMonths = function () {
         return _return([
             {
@@ -706,13 +728,12 @@
 
 (function (global) {
 
-
     /**********************************************
     * returns function that can be executed only once
     * Result of function execution is cached and can be accesed latter by calling that function
     ************************************************/
     global.once = function (fn) {
-        //TODO: Should this be chainable or not??
+        _clearContext();
         var result;
         return function () {
             if (fn) {
@@ -729,6 +750,7 @@
     * Default wait time for debounce is 200ms.
      ************************************************/
     global.debounce = function (fn, wait) {
+        _clearContext();
         var timeout;
         return function () {
             var callNow = !timeout;
@@ -747,6 +769,7 @@
     * execute function when condition becomes true
     ************************/
     global.execute = function (executeFn) {
+        _clearContext();
         return (function () {
             var tick;
             var maxTicks;
@@ -779,6 +802,7 @@
     var subscribers = {};
 
     global.broadcast = function (to) {
+        _clearContext();
         var callArguments = Array.prototype.slice.call(arguments, 1, arguments.length);
         for (var i = 0; i < subscribers[to].length; i++) {
             subscribers[to][i].apply(this, callArguments);
@@ -787,6 +811,7 @@
 
 
     global.listen = function (subscribe, cb) {
+        _clearContext();
         subscribers[subscribe] = subscribers[subscribe] || [];
         subscribers[subscribe].push(cb);
     };
@@ -794,32 +819,30 @@
 
 })(sn);
 
-(function(global) {
+(function (global) {
 
-    var internals = {
-        deepSealOrFreez: function deepSealOrFreez(obj, action, check) {
-            action(obj);
 
-            Object.getOwnPropertyNames(obj).forEach(function(key) {
-                if (obj.hasOwnProperty(key)
-                    && obj[key] !== null
-                    && (typeof obj[key] === 'object' || typeof obj[key] === 'function')
-                    && !check(obj[key])) {
-                    deepSealOrFreez(obj[key], action, check);
-                }
-            });
+    function deepSealOrFreez(obj, action, check) {
+        action(obj);
 
-            return obj;
-        }
-    };
+        Object.getOwnPropertyNames(obj).forEach(function (key) {
+            if (obj.hasOwnProperty(key)
+                && obj[key] !== null
+                && (typeof obj[key] === 'object' || typeof obj[key] === 'function')
+                && !check(obj[key])) {
+                deepSealOrFreez(obj[key], action, check);
+            }
+        });
 
+        return obj;
+    }
 
     /**********************************************
     * Apply Object.freez recursively on object and property of object.
     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
     ************************************************/
     global.deepFreeze = function deepFreez() {
-        return _return(internals.deepSealOrFreez(__EC__, Object.freeze, Object.isFrozen));
+        return _return(deepSealOrFreez(__EC__, Object.freeze, Object.isFrozen));
     };
 
 
@@ -828,7 +851,7 @@
     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
     ************************************************/
     global.deepSeal = function deepSeal() {
-        return _return(internals.deepSealOrFreez(__EC__, Object.seal, Object.isSealed));
+        return _return(deepSealOrFreez(__EC__, Object.seal, Object.isSealed));
     };
 
 
@@ -836,12 +859,12 @@
     * Extend object with the properties from other provided objects.
     * In case of same properties names value from first object will be overriden with the value from second object
     ************************************************/
-    global.extend = function() {
+    global.extend = function () {
         var objects = Array.prototype.slice.call(arguments);
         objects.unshift(__EC__);
 
         for (var i = 1; i < objects.length; i++) {
-            Object.getOwnPropertyNames(objects[i]).forEach(function(key) {
+            Object.getOwnPropertyNames(objects[i]).forEach(function (key) {
                 if (objects[i].hasOwnProperty(key)) {
                     objects[0][key] = objects[i][key];
                 }

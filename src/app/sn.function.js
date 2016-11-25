@@ -1,12 +1,11 @@
 (function (global) {
 
-
     /**********************************************
     * returns function that can be executed only once
     * Result of function execution is cached and can be accesed latter by calling that function
     ************************************************/
     global.once = function (fn) {
-        //TODO: Should this be chainable or not??
+        _clearContext();
         var result;
         return function () {
             if (fn) {
@@ -23,6 +22,7 @@
     * Default wait time for debounce is 200ms.
      ************************************************/
     global.debounce = function (fn, wait) {
+        _clearContext();
         var timeout;
         return function () {
             var callNow = !timeout;
@@ -41,6 +41,7 @@
     * execute function when condition becomes true
     ************************/
     global.execute = function (executeFn) {
+        _clearContext();
         return (function () {
             var tick;
             var maxTicks;
@@ -73,6 +74,7 @@
     var subscribers = {};
 
     global.broadcast = function (to) {
+        _clearContext();
         var callArguments = Array.prototype.slice.call(arguments, 1, arguments.length);
         for (var i = 0; i < subscribers[to].length; i++) {
             subscribers[to][i].apply(this, callArguments);
@@ -81,6 +83,7 @@
 
 
     global.listen = function (subscribe, cb) {
+        _clearContext();
         subscribers[subscribe] = subscribers[subscribe] || [];
         subscribers[subscribe].push(cb);
     };
